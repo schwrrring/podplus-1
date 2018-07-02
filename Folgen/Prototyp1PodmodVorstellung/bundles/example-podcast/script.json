@@ -1,0 +1,126 @@
+{
+  "podcastId": "test-podcast",
+  "episodeId": "example",
+  "audioFile": "audio.m4a",
+  "dingFile": "ding.mp3",
+  "metadata": {
+	"length": 203,
+	"title": "Test Podcast",
+	"episodeName": "Example Episode",
+	"description": "This is an example podcast",
+	"avatarFile": "robot_headshot.png",
+	"artwork": "assets/thumb-maat-lrg.jpg"
+  },
+  "contact": {
+	"tel": "+15550000000",
+	"sms": "+15550000000",
+	"email": "email@example.com"
+  },
+  "team": [
+	{
+	  "name": "Robot Voice",
+	  "role": "Presenter",
+	  "credit": "Isn't a real person",
+	  "photo": "robot_headshot.png"
+	}
+  ],
+  "assets": [],
+  "chapters": [
+	{
+	  "name": "Example Episode",
+	  "time": 0
+	}
+  ],
+  "items": [
+	{
+	  "silent": true,
+	  "time": 0,
+	  "type": "text",
+	  "text": "Hallo! \n Hier ein erster und hoffentlich nicht der letzte mini-Podcast im Strange-Bird-Stil. Clicke Play, um zu hören, welche Funktionen der Guardian-Player mitbringt – Für weitere Infos, clicke auf die Links, die Dir hier zur passenden Zeit zugesendet werden. Viel Spaß!"
+	},
+	{
+	  "time": 11,
+	  "type": "text",
+	  "images": [
+		{
+		  "url": "strangeBird.png",
+		  "width": 640,
+		  "height": 426
+		}
+	  ]
+	},
+	{
+	  "time": 11,
+	  "type": "text",
+	  "link": {
+		"url": "https://medium.com/the-guardian-mobile-innovation-lab/uncovering-the-potential-of-mobile-audio-a-new-experimental-player-and-a-new-show-f2eb13af0665",
+		"title": "Ein Link zum Bericht: Uncovering the potential of mobile audio – a new experimental player and a show"
+	  }
+	},
+	{
+	  "time": 86,
+	  "type": "text",
+	  "images": [
+		{
+		  "url": "library.jpeg",
+		  "width": 640,
+		  "height": 426
+		}
+	  ]
+	},
+	{
+	  "time": 86,
+	  "type": "link zur Seite:",
+	  "link": {
+		"url": "https://medium.com/the-guardian-mobile-innovation-lab/libraries-of-note-sharing-open-source-code-from-the-guardian-mobile-innovation-labs-storytelling-17603d088c9f",
+		"title": "Weiterer Open-Source-Code des Guardian Mobile Innovation Lab:"
+	  }
+	},
+	{
+	  "time": 98,
+	  "type": "text",
+	  "images": [
+		{
+		  "url": "hackToProduction.png",
+		  "width": 640,
+		  "height": 426
+		}
+	  ]
+	},
+	{
+	  "time": 98,
+	  "type": "text",
+	  "link": {
+		"url": "https://medium.com/the-guardian-mobile-innovation-lab/taking-web-podcasts-from-hack-to-production-5bb2acb7c00",
+		"title": "Die Entwicklung: vom Hack bis zum jetzigen Stand"
+	  }
+	},
+	{
+	  "time": 158,
+	  "type": "text",
+	  "images": [
+		{
+		  "url": "metriken.png",
+		  "width": 640,
+		  "height": 426
+		}
+	  ]
+	},
+	{
+	  "time": 158,
+	  "type": "text",
+	  "link": {
+		"url": "https://www.example.org",
+		"title": "Arbeiten im Lab: Metriken, Experimente..."
+	  }
+	},
+	{
+	  "time": 2000,
+	  "type": "text",
+	  "link": {
+		"url": "https://www.example.org",
+		"title": "An example site"
+	  }
+	}
+  ]
+}

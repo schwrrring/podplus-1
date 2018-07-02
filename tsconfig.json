@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "es6",
+        "target": "es6",
+        "jsx": "react",
+        "lib": ["es6", "dom", "webworker"],
+        "moduleResolution": "node",
+        "allowJs": true,
+        "outDir": "lib",
+        "strictNullChecks": true,
+        "importHelpers": true
+    },
+    "include": ["src"]
+}

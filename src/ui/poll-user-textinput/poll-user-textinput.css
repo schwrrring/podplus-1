@@ -1,0 +1,32 @@
+
+.poll-user-choice-padding {
+
+    padding: 10px 15px;
+    background-color: #5ebfba;
+}
+
+.user-input-area {
+    resize: none;
+    outline: none;
+    font-size: 16px;
+    font-family: sans-serif ;
+    border: none;
+    width: 100%;
+    rows: 4;
+    cols: 50;
+}
+
+.bubble-poll-buttons {
+    font-size: 20px;
+}
+
+.bubble-poll-buttons-container {
+    text-align: center;
+    widows: 100%;
+}
+
+.user-choice-container{
+
+    text-align: center;
+    padding: 10px 15px;
+}

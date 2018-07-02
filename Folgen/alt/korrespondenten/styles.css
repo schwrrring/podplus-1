@@ -1,0 +1,1654 @@
+body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+@font-face {
+	font-family: 'NDRSansCondRegular';
+	src: url('ndr_fonts/NDRSansDCondRegular.eot'); /* IE9 Compat Modes */
+	src: url('ndr_fonts/NDRSansDCondRegular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	url('ndr_fonts/NDRSansDCondRegular.woff2') format('woff2'), /* Super Modern Browsers */
+	url('ndr_fonts/NDRSansDCondRegular.woff') format('woff'), /* Pretty Modern Browsers */
+	url('ndr_fonts/NDRSansDCondRegular.ttf')  format('truetype'), /* Safari, Android, iOS */
+	url('ndr_fonts/NDRSansDCondRegular.svg#NDRSansDCondRegular') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+	font-family: 'NDRSansCondBlack';
+	src: url('ndr_fonts/NDRSansDCondBlack.eot'); /* IE9 Compat Modes */
+	src: url('ndr_fonts/NDRSansDCondBlack.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	url('ndr_fonts/NDRSansDCondBlack.woff2') format('woff2'), /* Super Modern Browsers */
+	url('ndr_fonts/NDRSansDCondBlack.woff') format('woff'), /* Pretty Modern Browsers */
+	url('ndr_fonts/NDRSansDCondBlack.ttf')  format('truetype'), /* Safari, Android, iOS */
+	url('ndr_fonts/NDRSansDCondBlack.svg#NDRSansDCondBlack') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+	font-family: 'NDRSansRegular';
+	src: url('ndr_fonts/NDRSansDRegular.eot'); /* IE9 Compat Modes */
+	src: url('ndr_fonts/NDRSansDRegular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	url('ndr_fonts/NDRSansDRegular.woff2') format('woff2'), /* Super Modern Browsers */
+	url('ndr_fonts/NDRSansDRegular.woff') format('woff'), /* Pretty Modern Browsers */
+	url('ndr_fonts/NDRSansDRegular.ttf')  format('truetype'), /* Safari, Android, iOS */
+	url('ndr_fonts/NDRSansDRegular.svg#NDRSansDRegular') format('svg'); /* Legacy iOS */
+}
+
+.frame__main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #222222;
+	font-family: 'NDRSansRegular', sans-serif;
+}
+
+.frame__frame {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.frame__controls {
+    background: #cddce9;
+    flex-shrink: 0;
+    /* padding: 3vw 1vw; */
+    position: relative;
+}
+
+.frame__time-block {
+    color: #0c1754;
+    font-size: 12px;
+    display: block;
+    flex-grow: 1;
+    /* this seems to limit Chrome's redraw needs */
+    width: 5em;
+    /* font-weight: bold; */
+}
+
+.frame__time-and-chapter {
+    display: flex;
+    margin: 10px 15px;
+}
+
+.frame__time-left {
+    text-align: right;
+}
+
+.frame__current-chapter-name {
+    text-align: center;
+    color: #0c1754;
+    font-size: 14px;
+}
+
+.frame__gmil-logo {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    width: 150px;
+    height: 150px;
+    opacity: 0.3;
+}
+
+@media (max-width: 500px) {
+    .frame__gmil-logo {
+        display: none;
+    }
+}
+
+input[type="button"] {
+    outline: none;
+}
+.chat-window__chat {
+    background: #fff;
+    flex-grow: 1;
+    overflow: auto;
+    /* display: flex; */
+    /* flex-direction: column; */
+    position: relative;
+}
+
+.chat-window__chat-container {
+    flex-grow: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+.chat-window__bubble {
+    background: #fff;
+    padding: 3vw;
+    margin: 0 3vw 3vw;
+    margin-left: 6vw;
+    border-radius: 2vw;
+    color: #555555;
+    flex-shrink: 0;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    position: absolute;
+    top: 0;
+}
+
+.chat-window__spacer {
+    flex-grow: 1;
+    height: 200vh;
+}
+
+.chat-window__more-button {
+    position: absolute;
+    bottom: 0vw;
+    text-align: center;
+    width: 100%;
+    z-index: 1;
+    animation-name: chat-window__more-button-slide-in;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    border-width: 0;
+	font-family: "NDRSansCondRegular";
+}
+
+@keyframes chat-window__more-button-slide-in {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(-10vw);
+    }
+}
+
+.chat-window__more-button button {
+    background: #5ebfba;
+    color: #fff;
+    font-size: 14px;
+    padding: 3vw 4vw;
+    line-height: 14px;
+    border-radius: 3vw;
+	font-family: "NDRSansCondRegular";
+}
+
+.chat-window__avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 8px;
+    left: 10px;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.chat-window__avatar-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+@keyframes chat-window__slidein {
+    from {
+        transform: translate3d(-50%, 100px, 0);
+    }
+
+    to {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+.chat-window__more-messages {
+    background: #1d5596;
+    color: #fff;
+    /* margin: 0 auto 30px; */
+    padding: 10px 15px;
+    border-radius: 18px;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+    cursor: pointer;
+    animation-name: chat-window__slidein;
+    animation-duration: 0.2s;
+    box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+}
+.controls__controls {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.controls__controls-inner {
+}
+
+.controls__controls button {
+    /* border: solid 1px %234c5057; */
+    border: none;
+    background: transparent;
+    color: #fff;
+    height: 30px;
+    width: 40px;
+    padding: 0;
+    /* padding: 1.5vw 4vw; */
+    font-size: 1px;
+    display: inline-block;
+    margin: 0 1vw;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 12px;
+    background-repeat: no-repeat;
+    background-size: auto 80%;
+    background-position: center center;
+    color: transparent;
+    outline: none;
+	font-family: "NDRSansCondRegular";
+}
+
+button.controls__forward-15 {
+    background-image: url('data:image/svg+xml;utf8,<svg width="85" height="53" viewBox="0 0 85 53" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>forward-15</title><defs><path d="M1.941.57l9.055 7.93c.416.36.458.99.094 1.41-.029.03-.06.06-.094.09l-9.055 7.92a1 1 0 0 1-1.659-.75V1.33c0-.55.448-1 1-1 .242 0 .476.09.659.24z" id="a"/></defs><g fill="none" fill-rule="evenodd"><path d="M82.33 29.778c0 11.475-9.252 20.778-20.665 20.778C50.252 50.556 41 41.253 41 29.778 41 18.303 50.252 9 61.665 9" stroke="%23FFF" stroke-width="4" stroke-linecap="round"/><g transform="translate(62)"><mask id="b" fill="%23FFF"><use xlink:href="%23a"/></mask><path fill="%23FFF" mask="url(%23b)" d="M-9.718 28.17h31.056V-9.673H-9.718z"/></g><path d="M5.704 32h3.904V9.664H7.816L1.8 11.936v2.304l3.904-.352V32zm13.44.352c5.184 0 8.288-2.848 8.288-7.296 0-4.8-2.848-6.976-7.712-6.976-1.056 0-1.76.096-2.464.256l.416-5.44h8.992V9.824H14.696l-.8 11.808c1.12-.288 2.56-.544 4.256-.544 3.36 0 5.152 1.024 5.152 3.968 0 2.912-1.92 4.096-5.152 4.096-1.984 0-3.712-.416-5.184-1.088v2.912c1.376.8 3.328 1.376 6.176 1.376z" fill="%23FFF"/></g></svg>');
+}
+
+button.controls__back-15 {
+    background-image: url('data:image/svg+xml;utf8,<svg width="85" height="53" viewBox="0 0 85 53" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>back-15</title><defs><path d="M1.941.57l9.055 7.93c.416.36.458.99.094 1.41-.029.03-.06.06-.094.09l-9.055 7.92a1 1 0 0 1-1.659-.75V1.33c0-.55.448-1 1-1 .242 0 .476.09.659.24z" id="a"/></defs><g fill="none" fill-rule="evenodd"><path d="M2.67 29.778c0 11.475 9.252 20.778 20.665 20.778C34.748 50.556 44 41.253 44 29.778 44 18.303 34.748 9 23.335 9" stroke="%23FFF" stroke-width="4" stroke-linecap="round"/><g transform="matrix(-1 0 0 1 23 0)"><mask id="b" fill="%23FFF"><use xlink:href="%23a"/></mask><path fill="%23FFF" mask="url(%23b)" d="M-9.718 28.17h31.056V-9.673H-9.718z"/></g><path d="M60.704 32h3.904V9.664h-1.792L56.8 11.936v2.304l3.904-.352V32zm13.44.352c5.184 0 8.288-2.848 8.288-7.296 0-4.8-2.848-6.976-7.712-6.976-1.056 0-1.76.096-2.464.256l.416-5.44h8.992V9.824H69.696l-.8 11.808c1.12-.288 2.56-.544 4.256-.544 3.36 0 5.152 1.024 5.152 3.968 0 2.912-1.92 4.096-5.152 4.096-1.984 0-3.712-.416-5.184-1.088v2.912c1.376.8 3.328 1.376 6.176 1.376z" fill="%23FFF"/></g></svg>');
+}
+
+button.controls__pause {
+    background-image: url('data:image/svg+xml;utf8,<svg width="38" height="56" viewBox="0 0 38 56" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>pause</title><defs><path d="M5 0c2.761 0 5 2.24 5 5v46a5.001 5.001 0 0 1-10 0V5c0-2.76 2.239-5 5-5z" id="a"/><path d="M5 0c2.761 0 5 2.24 5 5v46a5.001 5.001 0 0 1-10 0V5c0-2.76 2.239-5 5-5z" id="c"/></defs><g fill="none" fill-rule="evenodd"><g transform="translate(3)"><mask id="b" fill="%23FFF"><use xlink:href="%23a"/></mask><path fill="%23FFF" mask="url(%23b)" d="M-10 66h30v-76h-30z"/></g><g transform="translate(25)"><mask id="d" fill="%23FFF"><use xlink:href="%23c"/></mask><path fill="%23FFF" mask="url(%23d)" d="M-10 66h30v-76h-30z"/></g></g></svg>');
+}
+
+button.controls__play {
+    background-image: url('data:image/svg+xml;utf8,<svg width="27" height="56" viewBox="0 0 27 56" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>play</title><defs><path d="M4.367 1.29l20.374 17.947c.936.815 1.03 2.24.212 3.19a3.683 3.683 0 0 1-.212.205L4.367 40.556c-.936.837-2.358.724-3.177-.204a2.284 2.284 0 0 1-.555-1.494V3.01A2.26 2.26 0 0 1 2.885.747a2.35 2.35 0 0 1 1.482.543z" id="a"/></defs><g transform="translate(0 7)" fill="none" fill-rule="evenodd"><mask id="b" fill="%23FFF"><use xlink:href="%23a"/></mask><path fill="%23FFF" mask="url(%23b)" d="M-21.866 63.753H48.01v-85.645h-69.876z"/></g></svg>');
+}
+
+button.controls__more {
+    background-image: url('data:image/svg+xml;utf8,<svg width="14" height="56" viewBox="0 0 14 56" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>more</title><defs><path d="M7 13.83c3.866 0 7-3.07 7-6.85S10.866.13 7 .13 0 3.2 0 6.98s3.134 6.85 7 6.85z" id="a"/><path d="M7 13.96c3.866 0 7-3.07 7-6.85S10.866.26 7 .26 0 3.33 0 7.11s3.134 6.85 7 6.85z" id="c"/><path d="M7 13.96c3.866 0 7-3.07 7-6.85S10.866.26 7 .26 0 3.33 0 7.11s3.134 6.85 7 6.85z" id="e"/></defs><g fill="none" fill-rule="evenodd"><mask id="b" fill="%23FFF"><use xlink:href="%23a"/></mask><path fill="%23FFF" mask="url(%23b)" d="M-10 23.83h34V-9.866h-34z"/><g transform="translate(0 21)"><mask id="d" fill="%23FFF"><use xlink:href="%23c"/></mask><path fill="%23FFF" mask="url(%23d)" d="M-10 23.96h34V-9.736h-34z"/></g><g transform="translate(0 42)"><mask id="f" fill="%23FFF"><use xlink:href="%23e"/></mask><path fill="%23FFF" mask="url(%23f)" d="M-10 23.96h34V-9.736h-34z"/></g></g></svg>');
+    position: absolute;
+    right: 0;
+    width: 30px;
+    background-size: auto 60%;
+}
+
+.controls__controls button:disabled {
+    opacity: 0.5;
+}
+.header__header {
+    position: relative;
+
+    height: 45px;
+}
+
+.header__header-background {
+    width: 100%;
+    height: 200px;
+    background-color: #ccc;
+}
+
+.header__header-expand .header__header-image {
+	background-image: url(https://www.ndr.de/info/podcastbild104_v-podcast.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    width: 866px;
+    position: absolute;
+    left: 20px;
+    top: 5px;
+    height: 866px;
+	border-bottom: 39px solid #ffcc00;
+    /* transform: translate3d(-209px, -172px, 0);*/
+    transform-origin: 0 192px;
+    transition: transform 0.1s linear;
+    transform: translate3d(0px, -153px, 0) scale(0.13);
+}
+
+.header__header-expand {
+    height: 142px;
+}
+
+.header__header-expand .header__header-eye {
+    opacity: 0;
+}
+
+.header__header-interior {
+	background-color: #214683;
+	color: #FFF;
+	padding-bottom: 20px;
+    position: absolute;
+    height: 154px;
+    width: 100%;
+    z-index: 2;
+    overflow: hidden;
+    transition: transform 0.1s linear;
+    will-change: transform;
+    transform: translateY(-109px);
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.header__header-expand .header__header-interior {
+    transform: translateY(-0);
+    height: 134px;
+}
+
+.header__header h1 {
+    margin: 0;
+    font-size: 22px;
+    position: absolute;
+    font-family: 'NDRSansCondRegular', sans-serif;
+}
+
+.header__strange-bird-title {
+    transform: translate3d(10px, 116px, 0) scale(0.8);
+    transform-origin: top left;
+    transition: transform 0.1s linear;
+}
+
+.header__header-expand .header__strange-bird-title {
+    transform: translate3d(150px, 26px, 0);
+}
+
+.header__header p {
+    font-weight: 400;
+    position: absolute;
+    padding-left: 150px;
+    padding-right: 20px;
+    top: 50px;
+    opacity: 0;
+    will-change: opacity;
+    transition: opacity 0.1s linear;
+}
+
+.header__header-expand p {
+    opacity: 1;
+}
+
+.header__expanded-header {
+    /* height: 200px; */
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    padding-left: 39%;
+    padding-right: 3%;
+    padding-bottom: 3vh;
+    box-sizing: border-box;
+    /* display: none; */
+    opacity: 0;
+    transition: opacity 0.1s linear, height 2s linear;
+    /* height: 0; */
+    overflow: hidden;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.header__show-expanded-header {
+    opacity: 1;
+    /* height: auto; */
+}
+
+.header__expanded-title {
+    font-size: 5vh;
+    margin-top: 5vh;
+}
+.chat-bubble__bubble-container {
+    text-align: left;
+    margin-right: auto;
+}
+
+.chat-bubble__bubble {
+    background: #fff;
+    display: inline-block;
+    border-radius: 15px;
+    margin: 2px 10px;
+    overflow: hidden;
+    border: solid 0.5px #bdc1ca;
+    transition: border-radius 0.2s linear;
+    margin-left: 45px;
+    line-height: 1.4em;
+}
+
+.chat-window > div:nth-last-child(2) .chat-bubble__bubble-container:last-child .chat-bubble__bubble {
+    /* mess of global rule here, but it's the best I can do */
+    border-radius: 15px 15px 15px 0px;
+}
+.chat-bubble__chapter-indicator {
+    text-align: center;
+    font-size: 14px;
+    color: #767676;
+    position: relative;
+    margin: 0 15px 15px;
+}
+
+.chat-bubble__chapter-indicator-text {
+    background: #fff;
+    padding: 0 10px;
+    /* margin: 0 auto; */
+    display: inline;
+}
+
+.chat-bubble__chapter-indicator-line {
+    position: absolute;
+    width: 100%;
+    height: 0.5px;
+    background: #bdc1ca;
+    top: 50%;
+    z-index: -1;
+}
+
+.chat-bubble__bubble-touch {
+    background: #ccc;
+}
+
+.chat-bubble__bubble-text-padding {
+    padding: 10px 15px;
+}
+
+.chat-bubble__bubble-text {
+    display: inline;
+    font-size: 16px;
+}
+
+.chat-bubble__bubble-link {
+    display: flex;
+    text-decoration: none;
+    color: #000;
+    margin: 10px;
+}
+
+.chat-bubble__bubble-link-title {
+    font-size: 13px;
+    font-weight: bold;
+    display: block;
+    text-align: left;
+}
+
+.chat-bubble__bubble-link-domain {
+    font-size: 13px;
+    color: #bdbdbd;
+    display: block;
+    text-align: left;
+}
+
+.chat-bubble__bubble-link-image-container {
+    padding-left: 30px;
+}
+
+.chat-bubble__bubble-link-image {
+    display: block;
+    float: right;
+    height: 30px;
+    width: 30px;
+}
+
+.chat-bubble__bubble-full-width {
+    display: block;
+}
+
+.chat-bubble__bubble-image-container {
+    /* margin-bottom: 10px; */
+    background-color: #f0f0f0;
+    background-image: url('data:image/svg+xml;utf8,<svg width="338" height="252" viewBox="0 0 338 252" xmlns="http://www.w3.org/2000/svg"><title>Artboard</title><g fill-rule="nonzero" fill="%23D2D2D2"><path d="M30.303 18.667c-6.437 0-11.655 5.223-11.655 11.666v191.334c0 6.443 5.218 11.666 11.655 11.666h277.394c6.437 0 11.655-5.223 11.655-11.666V30.333c0-6.443-5.218-11.666-11.655-11.666H30.303zm0-18.667h277.394C324.433 0 338 13.58 338 30.333v191.334C338 238.419 324.433 252 307.697 252H30.303C13.567 252 0 238.42 0 221.667V30.333C0 13.581 13.567 0 30.303 0z"/><path d="M75 108c-18.778 0-34-14.998-34-33.5C41 55.998 56.222 41 75 41s34 14.998 34 33.5c0 18.502-15.222 33.5-34 33.5zm0-16.172c9.713 0 17.586-7.758 17.586-17.328S84.713 57.172 75 57.172c-9.713 0-17.586 7.758-17.586 17.328S65.287 91.828 75 91.828zm143.315-24.325c3.616-3.371 9.25-3.332 12.819.089l64.015 61.38a9.247 9.247 0 0 1 2.851 6.674v59.087c0 5.118-4.167 9.267-9.307 9.267H58.307c-5.14 0-9.307-4.149-9.307-9.267v-19.691a9.247 9.247 0 0 1 2.79-6.615l61.66-60.233a9.338 9.338 0 0 1 12.703-.312l25.065 22.183 67.097-62.562zm61.07 117.964v-45.88l-54.797-52.541-66.844 62.326a9.338 9.338 0 0 1-12.546.162l-24.915-22.05-52.668 51.448v6.535h211.77z"/></g></svg>');
+    background-size: 100px;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.chat-bubble__expanded-video {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.chat-bubble__link-container {
+    padding-right: 20px;
+    background-image: url('data:image/svg+xml;utf8,<svg width="46" height="80" viewBox="0 0 46 80" xmlns="http://www.w3.org/2000/svg"><title>link-arrow</title><path d="M8 8l28.453 31.858L8.14 71.89" stroke-width="12" stroke="%23000" fill="none" fill-rule="evenodd" stroke-linecap="round"/></svg>');
+    background-repeat: no-repeat;
+    background-size: 15px auto;
+    background-position: right center;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.pswp__caption a {
+    color: #fff;
+}
+/*! PhotoSwipe main CSS by Dmitry Semenov | photoswipe.com | MIT license */
+/*
+	Styles for basic PhotoSwipe functionality (sliding area, open/close transitions)
+*/
+/* pswp = photoswipe */
+.pswp {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  -ms-touch-action: none;
+  touch-action: none;
+  z-index: 1500;
+  -webkit-text-size-adjust: 100%;
+  /* create separate layer, to avoid paint on window.onscroll in webkit/blink */
+  -webkit-backface-visibility: hidden;
+  outline: none; }
+  .pswp * {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
+  .pswp img {
+    max-width: none; }
+
+/* style is added when JS option showHideOpacity is set to true */
+.pswp--animate_opacity {
+  /* 0.001, because opacity:0 doesn't trigger Paint action, which causes lag at start of transition */
+  opacity: 0.001;
+  will-change: opacity;
+  /* for open/close transition */
+  -webkit-transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1);
+          transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }
+
+.pswp--open {
+  display: block; }
+
+.pswp--zoom-allowed .pswp__img {
+  /* autoprefixer: off */
+  cursor: -webkit-zoom-in;
+  cursor: -moz-zoom-in;
+  cursor: zoom-in; }
+
+.pswp--zoomed-in .pswp__img {
+  /* autoprefixer: off */
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: grab; }
+
+.pswp--dragging .pswp__img {
+  /* autoprefixer: off */
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  cursor: grabbing; }
+
+/*
+	Background is added as a separate element.
+	As animating opacity is much faster than animating rgba() background-color.
+*/
+.pswp__bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  will-change: opacity; }
+
+.pswp__scroll-wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; }
+
+.pswp__container,
+.pswp__zoom-wrap {
+  -ms-touch-action: none;
+  touch-action: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0; }
+
+/* Prevent selection and tap highlights */
+.pswp__container,
+.pswp__img {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+      user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none; }
+
+.pswp__zoom-wrap {
+  position: absolute;
+  width: 100%;
+  -webkit-transform-origin: left top;
+  -ms-transform-origin: left top;
+  transform-origin: left top;
+  /* for open/close transition */
+  -webkit-transition: -webkit-transform 333ms cubic-bezier(0.4, 0, 0.22, 1);
+          transition: transform 333ms cubic-bezier(0.4, 0, 0.22, 1); }
+
+.pswp__bg {
+  will-change: opacity;
+  /* for open/close transition */
+  -webkit-transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1);
+          transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }
+
+.pswp--animated-in .pswp__bg,
+.pswp--animated-in .pswp__zoom-wrap {
+  -webkit-transition: none;
+  transition: none; }
+
+.pswp__container,
+.pswp__zoom-wrap {
+  -webkit-backface-visibility: hidden; }
+
+.pswp__item {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden; }
+
+.pswp__img {
+  position: absolute;
+  width: auto;
+  height: auto;
+  top: 0;
+  left: 0; }
+
+/*
+	stretched thumbnail or div placeholder element (see below)
+	style is added to avoid flickering in webkit/blink when layers overlap
+*/
+.pswp__img--placeholder {
+  -webkit-backface-visibility: hidden; }
+
+/*
+	div element that matches size of large image
+	large image loads on top of it
+*/
+.pswp__img--placeholder--blank {
+  background: #222; }
+
+.pswp--ie .pswp__img {
+  width: 100% !important;
+  height: auto !important;
+  left: 0;
+  top: 0; }
+
+/*
+	Error message appears when image is not loaded
+	(JS option errorMsg controls markup)
+*/
+.pswp__error-msg {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  line-height: 16px;
+  margin-top: -8px;
+  color: #CCC; }
+
+.pswp__error-msg a {
+  color: #CCC;
+  text-decoration: underline; }
+/*! PhotoSwipe Default UI CSS by Dmitry Semenov | photoswipe.com | MIT license */
+/*
+
+	Contents:
+
+	1. Buttons
+	2. Share modal and links
+	3. Index indicator ("1 of X" counter)
+	4. Caption
+	5. Loading indicator
+	6. Additional styles (root element, top bar, idle state, hidden state, etc.)
+
+*/
+/*
+	
+	1. Buttons
+
+ */
+/* <button> css reset */
+.pswp__button {
+  width: 44px;
+  height: 44px;
+  position: relative;
+  background: none;
+  cursor: pointer;
+  overflow: visible;
+  -webkit-appearance: none;
+  display: block;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  float: right;
+  opacity: 0.75;
+  -webkit-transition: opacity 0.2s;
+          transition: opacity 0.2s;
+  -webkit-box-shadow: none;
+          box-shadow: none; }
+  .pswp__button:focus, .pswp__button:hover {
+    opacity: 1; }
+  .pswp__button:active {
+    outline: none;
+    opacity: 0.9; }
+  .pswp__button::-moz-focus-inner {
+    padding: 0;
+    border: 0; }
+
+/* pswp__ui--over-close class it added when mouse is over element that should close gallery */
+.pswp__ui--over-close .pswp__button--close {
+  opacity: 1; }
+
+.pswp__button,
+.pswp__button--arrow--left:before,
+.pswp__button--arrow--right:before {
+  background: url(e3f799c6dec9af194c86decdf7392405.png) 0 0 no-repeat;
+  background-size: 264px 88px;
+  width: 44px;
+  height: 44px; }
+
+@media (-webkit-min-device-pixel-ratio: 1.1), (-webkit-min-device-pixel-ratio: 1.09375), (min-resolution: 105dpi), (min-resolution: 1.1dppx) {
+  /* Serve SVG sprite if browser supports SVG and resolution is more than 105dpi */
+  .pswp--svg .pswp__button,
+  .pswp--svg .pswp__button--arrow--left:before,
+  .pswp--svg .pswp__button--arrow--right:before {
+    background-image: url(b257fa9c5ac8c515ac4d77a667ce2943.svg); }
+  .pswp--svg .pswp__button--arrow--left,
+  .pswp--svg .pswp__button--arrow--right {
+    background: none; } }
+
+.pswp__button--close {
+  background-position: 0 -44px; }
+
+.pswp__button--share {
+  background-position: -44px -44px; }
+
+.pswp__button--fs {
+  display: none; }
+
+.pswp--supports-fs .pswp__button--fs {
+  display: block; }
+
+.pswp--fs .pswp__button--fs {
+  background-position: -44px 0; }
+
+.pswp__button--zoom {
+  display: none;
+  background-position: -88px 0; }
+
+.pswp--zoom-allowed .pswp__button--zoom {
+  display: block; }
+
+.pswp--zoomed-in .pswp__button--zoom {
+  background-position: -132px 0; }
+
+/* no arrows on touch screens */
+.pswp--touch .pswp__button--arrow--left,
+.pswp--touch .pswp__button--arrow--right {
+  visibility: hidden; }
+
+/*
+	Arrow buttons hit area
+	(icon is added to :before pseudo-element)
+*/
+.pswp__button--arrow--left,
+.pswp__button--arrow--right {
+  background: none;
+  top: 50%;
+  margin-top: -50px;
+  width: 70px;
+  height: 100px;
+  position: absolute; }
+
+.pswp__button--arrow--left {
+  left: 0; }
+
+.pswp__button--arrow--right {
+  right: 0; }
+
+.pswp__button--arrow--left:before,
+.pswp__button--arrow--right:before {
+  content: '';
+  top: 35px;
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 30px;
+  width: 32px;
+  position: absolute; }
+
+.pswp__button--arrow--left:before {
+  left: 6px;
+  background-position: -138px -44px; }
+
+.pswp__button--arrow--right:before {
+  right: 6px;
+  background-position: -94px -44px; }
+
+/*
+
+	2. Share modal/popup and links
+
+ */
+.pswp__counter,
+.pswp__share-modal {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+      user-select: none; }
+
+.pswp__share-modal {
+  display: block;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  position: absolute;
+  z-index: 1600;
+  opacity: 0;
+  -webkit-transition: opacity 0.25s ease-out;
+          transition: opacity 0.25s ease-out;
+  -webkit-backface-visibility: hidden;
+  will-change: opacity; }
+
+.pswp__share-modal--hidden {
+  display: none; }
+
+.pswp__share-tooltip {
+  z-index: 1620;
+  position: absolute;
+  background: #FFF;
+  top: 56px;
+  border-radius: 2px;
+  display: block;
+  width: auto;
+  right: 44px;
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  -webkit-transform: translateY(6px);
+      -ms-transform: translateY(6px);
+          transform: translateY(6px);
+  -webkit-transition: -webkit-transform 0.25s;
+          transition: transform 0.25s;
+  -webkit-backface-visibility: hidden;
+  will-change: transform; }
+  .pswp__share-tooltip a {
+    display: block;
+    padding: 8px 12px;
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 18px; }
+    .pswp__share-tooltip a:hover {
+      text-decoration: none;
+      color: #000; }
+    .pswp__share-tooltip a:first-child {
+      /* round corners on the first/last list item */
+      border-radius: 2px 2px 0 0; }
+    .pswp__share-tooltip a:last-child {
+      border-radius: 0 0 2px 2px; }
+
+.pswp__share-modal--fade-in {
+  opacity: 1; }
+  .pswp__share-modal--fade-in .pswp__share-tooltip {
+    -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+            transform: translateY(0); }
+
+/* increase size of share links on touch devices */
+.pswp--touch .pswp__share-tooltip a {
+  padding: 16px 12px; }
+
+a.pswp__share--facebook:before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: -12px;
+  right: 15px;
+  border: 6px solid transparent;
+  border-bottom-color: #FFF;
+  -webkit-pointer-events: none;
+  -moz-pointer-events: none;
+  pointer-events: none; }
+
+a.pswp__share--facebook:hover {
+  background: #3E5C9A;
+  color: #FFF; }
+  a.pswp__share--facebook:hover:before {
+    border-bottom-color: #3E5C9A; }
+
+a.pswp__share--twitter:hover {
+  background: #55ACEE;
+  color: #FFF; }
+
+a.pswp__share--pinterest:hover {
+  background: #CCC;
+  color: #CE272D; }
+
+a.pswp__share--download:hover {
+  background: #DDD; }
+
+/*
+
+	3. Index indicator ("1 of X" counter)
+
+ */
+.pswp__counter {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 44px;
+  font-size: 13px;
+  line-height: 44px;
+  color: #FFF;
+  opacity: 0.75;
+  padding: 0 10px; }
+
+/*
+	
+	4. Caption
+
+ */
+.pswp__caption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  min-height: 44px; }
+  .pswp__caption small {
+    font-size: 11px;
+    color: #BBB; }
+
+.pswp__caption__center {
+  text-align: left;
+  max-width: 420px;
+  margin: 0 auto;
+  font-size: 13px;
+  padding: 10px;
+  line-height: 20px;
+  color: #CCC; }
+
+.pswp__caption--empty {
+  display: none; }
+
+/* Fake caption element, used to calculate height of next/prev image */
+.pswp__caption--fake {
+  visibility: hidden; }
+
+/*
+
+	5. Loading indicator (preloader)
+
+	You can play with it here - http://codepen.io/dimsemenov/pen/yyBWoR
+
+ */
+.pswp__preloader {
+  width: 44px;
+  height: 44px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -22px;
+  opacity: 0;
+  -webkit-transition: opacity 0.25s ease-out;
+          transition: opacity 0.25s ease-out;
+  will-change: opacity;
+  direction: ltr; }
+
+.pswp__preloader__icn {
+  width: 20px;
+  height: 20px;
+  margin: 12px; }
+
+.pswp__preloader--active {
+  opacity: 1; }
+  .pswp__preloader--active .pswp__preloader__icn {
+    /* We use .gif in browsers that don't support CSS animation */
+    background: url(e34aafbb485a96eaf2a789b2bf3af6fe.gif) 0 0 no-repeat; }
+
+.pswp--css_animation .pswp__preloader--active {
+  opacity: 1; }
+  .pswp--css_animation .pswp__preloader--active .pswp__preloader__icn {
+    -webkit-animation: clockwise 500ms linear infinite;
+            animation: clockwise 500ms linear infinite; }
+  .pswp--css_animation .pswp__preloader--active .pswp__preloader__donut {
+    -webkit-animation: donut-rotate 1000ms cubic-bezier(0.4, 0, 0.22, 1) infinite;
+            animation: donut-rotate 1000ms cubic-bezier(0.4, 0, 0.22, 1) infinite; }
+
+.pswp--css_animation .pswp__preloader__icn {
+  background: none;
+  opacity: 0.75;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  margin: 0; }
+
+.pswp--css_animation .pswp__preloader__cut {
+  /* 
+			The idea of animating inner circle is based on Polymer ("material") loading indicator 
+			 by Keanu Lee https://blog.keanulee.com/2014/10/20/the-tale-of-three-spinners.html
+		*/
+  position: relative;
+  width: 7px;
+  height: 14px;
+  overflow: hidden; }
+
+.pswp--css_animation .pswp__preloader__donut {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #FFF;
+  border-radius: 50%;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: none;
+  margin: 0; }
+
+@media screen and (max-width: 1024px) {
+  .pswp__preloader {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin: 0;
+    float: right; } }
+
+@-webkit-keyframes clockwise {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes clockwise {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@-webkit-keyframes donut-rotate {
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0); }
+  50% {
+    -webkit-transform: rotate(-140deg);
+            transform: rotate(-140deg); }
+  100% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0); } }
+
+@keyframes donut-rotate {
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0); }
+  50% {
+    -webkit-transform: rotate(-140deg);
+            transform: rotate(-140deg); }
+  100% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0); } }
+
+/*
+	
+	6. Additional styles
+
+ */
+/* root element of UI */
+.pswp__ui {
+  -webkit-font-smoothing: auto;
+  visibility: visible;
+  opacity: 1;
+  z-index: 1550; }
+
+/* top black bar with buttons and "1 of X" indicator */
+.pswp__top-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 44px;
+  width: 100%; }
+
+.pswp__caption,
+.pswp__top-bar,
+.pswp--has_mouse .pswp__button--arrow--left,
+.pswp--has_mouse .pswp__button--arrow--right {
+  -webkit-backface-visibility: hidden;
+  will-change: opacity;
+  -webkit-transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1);
+          transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }
+
+/* pswp--has_mouse class is added only when two subsequent mousemove events occur */
+.pswp--has_mouse .pswp__button--arrow--left,
+.pswp--has_mouse .pswp__button--arrow--right {
+  visibility: visible; }
+
+.pswp__top-bar,
+.pswp__caption {
+  background-color: rgba(0, 0, 0, 0.5); }
+
+/* pswp__ui--fit class is added when main image "fits" between top bar and bottom bar (caption) */
+.pswp__ui--fit .pswp__top-bar,
+.pswp__ui--fit .pswp__caption {
+  background-color: rgba(0, 0, 0, 0.3); }
+
+/* pswp__ui--idle class is added when mouse isn't moving for several seconds (JS option timeToIdle) */
+.pswp__ui--idle .pswp__top-bar {
+  opacity: 0; }
+
+.pswp__ui--idle .pswp__button--arrow--left,
+.pswp__ui--idle .pswp__button--arrow--right {
+  opacity: 0; }
+
+/*
+	pswp__ui--hidden class is added when controls are hidden
+	e.g. when user taps to toggle visibility of controls
+*/
+.pswp__ui--hidden .pswp__top-bar,
+.pswp__ui--hidden .pswp__caption,
+.pswp__ui--hidden .pswp__button--arrow--left,
+.pswp__ui--hidden .pswp__button--arrow--right {
+  /* Force paint & create composition layer for controls. */
+  opacity: 0.001; }
+
+/* pswp__ui--one-slide class is added when there is just one item in gallery */
+.pswp__ui--one-slide .pswp__button--arrow--left,
+.pswp__ui--one-slide .pswp__button--arrow--right,
+.pswp__ui--one-slide .pswp__counter {
+  display: none; }
+
+.pswp__element--disabled {
+  display: none !important; }
+
+.pswp--minimal--dark .pswp__top-bar {
+  background: none; }
+@keyframes contact-box__back-fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.contact-box__contact-box-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 4;
+    animation-name: contact-box__back-fade;
+    animation-duration: 0.2s;
+}
+
+.contact-box__contact-box {
+    background: #fff;
+    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    padding: 20px;
+    box-sizing: border-box;
+    transform: translateY(-50%);
+    z-index: 5;
+}
+
+.contact-box__contact-box h3 {
+    margin: 0;
+    margin: 1em 0;
+}
+
+.contact-box__contact-box p {
+    line-height: 1.3em;
+    margin: 1.5em 0;
+}
+
+.contact-box__contact-box ul,
+.contact-box__contact-box li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.contact-box__contact-box a {
+    border-radius: 15px;
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #f5b227;
+    color: #fff;
+    border: none;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-decoration: none;
+    text-align: center;
+    margin: 10px 0;
+}
+.side-menu__side-menu-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    transition: background 0.2s linear;
+    z-index: 10;
+}
+
+.side-menu__opened-container {
+    background: rgba(0, 0, 0, 0.7);
+    pointer-events: auto;
+}
+
+.side-menu__side-menu {
+    position: absolute;
+    height: 100%;
+    width: 80%;
+    background: #f5f2f0;
+    right: 0;
+    top: 0;
+    transform: translate3d(100%, 0, 0);
+    transition: transform 0.2s linear;
+    z-index: 3;
+    box-sizing: border-box;
+}
+
+.side-menu__scroller {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+}
+
+.side-menu__top-wing {
+}
+
+.side-menu__opened-container .side-menu__side-menu {
+    transform: translate3d(0, 0, 0);
+}
+
+.side-menu__opener-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: block;
+    pointer-events: auto;
+    z-index: 3;
+    background: transparent;
+    background-image: url('data:image/svg+xml;utf8,<svg width="70" height="48" viewBox="0 0 70 48" xmlns="http://www.w3.org/2000/svg"><title>menu-button</title><g fill="%23000" fill-rule="evenodd"><path d="M0 0h72v8H0zM0 20h72v8H0zM0 40h72v8H0z"/></g></svg>');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border: none;
+    width: 25px;
+    height: 25px;
+    font-size: 1px;
+    overflow: hidden;
+    text-indent: -1000px;
+	font-family: "NDRSansCondRegular";
+}
+
+.side-menu__strangebird-header {
+    font-size: 29px;
+    margin: 0;
+    max-width: 100%;
+}
+
+.side-menu__closer-button {
+    background-image: url('data:image/svg+xml;utf8,<svg width="55" height="53" viewBox="0 0 55 53" xmlns="http://www.w3.org/2000/svg"><title>close-button</title><g stroke="%23000" stroke-width="4" fill="none" fill-rule="evenodd" stroke-linecap="round"><path d="M50 4L4.9 49.1M4 4l45.1 45.1"/></g></svg>');
+}
+
+.side-menu__side-menu h4 {
+    font-weight: bold;
+    margin: 0;
+    margin: 32px 0 10px;
+    color: #333333;
+    letter-spacing: 0.2px;
+}
+
+.side-menu__side-menu p {
+    line-height: 1.3em;
+    font-size: 14px;
+    margin-top: 0;
+}
+
+.side-menu__episode-list {
+    margin: 0;
+    padding: 0;
+}
+
+.side-menu__episode-entry {
+    list-style: none;
+    background: #fff;
+    border-radius: 15px;
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 14px;
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.side-menu__episodeEntryWithArrow {
+    background-image: url('data:image/svg+xml;utf8,<svg width="23" height="45" viewBox="0 0 23 45" xmlns="http://www.w3.org/2000/svg"><title>right-arrow</title><path d="M3 41.353l16.74-19.176L3 3" stroke-width="4" stroke="%23F5B227" fill="none" fill-rule="evenodd" stroke-linecap="round"/></svg>');
+    background-size: auto 60%;
+    background-position: 96% center;
+    background-repeat: no-repeat;
+    padding-right: 10%;
+}
+
+.side-menu__episode-entry span {
+    display: block;
+}
+
+.side-menu__episode-name {
+}
+
+.side-menu__episode-status {
+    color: #767676;
+    flex-grow: 1;
+    text-align: right;
+}
+
+.side-menu__subscribe-button {
+    border-radius: 15px;
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #ccc;
+    color: #fff;
+    border: none;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    text-decoration: none;
+	font-family: "NDRSansCondRegular";
+}
+
+.side-menu__subscribe-button:disabled {
+    background: #ccc;
+	font-family: "NDRSansCondRegular";
+}
+
+.side-menu__the-team {
+    background: #fff;
+    border-radius: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.side-menu__the-team li {
+    display: flex;
+    padding: 10px;
+    border-bottom: solid 1px #ccc;
+}
+
+.side-menu__the-team li:last-child {
+    border-bottom: none;
+}
+
+.side-menu__the-team img {
+    display: block;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.side-menu__the-team em {
+    color: #848484;
+    font-style: normal;
+}
+
+.side-menu__the-team p {
+    margin: 0.5em 0;
+    margin-left: 10px;
+}
+
+.side-menu__contact-us {
+    color: #848484;
+    padding: 30px 0;
+}
+
+.side-menu__contact-us a {
+    color: #848484;
+}
+.start-button__start-button-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+    /* total hack but it covers up the top of the slider control */
+    margin-top: -5px;
+    padding-top: 5px;
+    will-change: opacity, transform;
+	font-family: "NDRSansCondRegular";
+}
+
+.start-button__hidden {
+    opacity: 0;
+    transform: translateY(100%);
+    pointer-events: none;
+    transition: transform 0.2s linear, opacity 0.2s linear;
+	font-family: "NDRSansCondRegular";
+}
+
+.start-button__start-button-container button {
+    display: block;
+    border: none;
+    padding: 10px 30px;
+    background: transparent;
+    color: #0c1754;
+    width: 90%;
+    /* margin: 0 auto; */
+    font-size: 15px;
+	font-family: "NDRSansCondRegular";
+}
+
+.start-button__start-button-container button.start-button__highlighted-button {
+	font-weight: bold;
+	font-size: 16px;
+	background-color: #cddce9;
+	border-radius: 4px;
+	font-family: "NDRSansCondRegular";
+	color: #0c1754;
+	line-height: 1em;
+	border: 1px solid #aabed2;
+}
+.progress-slider__progress-slider {
+    margin: 0 10px;
+    position: relative;
+    height: 6px;
+    background: #eee;
+}
+
+.progress-slider__progress-slider-touch-target {
+    position: absolute;
+    background: rgba(0, 0, 0, 0);
+    height: 200%;
+    width: 100%;
+    transform: translateY(-50%);
+    top: 50%;
+    /* Add this so it goes to the edges of the screen */
+    left: -10px;
+    padding: 0 10px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.progress-slider__so-far-bar {
+    background: #ddd;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    will-change: transform;
+    transform-origin: 0;
+}
+
+.progress-slider__current-position {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    left: 0px;
+    background: #0c327d;
+    transition: transform 0.1s linear, opacity 0.1s linear;
+}
+
+.progress-slider__current-position-wrapper {
+    margin-left: -10px;
+    margin-top: -14px;
+    padding: 10px;
+    position: absolute;
+    border-radius: 50%;
+    top: 0;
+    will-change: transform;
+}
+
+.progress-slider__picked-up-wrapper .progress-slider__current-position {
+    transform: scale(1.5);
+    opacity: 0.5;
+}
+
+.progress-slider__chapter-mark {
+    height: 6px;
+    width: 6px;
+    margin-top: 0px;
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+}
+.bottom-info__bottom-info {
+    background: #bbb;
+    padding: 15px;
+    color: #fff;
+    /* transform: translateY(-100%); */
+}
+
+/* we may want to give this div a class */
+.bottom-info__bottom-info > div {
+    text-align: center;
+}
+
+.bottom-info__bottom-info h3 {
+    margin: 0;
+}
+
+.bottom-info__description {
+    font-size: 16px;
+    line-height: 1.3em;
+}
+
+.bottom-info__subtitle {
+    color: #eee;
+    font-size: 16px;
+    margin: 0.5em 0 1em;
+}
+
+.bottom-info__bottom-info button {
+    color: #bbb;
+    background: #fff;
+    border: none;
+    padding: 7px 10px;
+    border-radius: 14px;
+    padding-left: 30px;
+    position: relative;
+    margin: 0 3px;
+    overflow: hidden;
+    font-size: 14px;
+}
+
+.bottom-info__bottom-info-button-text {
+    position: relative;
+    z-index: 2;
+	font-family: "NDRSansCondRegular";
+}
+
+.bottom-info__download-bar {
+    background: #fad893;
+}
+
+button.bottom-info__with-checkbox {
+    padding-left: 30px;
+    position: relative;
+	font-family: "NDRSansCondRegular";
+}
+
+.bottom-info__checkbox {
+    /* background-color: red; */
+    background-image: url('data:image/svg+xml;utf8,<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><title>tick_off</title><rect width="42" height="42" rx="5" fill="%23000" fill-rule="evenodd"/></svg>');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    left: 10px;
+    /* background: red; */
+    /* line-height: 1em; */
+    /* margin-right: 5px; */
+    /* margin-top: 1px; */
+    /* margin-top: 2px; */
+}
+
+.bottom-info__checkbox-ticked {
+    background-image: url('data:image/svg+xml;utf8,<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>tick_on</title><defs><path d="M37.33 0C39.9 0 42 2.1 42 4.67v32.66C42 39.9 39.9 42 37.33 42H4.67C2.1 42 0 39.9 0 37.33V4.67C0 2.1 2.1 0 4.67 0h32.66zm-21 32.67l21-20.2-3.26-3.14-17.74 17.05-8.4-8.07-3.26 3.14 11.66 11.22z" id="a"/></defs><g fill="none" fill-rule="evenodd"><path fill="%23FFF" d="M3 5h36v29H3z"/><mask id="b" fill="%23fff"><use xlink:href="%23a"/></mask><path fill="%23000" mask="url(%23b)" d="M-10 52h62v-62h-62z"/></g></svg>');
+}
+
+.bottom-info__share {
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg width="44" height="39" viewBox="0 0 44 39" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>share_button</title><defs><path id="a" d="M.67 14.78l30 4.22-30 4.22L.69 38l41.98-19L.69 0z"/></defs><g fill="none" fill-rule="evenodd"><mask id="b" fill="%23fff"><use xlink:href="%23a"/></mask><path fill="%23000" mask="url(%23b)" d="M-9.33 48h62v-58h-62z"/></g></svg>');
+    display: block;
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    left: 10px;
+}
+
+.bottom-info__download-bar {
+    /* position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; */
+    /* z-index: -1; */
+}
+.notification-permission-box__button-box {
+    text-align: right;
+}
+
+.notification-permission-box__button-box button {
+    color: #f5b227;
+    border: none;
+    background: transparent;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/*# sourceMappingURL=styles.css.map*/
