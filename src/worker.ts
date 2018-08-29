@@ -11,9 +11,7 @@ import {
     unsubscribeFromTopic,
     getSubscribedTopics,
     SubscribeOptions,
-    UnsubscribeOptions,
-    sendMessage,
-    SendMessageOptions
+    UnsubscribeOptions
 
 } from "pushkin-client";
 import { cacheCheckSplit } from "./io/cache-split";
@@ -216,8 +214,4 @@ CommandListener.bind("push-unsubscribe", (opts: UnsubscribeOptions) => {
     return unsubscribeFromTopic(opts);
 });
 
-CommandListener.bind("send-message", (opts: SendMessageOptions) => {
-    console.log('is it called? yes it is')
-    return sendMessage(opts);
-});
 

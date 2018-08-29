@@ -1,5 +1,5 @@
 import { runServiceWorkerCommand } from "service-worker-command-bridge";
-import { UnsubscribeOptions, SubscribeOptions, sendMessage } from "pushkin-client";
+import { UnsubscribeOptions, SubscribeOptions } from "pushkin-client";
 export const PushSupported = "PushManager" in self;
 
 export async function checkIfSubscribed(topicName: string) {
@@ -35,36 +35,36 @@ export async function subscribe(topicName: string) {
         }
     });
 }
-
-export async function message(topicName: string, message: string) {
-    console.log('this is called bingo');
-    await runServiceWorkerCommand<SubscribeOptions, any>("send-message", {
-        topic: topicName,
-        confirmationPayload: {
-            __workerCommandPayload: {
-                command: "notification.show",
-                options: {
-                    title: "You are subscribed",
-                    body: message,
-                    events: {
-                        onclick: [
-                            {
-                                command: "client.focus"
-                            },
-                            {
-                                command: "notification.close"
-                            }
-                        ]
-                    }
-                }
-            }
-        },
-        confirmationIOS: {
-            title: "__",
-            body: "__"
-        }
-    });
-}
+//
+// export async function message(topicName: string, message: string) {
+//     console.log('this is called bingo');
+//     await runServiceWorkerCommand<SubscribeOptions, any>("send-message", {
+//         topic: topicName,
+//         confirmationPayload: {
+//             __workerCommandPayload: {
+//                 command: "notification.show",
+//                 options: {
+//                     title: "You are subscribed",
+//                     body: message,
+//                     events: {
+//                         onclick: [
+//                             {
+//                                 command: "client.focus"
+//                             },
+//                             {
+//                                 command: "notification.close"
+//                             }
+//                         ]
+//                     }
+//                 }
+//             }
+//         },
+//         confirmationIOS: {
+//             title: "__",
+//             body: "__"
+//         }
+//     });
+// }
 
 // This is how a message can be send: *malte
 // message('mona_podcast', 'Es ist so fucking einfach!!! Und das ist geil!')

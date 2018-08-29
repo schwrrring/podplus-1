@@ -51,7 +51,7 @@ export class BubbleGroup extends React.Component<BubbleGroupProperties, BubbleGr
         }
 
         if (this.props.notification) {
-            sendEvent("Web browser", "Shows", this.props.notification.body);
+            sendEvent("Web browser", "Shows", this.props.notification.body as string);
         }
 
         if (
