@@ -1,4 +1,7 @@
 # Podmod
+An adaptation of a guardian Experiment (original description underneath). The experiment at hand adds functionalities that allow the user to send messages back to the newsroom as well as answering polls and questionairs. The state of the code is very experimental, hence it isnt supposed to be used in production and needs lots of refactoring. For more information see...
+
+# original Guardian Description 
 
 An "augmented" podcast player by the Guardian Mobile Innovation Lab. Delivers links and images to listeners at various marked points during playback.
 
