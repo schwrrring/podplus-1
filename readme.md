@@ -1,5 +1,5 @@
 # Podmod
-An adaptation of a guardian Experiment (original description underneath). The experiment at hand adds functionalities that allows the user to send messages back to the news room as well as answering polls and questionairs. The state of the code is very experimental hence it isnt supposed to be used in production and needs lots of refactoring. For more information see...
+An adaptation of a guardian Experiment (original description underneath). The experiment at hand adds functionalities that allow the user to send messages back to the newsroom as well as answering polls and questionairs. The state of the code is very experimental, hence it isnt supposed to be used in production and needs lots of refactoring. For more information see...
 
 # original Guardian Description 
 
