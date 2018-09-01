@@ -49,6 +49,10 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
         this.setUpDatabase()
     }
 
+    hideControls(){
+
+    }
+
     showInputSendButtons(event){
         let value = event.target.value;
         if(value.length!=0){

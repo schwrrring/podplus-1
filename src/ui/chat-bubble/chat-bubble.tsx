@@ -68,6 +68,7 @@ export interface ChatBubbleProperties {
     notificationOnlyText?: string;
     poll?: ChatBubblePollInt;
     onResize?: ()=> void;
+    pausePlayer?: () => void;
 }
 
 interface ChatBubbleState {

@@ -17,6 +17,8 @@ interface ChatWindowProps {
     elements?: JSX.Element[];
     currentTime: number;
     playDings: boolean;
+    playStateChange: () => void
+
 }
 
 function easeOutBack(t: number, b: number, c: number, d: number, s: number = 0) {

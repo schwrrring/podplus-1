@@ -244,6 +244,8 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
                     elements={this.state.scriptElements}
                     ref={el => (this.chatWindow = el)}
                     playDings={this.state.playback ? !this.state.playback.manuallyScrubbed : true}
+                    playStateChange = { this.playStateChange }
+
                 />
                 <BottomSlider
                     className={styles.controls}
@@ -516,7 +518,7 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
         console.info(e, e.target.buffered.start(0), e.target.buffered.end(0));
     }
 
-    playStateChange(e) {
+    playStateChange() {
         this.setState({
             playState: this.audioElement.paused ? PlayState.Paused : PlayState.Playing
         });
