@@ -1,5 +1,5 @@
 import * as styles from "./frame.css";
-import { ChatWindow } from "../chat-window/chat-window";
+import {ChatWindow} from "../chat-window/chat-window";
 import * as React from "react";
 import {runServiceWorkerCommand, ServiceWorkerNotSupportedError} from "service-worker-command-bridge";
 import {CacheSyncRequest, CacheSyncResponse} from "../../interfaces/cache-sync-request";
@@ -50,6 +50,7 @@ interface PlayerState {
     buffering: boolean;
     showContactWindow?: string;
     notificationPermission?: "granted" | "denied" | "default";
+    hideControls?: boolean;
 }
 
 interface PlayerProps {
@@ -67,13 +68,25 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
             bottomSliderExpanded: false,
             showNotifications: false,
             downloadOffline: false,
-            buffering: false
+            buffering: false,
+            hideControls: false
         };
         this.timeUpdate = this.timeUpdate.bind(this);
         this.playStateChange = this.playStateChange.bind(this);
         this.audioProgress = this.audioProgress.bind(this);
         this.toggleContactWindow = this.toggleContactWindow.bind(this);
+        this.toggleControls = this.toggleControls.bind(this);
         this.audioError = this.audioError.bind(this);
+        (window as any).toggleControls = () => {
+            this.toggleControls()
+        };
+    }
+
+    toggleControls() {
+        console.log('toggle Controls is called');
+        this.setState(prevState => ({
+            hideControls: !prevState.hideControls
+        }))
     }
 
     async loadData() {
@@ -203,24 +216,24 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
                     onTimeUpdate={this.timeUpdate}
                     onPlay={this.playStateChange}
                     onPause={this.playStateChange}
-                    onWaiting={() => this.setState({ buffering: true })}
+                    onWaiting={() => this.setState({buffering: true})}
                     // onPlaying={() => this.setState({ buffering: false })}
                     onError={this.audioError}
                     onAbort={() => console.warn("abort!")}
                     // onEnded={() => console.warn("ended!")}
                     // onStalled={() => console.warn("stalled!")}
-                    onLoadStart={() => this.setState({ buffering: true })}
-                    onCanPlayThrough={() => this.setState({ buffering: false })}
+                    onLoadStart={() => this.setState({buffering: true})}
+                    onCanPlayThrough={() => this.setState({buffering: false})}
                     title={this.state.currentChapterName}
-                    style={{ position: "absolute", zIndex: 100 }}
+                    style={{position: "absolute", zIndex: 100}}
                     ref={el => (this.audioElement = el as HTMLAudioElement)}
                 >
-                    <source src={this.state.script.audioFile} />
+                    <source src={this.state.script.audioFile}/>
                 </audio>
             );
 
             dingElement = (
-                <Ding audioURL={this.state.script.dingFile} getMainAudioElement={() => this.audioElement} />
+                <Ding audioURL={this.state.script.dingFile} getMainAudioElement={() => this.audioElement}/>
             );
 
             chapterMarks = this.state.script.chapters.map(c => c.time);
@@ -244,15 +257,16 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
                     elements={this.state.scriptElements}
                     ref={el => (this.chatWindow = el)}
                     playDings={this.state.playback ? !this.state.playback.manuallyScrubbed : true}
-                    playStateChange = { this.playStateChange }
+                    playStateChange={this.playStateChange}
 
                 />
+                {!this.state.hideControls &&
                 <BottomSlider
                     className={styles.controls}
                     bottomElement={
                         <BottomInfo
                             offlineDownloadEnabled={this.state.downloadOffline}
-                            offlineDownloadChange={newValue => this.setState({ downloadOffline: newValue })}
+                            offlineDownloadChange={newValue => this.setState({downloadOffline: newValue})}
                             script={this.state.script}
                             alertsEnabled={this.state.showNotifications}
                             onAlertChange={newSetting => this.setNotificationSetting(newSetting)}
@@ -319,6 +333,7 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
                         }}
                     />
                 </BottomSlider>
+                }
                 {contactBox}
                 <SideMenu
                     script={this.state.script}
@@ -451,7 +466,7 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
             return;
         }
 
-        let notificationPermission = await (navigator as any).permissions.query({ name: "notifications" });
+        let notificationPermission = await (navigator as any).permissions.query({name: "notifications"});
         console.info("PERMISSIONS: existing notification permission is", notificationPermission.state);
         this.setState({
             notificationPermission: notificationPermission.state
@@ -561,7 +576,7 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
             title: this.state.currentChapterName,
             artist: "The Guardian",
             album: this.state.script.metadata.title,
-            artwork: [{ src: this.state.script.metadata.artwork, sizes: "3001x3001", type: "image/jpg" }]
+            artwork: [{src: this.state.script.metadata.artwork, sizes: "3001x3001", type: "image/jpg"}]
         });
     }
 }
