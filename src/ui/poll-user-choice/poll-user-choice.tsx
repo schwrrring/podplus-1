@@ -4,6 +4,7 @@ import {Component} from "react";
 import {ChatBubbleImage, ChatBubbleLink, ChatBubbleProperties} from "../chat-bubble/chat-bubble";
 import {Chapter} from "../../interfaces/script";
 import {createCounter, db, getCount, incrementCounter} from "../../bridge/database";
+import {FrameFunctions} from "../frame/frame";
 
 interface ChatBubblePollProperties {
     question: string;
@@ -12,6 +13,8 @@ interface ChatBubblePollProperties {
     pollID: string;
     showResults: boolean;
     onResize: ()=> void;
+    frameFunctions?: FrameFunctions;
+    projectId?: string;
 
 }
 

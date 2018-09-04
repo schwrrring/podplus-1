@@ -1,7 +1,7 @@
 import * as firebase from 'firebase'
 import firestore from 'firebase/firebase-firestore'
 
-interface FirebaseConfig{
+interface FirebaseConfig {
     apiKey: string,
     authDomain: string,
     databaseURL: string,
@@ -11,7 +11,8 @@ interface FirebaseConfig{
 
 
 }
-var config: FirebaseConfig  = {
+
+var config: FirebaseConfig = {
 
     apiKey: "AIzaSyAKzcd6jibmJTJqZHIbAhPgjRv_m0f4cws",
     authDomain: "podcastplusv1.firebaseapp.com",
@@ -19,7 +20,6 @@ var config: FirebaseConfig  = {
     projectId: "podcastplusv1",
     storageBucket: "podcastplusv1.appspot.com",
     messagingSenderId: "898237232429",
-
 
 };
 firebase.initializeApp(config);
@@ -29,16 +29,19 @@ firestore.settings({timestampsInSnapshots: true})
 
 export const db = firebase.firestore();
 
-export function createCounter ( ref: firebase.firestore.DocumentReference, num_shards: number) {
+(window as any).db = db;
+(window as any).firebase = firebase;
+
+export function createCounter(ref: firebase.firestore.DocumentReference, num_shards: number) {
     var batch = db.batch();
     // Initialize the counter document
 
-    batch.set(ref, { num_shards: num_shards }, {merge: true});
+    batch.set(ref, {num_shards: num_shards}, {merge: true});
 
     // Initialize each shard with count=0
     for (let i = 0; i < num_shards; i++) {
         let shardRef = ref.collection('shards').doc(i.toString());
-        batch.set(shardRef, { count: 0 }, {merge: true} );
+        batch.set(shardRef, {count: 0}, {merge: true});
     }
 
     // Commit the write batch
@@ -54,13 +57,15 @@ export function incrementCounter(db, ref, num_shards) {
     return db.runTransaction(t => {
         return t.get(shard_ref).then(doc => {
             const new_count = doc.data().count + 1;
-            t.update(shard_ref, { count: new_count });
+            t.update(shard_ref, {count: new_count});
         });
     });
 }
+
 var getOptions = {
     source: 'server'
 };
+
 export function getCount(ref) {
     // Sum the count of each shard in the subcollection
     return ref.collection('shards').get(getOptions).then(snapshot => {
@@ -73,3 +78,45 @@ export function getCount(ref) {
     });
 }
 
+
+export function saveTextInput(pollId: String, projectId, db, message) {
+
+
+    let docRef = db.collection(projectId).doc(pollId);
+
+    docRef = db.collection(projectId).doc(pollId);
+
+    docRef.get().then(
+        (value) => {
+            if (!value.exists) {
+                docRef.set({values: [message]});
+            }
+            else {
+                docRef.update(
+                    {   values: firebase.firestore.FieldValue._arrayUnion(message)}
+                )
+            }
+        }
+
+    )   .then(() => console.log('Successfully written'))
+        .catch(err => console.log(err));
+
+    // db.collection(projectId).doc(pollId).set({a: 2}, {merge: true}).then(function () {
+    //     console.log("Document successfully written!");
+    // })
+    //     .catch(function (error) {
+    //         console.error("Error writing document: ", error);
+    //     });
+
+    // var newPostKey = firebase.database().ref().child(pollId).push().key;
+    //
+    //     let ref = db.collection(pollID).doc(this.props.choices[i]);
+    //     const ergebnis = ref.get()
+    //     ergebnis.then(function (value) {
+    //         if (!value.exists) {
+    //             createCounter(ref, 10)
+    //         }
+    //     })
+    //     temp.push(ref)
+
+}

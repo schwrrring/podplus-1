@@ -1,6 +1,7 @@
 import { ChatBubbleProperties, ChatBubble } from "../ui/chat-bubble/chat-bubble";
 import { BubbleGroup } from "../ui/bubble-group/bubble-group";
 import { ShowNotification, RunCommand } from "worker-commands";
+import {FrameFunctions} from "../ui/frame/frame";
 import * as React from "react";
 
 export interface Chapter {
@@ -51,7 +52,8 @@ export function makeRelative(url: string, baseURL: string) {
 function mapScriptEntry(
     response: ChatBubbleProperties,
     index: number,
-    baseURL: URL
+    baseURL: URL,
+    frameFunctions: FrameFunctions
 ): JSX.Element | undefined {
     // Hack for last-minute iOS bug
 
@@ -123,7 +125,7 @@ function mapScriptEntry(
            poll: response.poll,
         };
 
-        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_poll`} />);
+        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_poll`} frameFunctions={frameFunctions} />);
 
     }
 
@@ -182,7 +184,8 @@ function mapScriptEntry(
     );
 }
 
-export function mapScriptEntries(script: Script, baseURL: URL) {
+export function mapScriptEntries(script: Script, baseURL: URL, frameFunctions: FrameFunctions) {
+
     let items: JSX.Element[] = [];
     let currentChapterIndex = 0;
 
@@ -191,13 +194,13 @@ export function mapScriptEntries(script: Script, baseURL: URL) {
         if (currentChapter && currentChapter.time <= scriptItem.time) {
             items.push(
                 <BubbleGroup key={"chapter_" + currentChapterIndex} silent={true}>
-                    <ChatBubble chapterIndicator={currentChapter} time={currentChapter.time} />
+                    <ChatBubble chapterIndicator={currentChapter} time={currentChapter.time}  />
                 </BubbleGroup>
             );
             currentChapterIndex++;
         }
 
-        let item = mapScriptEntry(scriptItem, idx, baseURL);
+        let item = mapScriptEntry(scriptItem, idx, baseURL,  frameFunctions );
         if (item) {
             items.push(item);
         }

@@ -1,8 +1,6 @@
 
 .poll-user-choice-padding {
-
     padding: 10px 15px;
-    background-color: #5ebfba;
 }
 
 .user-input-area {
@@ -12,8 +10,6 @@
     font-family: sans-serif ;
     border: none;
     width: 100%;
-    rows: 4;
-    cols: 50;
     max-height: 200px;
 }
 
@@ -22,12 +18,10 @@
 }
 
 .bubble-poll-buttons-container {
-    text-align: center;
-    widows: 100%;
+    text-align: right;
 }
 
 .user-choice-container{
-
-    text-align: center;
-    padding: 10px 15px;
+    text-align: right;
+    margin-left: auto;
 }

@@ -53,6 +53,13 @@ interface PlayerState {
     hideControls?: boolean;
 }
 
+export interface FrameFunctions{
+    pause: ()=> void;
+    play: () => void;
+    toggleControls: () => void;
+    cacheName: string;
+}
+
 interface PlayerProps {
     scriptURL: string;
 }
@@ -77,6 +84,8 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
         this.toggleContactWindow = this.toggleContactWindow.bind(this);
         this.toggleControls = this.toggleControls.bind(this);
         this.audioError = this.audioError.bind(this);
+        this.pause = this.pause.bind(this);
+        this.play = this.play.bind(this);
         (window as any).toggleControls = () => {
             this.toggleControls()
         };
@@ -111,9 +120,11 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
             // to cache the podcast before now.
             let hasCacheAlready = "caches" in self && (await caches.has(cacheName));
 
+            let frameFunctions = {pause: this.pause, play: this.play, toggleControls: this.toggleControls, cacheName: cacheName}
+
             this.setState({
                 script: json,
-                scriptElements: mapScriptEntries(json, absoluteURL),
+                scriptElements: mapScriptEntries(json, absoluteURL, frameFunctions ),
                 downloadOffline: hasCacheAlready
             });
         });

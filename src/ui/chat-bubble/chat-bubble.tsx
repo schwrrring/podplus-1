@@ -9,6 +9,7 @@ import {showOrHideSideMenu} from "../side-menu/side-menu";
 import {sendEvent} from "../../util/analytics";
 import {PollUserChoice} from "../poll-user-choice/poll-user-choice";
 import {PollUserTextinput} from "../poll-user-textinput/poll-user-textinput";
+import {FrameFunctions} from "../frame/frame";
 
 // tryouts
 import {httpGet} from "../../bridge/httpRequest";
@@ -32,6 +33,8 @@ export interface ChatBubblePollProperties {
     followUp?: string;
     pollID: string;
     onResize?: ()=> void;
+    projectId?: string;
+    frameFunctions?: FrameFunctions;
 }
 
 
@@ -68,7 +71,10 @@ export interface ChatBubbleProperties {
     notificationOnlyText?: string;
     poll?: ChatBubblePollInt;
     onResize?: ()=> void;
+    frameFunctions?: FrameFunctions;
     pausePlayer?: () => void;
+    startPlayer?: () => void;
+    projectId?: string;
 }
 
 interface ChatBubbleState {
@@ -189,7 +195,9 @@ function renderPoll(bindTo: ChatBubble) {
             pollID={bindTo.props.poll.pollID}
             showResults={bindTo.props.poll.showResults}
             onResize = { bindTo.props.onResize!}
+            frameFunctions = {bindTo.props.frameFunctions}
             key = {"poll"}
+            projectId = {bindTo.props.frameFunctions!.cacheName}
         />)
     }
     else {
@@ -200,7 +208,10 @@ function renderPoll(bindTo: ChatBubble) {
             followUp={bindTo.props.poll.followUp}
             pollID={bindTo.props.poll.pollID}
             onResize = {bindTo.props.onResize}
+            frameFunctions = {bindTo.props.frameFunctions}
+            projectId = {bindTo.props.frameFunctions!.cacheName}
             key = {"poll"}
+
         />)
     }
 }
@@ -316,8 +327,7 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
         }
 
         if (this.props.poll) {
-            containerClassName += " " + styles.pollContainer;
-            className += " " + styles.bubbleFullWidth;
+             containerClassName =  styles.pollContainer;
         }
 
         return (
