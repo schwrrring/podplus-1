@@ -3,6 +3,7 @@
 .bubble-container {
     text-align: left;
     margin-right: auto;
+    width: 90%;
 }
 
 .bubble {
@@ -79,6 +80,7 @@
 .poll-container{
     text-align: right;
     margin-left: auto;
+    width: 90%;
 }
 .bubble-poll-buttons{
     font-size: 20px;
