@@ -3,6 +3,7 @@ import { BubbleGroup } from "../ui/bubble-group/bubble-group";
 import { ShowNotification, RunCommand } from "worker-commands";
 import {FrameFunctions} from "../ui/frame/frame";
 import * as React from "react";
+import {ChatBubbleWrapper} from "../ui/chat-bubble-wrapper/chat-bubble-wrapper";
 
 export interface Chapter {
     time: number;
@@ -125,7 +126,7 @@ function mapScriptEntry(
            poll: response.poll,
         };
 
-        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_poll`} frameFunctions={frameFunctions} />);
+        elements.push(<ChatBubbleWrapper {...secondItemProperties} key={`item_${index}_poll`} frameFunctions={frameFunctions} />);
 
     }
 

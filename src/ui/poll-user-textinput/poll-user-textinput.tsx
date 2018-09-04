@@ -24,7 +24,7 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
     componentDidMount() {
 
         // dirty dirty hack to make the textArea available
-        document.getElementById(this.props.pollID)!.parentElement!.parentElement!.parentElement!.style.zIndex = "1";
+        document.getElementById(this.props.pollID)!.parentElement!.parentElement!.parentElement!.parentElement!.style.zIndex = "1";
 
     }
 
