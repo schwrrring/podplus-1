@@ -35,6 +35,7 @@ export interface ChatBubblePollProperties {
     onResize?: ()=> void;
     projectId?: string;
     frameFunctions?: FrameFunctions;
+    activateAnswerBubble?: (string)=>void;
 }
 
 
@@ -75,6 +76,7 @@ export interface ChatBubbleProperties {
     pausePlayer?: () => void;
     startPlayer?: () => void;
     projectId?: string;
+    activateAnswerBubble?: (string) => void;
 }
 
 interface ChatBubbleState {
@@ -211,6 +213,7 @@ function renderPoll(bindTo: ChatBubble) {
             frameFunctions = {bindTo.props.frameFunctions}
             projectId = {bindTo.props.frameFunctions!.cacheName}
             key = {"poll"}
+            activateAnswerBubble={bindTo.props.activateAnswerBubble}
 
         />)
     }

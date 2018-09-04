@@ -32,15 +32,18 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
         this.state = {
             answerBubbleIsActive: false
         }
-        // this.activateAnswerBubble= this.activateAnswerBubble.bind(this);
+        this.activateAnswerBubble= this.activateAnswerBubble.bind(this);
     }
-    // activateAnswerBubble(){
-    //
-    //     return <ChatBubble {...this.props}/>
-    // }
+    activateAnswerBubble(message: String){
+
+       console.log(message)
+    }
 
     render(){
-        return <div><ChatBubble {...this.props}/><ChatBubble {...this.props}/></div>
-
+        if(!this.state.answerBubbleIsActive) {
+            return <div><ChatBubble {...this.props}
+            activateAnswerBubble={this.activateAnswerBubble}/><ChatBubble {...this.props} activateAnswerBubble={this.activateAnswerBubble}/>
+            </div>
+        }
     }
 }
