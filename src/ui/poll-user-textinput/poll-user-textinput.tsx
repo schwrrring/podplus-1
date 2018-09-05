@@ -3,16 +3,34 @@ import * as React from "react";
 import {ChangeEvent, Component} from "react";
 import {ChatBubblePollProperties, ChatBubblePollState} from "../chat-bubble/chat-bubble";
 import {db, saveTextInput} from "../../bridge/database";
+import {FrameFunctions} from "../frame/frame";
 
 
-export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatBubblePollState> {
+
+export interface PollUserTextinputProperties {
+    question: string;
+    followUp?: string;
+    pollID: string;
+    onResize?: ()=> void;
+    projectId?: string;
+    frameFunctions?: FrameFunctions;
+    activateAnswerBubble?: (string)=>void;
+}
+
+export interface PollUserTextinputState {
+    pollSent: boolean;
+    value: any;
+    showInputButtons: boolean;
+}
+
+
+export class PollUserTextinput extends Component<PollUserTextinputProperties, PollUserTextinputState> {
     textAreaElement: HTMLTextAreaElement | null;
 
     constructor(props) {
         super(props);
         this.state = {
             pollSent: false,
-            databaseRefs: [],
             value: '',
             showInputButtons: false,
         }
@@ -68,6 +86,7 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
                                 this.setState({pollSent: true})
                                 saveTextInput(this.props.pollID, this.props.projectId, db, this.state.value)
                                 this.props.activateAnswerBubble!(this.state.value);
+                                // this.props.onResize!();
                             }}>
                                 Senden
                             </button>

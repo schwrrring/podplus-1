@@ -206,7 +206,6 @@ function renderPoll(bindTo: ChatBubble) {
 
         return (<PollUserTextinput
             question={bindTo.props.poll.question}
-            choices={bindTo.props.poll.choices}
             followUp={bindTo.props.poll.followUp}
             pollID={bindTo.props.poll.pollID}
             onResize = {bindTo.props.onResize}
