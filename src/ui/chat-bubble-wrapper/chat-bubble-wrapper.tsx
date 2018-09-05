@@ -13,7 +13,7 @@ export interface ChatBubbleWrapperProp {
     silent?: boolean;
     notificationOnlyText?: string;
     poll?: ChatBubblePollInt;
-    onResize?: ()=> void;
+    onResize?: () => void;
     frameFunctions?: FrameFunctions;
     pausePlayer?: () => void;
     startPlayer?: () => void;
@@ -44,19 +44,39 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
         })
     }
 
-    render(){
-        if(!this.state.answerBubbleIsActive) {
+
+    render() {
+
+        if (!this.state.answerBubbleIsActive) {
             return (
-            <div className = {styles.chatBubbleWrapper}>
-                <ChatBubble {...this.props} activateAnswerBubble={this.activateAnswerBubble}/>
-                <div className={styles.buttonWrapper}>
-                <button className={styles.button}>senden</button>
-                <button className={styles.button}>cancel</button>
+                <div className={styles.chatBubbleWrapper}>
+                    <ChatBubble {...this.props} activateAnswerBubble={this.activateAnswerBubble}/>
+                    <div className={styles.buttonWrapper}>
+                        <button className={styles.button}>senden</button>
+                        <button className={styles.button}>cancel</button>
+                    </div>
                 </div>
-            </div>
             )
-        } else{
-           return <ChatBubble time={this.props.time} text={this.state.message} activateAnswerBubble={this.activateAnswerBubble} />
+        } else {
+
+            return (
+                <div>
+                    <div className={styles.divRight}>
+                        <ChatBubble time={this.props.time} text={this.state.message}
+                                    activateAnswerBubble={this.activateAnswerBubble}/>
+
+                    </div>
+                    <div>
+                        <ChatBubble time={this.props.time} text={this.props.poll!.followUp}
+                        />
+                    </div>
+                    <div>
+                        <ChatBubble time={this.props.time} text={'Hallo Sandra'}
+                        />
+                    </div>
+                </div>
+
+            )
         }
     }
 }

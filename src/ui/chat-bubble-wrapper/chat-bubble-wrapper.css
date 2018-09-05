@@ -5,8 +5,13 @@
 .button-wrapper{
     display: inline-block;
     text-align: right;
+    float: right;
 }
 
 .button{
     display: block;
+}
+
+.div-right{
+    float: right;
 }

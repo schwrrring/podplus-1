@@ -22,23 +22,18 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
 
 
     componentDidMount() {
-
         // dirty dirty hack to make the textArea available
         document.getElementById(this.props.pollID)!.parentElement!.parentElement!.parentElement!.parentElement!.style.zIndex = "1";
 
     }
 
 
+
     onTextAreaChange(event) {
         let value = event.target.value;
         this.setState({value: event.target.value});
         if (value.length != 0  ) {
-            this.setState({showInputButtons: true})
             this.props.onResize!();
-            // this.props.frameFunctions!.pause();
-            // this.props.frameFunctions!.toggleControls();
-        } else {
-            this.setState({showInputButtons: false})
         }
     }
 
@@ -62,22 +57,22 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
                               onKeyDown={() => this.autoGrow(this.textAreaElement)}
                               value={this.state.value}
                     />
-                        {this.state.showInputButtons &&
+
                         <div>
-                            {/*<button onClick={() => {*/}
-                                {/*this.setState({pollSent: false})*/}
-                            {/*}}>*/}
-                                {/*Abbrechen*/}
-                            {/*</button>*/}
-                            {/*<button onClick={() => {*/}
-                                {/*this.setState({pollSent: true})*/}
-                                {/*saveTextInput(this.props.pollID, this.props.projectId, db, this.state.value)*/}
-                                {/*this.props.activateAnswerBubble!(this.state.value);*/}
-                            {/*}}>*/}
-                                {/*Senden*/}
-                            {/*</button>*/}
+                            <button onClick={() => {
+                                this.setState({pollSent: false})
+                            }}>
+                                Abbrechen
+                            </button>
+                            <button onClick={() => {
+                                this.setState({pollSent: true})
+                                saveTextInput(this.props.pollID, this.props.projectId, db, this.state.value)
+                                this.props.activateAnswerBubble!(this.state.value);
+                            }}>
+                                Senden
+                            </button>
                         </div>
-                        }
+
                     </div>
 
                 </div>);
