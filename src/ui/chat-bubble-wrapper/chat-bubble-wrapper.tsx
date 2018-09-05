@@ -21,6 +21,7 @@ export interface ChatBubbleWrapperProp {
 
 export interface ChatBubbleWrapperState {
     answerBubbleIsActive: boolean;
+    message: string;
 
 }
 
@@ -30,20 +31,28 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
     constructor(props) {
         super(props);
         this.state = {
-            answerBubbleIsActive: false
+            answerBubbleIsActive: false,
+            message: ''
         }
         this.activateAnswerBubble= this.activateAnswerBubble.bind(this);
     }
-    activateAnswerBubble(message: String){
-
-       console.log(message)
+    activateAnswerBubble(message: string){
+        this.setState({
+            answerBubbleIsActive: true,
+            message: message
+        })
     }
 
     render(){
         if(!this.state.answerBubbleIsActive) {
-            return <div><ChatBubble {...this.props}
-            activateAnswerBubble={this.activateAnswerBubble}/><ChatBubble {...this.props} activateAnswerBubble={this.activateAnswerBubble}/>
+            return (
+            <div>
+                <ChatBubble {...this.props} activateAnswerBubble={this.activateAnswerBubble}/>
+
             </div>
+            )
+        } else{
+           return <ChatBubble time={this.props.time} text={this.state.message} />
         }
     }
 }
