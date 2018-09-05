@@ -64,18 +64,18 @@ export class PollUserTextinput extends Component<ChatBubblePollProperties, ChatB
                     />
                         {this.state.showInputButtons &&
                         <div>
-                            <button onClick={() => {
-                                this.setState({pollSent: false})
-                            }}>
-                                Abbrechen
-                            </button>
-                            <button onClick={() => {
-                                this.setState({pollSent: true})
-                                saveTextInput(this.props.pollID, this.props.projectId, db, this.state.value)
-                                this.props.activateAnswerBubble!(this.state.value);
-                            }}>
-                                Senden
-                            </button>
+                            {/*<button onClick={() => {*/}
+                                {/*this.setState({pollSent: false})*/}
+                            {/*}}>*/}
+                                {/*Abbrechen*/}
+                            {/*</button>*/}
+                            {/*<button onClick={() => {*/}
+                                {/*this.setState({pollSent: true})*/}
+                                {/*saveTextInput(this.props.pollID, this.props.projectId, db, this.state.value)*/}
+                                {/*this.props.activateAnswerBubble!(this.state.value);*/}
+                            {/*}}>*/}
+                                {/*Senden*/}
+                            {/*</button>*/}
                         </div>
                         }
                     </div>

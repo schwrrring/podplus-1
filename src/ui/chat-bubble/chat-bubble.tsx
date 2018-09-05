@@ -329,7 +329,9 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
             containerClassName += " " + styles.linkContainer;
         }
 
-        if (this.props.poll) {
+        // activateAnswerBubble is used in polls so it is another indicator, that it is a
+        // user-chat bubble, even if poll isnt defined
+        if (this.props.poll || this.props.activateAnswerBubble) {
              containerClassName =  styles.pollContainer;
         }
 

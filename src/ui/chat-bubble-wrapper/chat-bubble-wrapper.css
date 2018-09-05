@@ -1,0 +1,12 @@
+.chat-bubble-wrapper{
+    float: right;
+}
+
+.button-wrapper{
+    display: inline-block;
+    text-align: right;
+}
+
+.button{
+    display: block;
+}

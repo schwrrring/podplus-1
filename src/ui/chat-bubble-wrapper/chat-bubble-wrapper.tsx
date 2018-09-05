@@ -2,6 +2,7 @@ import * as React from "react";
 import {FrameFunctions} from "../frame/frame";
 import {ChatBubble, ChatBubbleImage, ChatBubbleLink, ChatBubblePollInt} from "../chat-bubble/chat-bubble";
 import {Chapter} from "../../interfaces/script";
+import * as styles from "./chat-bubble-wrapper.css";
 
 export interface ChatBubbleWrapperProp {
     text?: string;
@@ -46,13 +47,16 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
     render(){
         if(!this.state.answerBubbleIsActive) {
             return (
-            <div>
+            <div className = {styles.chatBubbleWrapper}>
                 <ChatBubble {...this.props} activateAnswerBubble={this.activateAnswerBubble}/>
-
+                <div className={styles.buttonWrapper}>
+                <button className={styles.button}>senden</button>
+                <button className={styles.button}>cancel</button>
+                </div>
             </div>
             )
         } else{
-           return <ChatBubble time={this.props.time} text={this.state.message} />
+           return <ChatBubble time={this.props.time} text={this.state.message} activateAnswerBubble={this.activateAnswerBubble} />
         }
     }
 }

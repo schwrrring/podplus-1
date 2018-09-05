@@ -80,6 +80,7 @@
 .poll-container{
     text-align: right;
     margin-left: auto;
+    display: inline;
     width: 90%;
 }
 .bubble-poll-buttons{
