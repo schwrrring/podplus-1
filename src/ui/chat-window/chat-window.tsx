@@ -52,6 +52,8 @@ export class ChatWindow extends React.Component<ChatWindowProps, ChatWindowState
             numberOfVisibleItems: 0,
             alreadySentScrollEvent: false
         };
+
+        (window as any).refresh = ()=>{this.refreshScrollViewSize()}
     }
 
     generateItem(indexes: number[]) {

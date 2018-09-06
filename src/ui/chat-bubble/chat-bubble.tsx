@@ -36,6 +36,7 @@ export interface ChatBubblePollProperties {
     projectId?: string;
     frameFunctions?: FrameFunctions;
     activateAnswerBubble?: (string)=>void;
+
 }
 
 
@@ -73,10 +74,10 @@ export interface ChatBubbleProperties {
     poll?: ChatBubblePollInt;
     onResize?: ()=> void;
     frameFunctions?: FrameFunctions;
-    pausePlayer?: () => void;
-    startPlayer?: () => void;
     projectId?: string;
-    activateAnswerBubble?: (string) => void;
+    userInput?: string;
+    onInputChange?: any;
+    isUserChatBubble?: boolean; // TODO: implement als ersatz fuer den isActivted filter, der bestimmt, ob die bubble nach rehts oder nicht nach rechts rutscht.
 }
 
 interface ChatBubbleState {
@@ -186,6 +187,7 @@ function renderText(bindTo: ChatBubble) {
 }
 
 function renderPoll(bindTo: ChatBubble) {
+    console.log(bindTo.props, 'bindToProps')
     if (!bindTo.props.poll) {
         return null;
     }
@@ -212,8 +214,8 @@ function renderPoll(bindTo: ChatBubble) {
             frameFunctions = {bindTo.props.frameFunctions}
             projectId = {bindTo.props.frameFunctions!.cacheName}
             key = {"poll"}
-            activateAnswerBubble={bindTo.props.activateAnswerBubble}
-
+            userInput={bindTo.props.userInput}
+            onInputChange={bindTo.props.onInputChange}
         />)
     }
 }
@@ -330,7 +332,7 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
 
         // activateAnswerBubble is used in polls so it is another indicator, that it is a
         // user-chat bubble, even if poll isnt defined
-        if (this.props.poll || this.props.activateAnswerBubble) {
+        if (this.props.poll) {
              containerClassName =  styles.pollContainer;
         }
 

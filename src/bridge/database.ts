@@ -112,8 +112,8 @@ export function saveTextInput(pollId: String, projectId, db, message) {
     //
     //     let ref = db.collection(pollID).doc(this.props.choices[i]);
     //     const ergebnis = ref.get()
-    //     ergebnis.then(function (value) {
-    //         if (!value.exists) {
+    //     ergebnis.then(function (userInput) {
+    //         if (!userInput.exists) {
     //             createCounter(ref, 10)
     //         }
     //     })

@@ -119,7 +119,7 @@ function mapScriptEntry(
         elements.unshift(<ChatBubble time={response.time} key={`item_${index}_images`} images={images} />);
     }
 
-    if (response.poll) {
+    if (response.poll && response.poll!.choices.length == 0) { // TODO: zwischen Poll 1 und Poll 2 unterscheiden
 
         let secondItemProperties: ChatBubbleProperties = {
             time: response.time,
@@ -127,6 +127,17 @@ function mapScriptEntry(
         };
 
         elements.push(<ChatBubbleWrapper {...secondItemProperties} key={`item_${index}_poll`} frameFunctions={frameFunctions} />);
+
+    }
+
+    if (response.poll && response.poll!.choices.length > 0) { // TODO: zwischen Poll 1 und Poll 2 unterscheiden
+
+        let secondItemProperties: ChatBubbleProperties = {
+            time: response.time,
+            poll: response.poll,
+        };
+
+        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_poll`} frameFunctions={frameFunctions} />);
 
     }
 

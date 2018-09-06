@@ -14,6 +14,7 @@ export interface ScrollViewItemProperties {
     itemIndex: number;
     y?: number;
     debugId?: string;
+
 }
 
 export class ScrollViewItem extends Component<ScrollViewItemProperties, any> {
@@ -23,14 +24,25 @@ export class ScrollViewItem extends Component<ScrollViewItemProperties, any> {
         super(props);
 
         this.onResize = this.onResize.bind(this);
+
+
+        (window as any).resizer = ()=>{ return this.onResize()}
     }
 
     onResize (){
-        let size = this.wrapperElement.getBoundingClientRect();
-        this.props.onRender(this.props.itemIndex, Math.ceil(size.width), Math.ceil(size.height));
+
+        if(this.wrapperElement) {
+            let size = this.wrapperElement.getBoundingClientRect();
+            this.props.onRender(this.props.itemIndex, Math.ceil(size.width), Math.ceil(size.height));
+            return this.wrapperElement;
+        }
+        else{
+            console.log(this, 'das this aus on resize wenn this wrapper element nicht definiert ist');
+        }
     }
 
     render() {
+
         let style = scrollViewItemCSS;
 
         if (this.props.y !== undefined) {
@@ -42,6 +54,8 @@ export class ScrollViewItem extends Component<ScrollViewItemProperties, any> {
         const childWithProp = React.Children.map(this.props.children, (child) => {
             return React.cloneElement(child as React.ReactElement<any>, {onResize: this.onResize});
         });
+
+        console.log('jetzt muesste das fuckin wrapper element defined sein', this.props.debugId)
 
         return (
             <div id={this.props.debugId} ref={el => (this.wrapperElement = el!)} style={style}>
