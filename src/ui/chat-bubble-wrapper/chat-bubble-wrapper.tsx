@@ -46,7 +46,6 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
             answerBubbleIsActive: true,
         });
         saveTextInput(this.props.poll!.pollID!, this.props.frameFunctions!.cacheName, db, this.state.inputText)
-        console.log(this.props.onResize!(), 'aus der handleClickfunktion aufgerufen ');
     }
 
 
@@ -78,6 +77,12 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
                 </div>
 
             )
+        }
+    }
+
+    componentDidUpdate(){
+        if(this.props.poll!.choices.length == 0) {
+            setTimeout(()=>{this.props.onResize!(); console.log('jetzt')}, 0);
         }
     }
 
