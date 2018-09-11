@@ -94,7 +94,7 @@ export function saveTextInput(pollId: String, projectId, db, message) {
             else {
                 try {
                     docRef.update(
-                        {values: firebase.firestore.FieldValue!._arrayUnion(message)}
+                        {values: firebase.firestore.FieldValue!.arrayUnion(message)}
                     )
                 }
                 catch (e) { console.log(e);

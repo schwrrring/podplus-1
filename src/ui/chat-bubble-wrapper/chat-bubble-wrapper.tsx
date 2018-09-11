@@ -91,6 +91,8 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
                     this.props.onResize!();
                     console.log('jetzt')
                 }, 0);
+
+
             }
             this.setState({
                 bubbleSizeChanged: false

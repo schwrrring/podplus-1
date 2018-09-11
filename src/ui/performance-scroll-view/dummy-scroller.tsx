@@ -183,6 +183,7 @@ export class DummyScroller extends React.Component<DummyScrollerProps> {
 
         if (this.element.scrollTop === 1) {
             toReturn = 0;
+            console.log('scroll top 1')
             return;
         }
 
@@ -191,6 +192,13 @@ export class DummyScroller extends React.Component<DummyScrollerProps> {
         } else if (this.element.scrollTop === this.element.scrollHeight - this.element.clientHeight) {
             this.element.scrollTop -= 1;
         }
+
+
+
+        console.log('element: ',this.element);
+        console.log('scrollTop: ',this.element.scrollTop);
+        console.log('scrollHeight: ',this.element.scrollHeight);
+        console.log('clientHeight: ',this.element.clientHeight);
 
         this.props.onScroll(toReturn);
     }

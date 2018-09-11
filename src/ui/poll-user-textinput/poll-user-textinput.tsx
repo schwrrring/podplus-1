@@ -46,15 +46,20 @@ export class PollUserTextinput extends Component<PollUserTextinputProperties, Po
             element.style.height = (element.scrollHeight) + "px";
             // element.style.width = (element.scrollWidth) + "px";
             this.props.onResize!();
+
     }
 
     handleChange(e){
         this.props.onInputChange(e.target.value)
         this.props.onResize!();
+        let elementx = window!.document!.querySelector('.chat-window')!.lastChild! as HTMLDivElement;
+        elementx.scrollTop! = elementx.scrollHeight! - elementx.clientHeight!
     }
 
     toggleControls(){
         this.props.frameFunctions!.toggleControls();
+        let elementx = window!.document!.querySelector('.chat-window')!.lastChild! as HTMLDivElement;
+        elementx.scrollTop! = elementx.scrollHeight! - elementx.clientHeight!
     }
 
     render() {

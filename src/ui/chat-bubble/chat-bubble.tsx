@@ -338,6 +338,15 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
         // user-chat bubble, even if poll isnt defined
         if (this.props.poll) {
              containerClassName =  styles.pollContainer;
+            return (
+                <div className={containerClassName} ref={el => (this.containerElement = el)}>
+                    <div className={className} id={'scrollWrapper'} onTouchStart={this.setTouch} onTouchEnd={this.setTouch}>
+                        {elements}
+                    </div>
+                </div>
+            );
+
+
         }
 
         return (

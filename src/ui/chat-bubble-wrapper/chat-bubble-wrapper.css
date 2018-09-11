@@ -1,12 +1,11 @@
 .chat-bubble-wrapper{
     float: right;
-    margin-left: 45px;
+    margin-left: 14%;
 }
 
 .button-wrapper{
+    width: 20%;
     display: inline-block;
-    text-align: right;
-    float: right;
 }
 
 .button{
@@ -22,7 +21,7 @@
     overflow: hidden;
     border: solid 0.5px #bdc1ca;
     transition: border-radius 0.2s linear;
-    margin-right: 45px;
+    margin-right: 14%;
     line-height: 1.4em;
 }
 
@@ -35,7 +34,7 @@
     overflow: hidden;
     border: solid 0.5px #bdc1ca;
     transition: border-radius 0.2s linear;
-    margin-left: 45px;
+    margin-left: 14%;
 
     line-height: 1.4em;
 }

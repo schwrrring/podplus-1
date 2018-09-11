@@ -13,7 +13,7 @@
     overflow: hidden;
     border: solid 0.5px #bdc1ca;
     transition: border-radius 0.2s linear;
-    margin-right: 45px;
+    margin-right: 14%;
     line-height: 1.4em;
 }
 
@@ -71,17 +71,16 @@
 }
 
 .poll-container{
-    text-align: right;
-    margin-left: auto;
-    display: inline;
+    float: left;
+    width: 80%
 }
 .bubble-poll-buttons{
     font-size: 20px;
 }
 
 .bubble-poll-buttons-container{
-    text-align: center;
-    float: right;
+    width: 20%;
+
 }
 
 .bubble-link-title {
