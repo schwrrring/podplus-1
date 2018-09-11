@@ -117,7 +117,7 @@ export class ChatWindow extends React.Component<ChatWindowProps, ChatWindowState
 
     render() {
         let innerView: JSX.Element | null = null;
-        let avatar: JSX.Element | null = null;
+
 
         if (this.state.numberOfVisibleItems > 0 && this.props.script) {
             // We only create the view when we have items, that way we avoid the initial items
@@ -137,17 +137,6 @@ export class ChatWindow extends React.Component<ChatWindowProps, ChatWindowState
                 />
             );
 
-            avatar = (
-                <div
-                    className={styles.avatar}
-                    style={{
-                        backgroundImage: `url(${this.props.script.baseURL +
-                            this.props.script.metadata.avatarFile})`
-                    }}
-                >
-                    <div className={styles.avatarInner} />
-                </div>
-            );
         }
 
         let touchMoveListen: ((Event) => void) = e => e.stopPropagation();
@@ -173,7 +162,6 @@ export class ChatWindow extends React.Component<ChatWindowProps, ChatWindowState
                 onTouchMove={touchMoveListen}
             >
                 {innerView}
-                {avatar}
             </div>
         );
     }

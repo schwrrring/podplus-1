@@ -22,6 +22,7 @@ export interface ChatBubbleWrapperProp {
 export interface ChatBubbleWrapperState {
     answerBubbleIsActive: boolean;
     inputText: string;
+    bubbleSizeChanged: boolean;
 }
 
 export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, ChatBubbleWrapperState> {
@@ -30,7 +31,8 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
         super(props);
         this.state = {
             answerBubbleIsActive: false,
-            inputText: ''
+            inputText: '',
+            bubbleSizeChanged: false
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSendClick = this.handleSendClick.bind(this);
@@ -44,7 +46,9 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
     handleSendClick() {
         this.setState({
             answerBubbleIsActive: true,
+            bubbleSizeChanged: true
         });
+
         saveTextInput(this.props.poll!.pollID!, this.props.frameFunctions!.cacheName, db, this.state.inputText)
     }
 
@@ -54,26 +58,26 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
         if (!this.state.answerBubbleIsActive) {
             return (
                 <div className={styles.chatBubbleWrapper}>
-                    <ChatBubble {...this.props} onInputChange={this.handleInputChange}
+                    <ChatBubble className={styles.bubbleTextInput}  {...this.props} onInputChange={this.handleInputChange}
                                 userInput={this.state.inputText}/>
                     <div className={styles.buttonWrapper}>
                         <button className={styles.button} onClick={this.handleSendClick}>senden</button>
-                        <button className={styles.button}>cancel</button>
+                        <button className={styles.button} onClick={()=>{this.props.frameFunctions!.pause(); this.props.frameFunctions!.toggleControls()}}>cancel</button>
                     </div>
                 </div>
             )
         } else {
             return (
                 <div>
-                    <div className={styles.divRight}>
-                        <ChatBubble time={this.props.time} text={this.state.inputText} userInput={this.state.inputText}
+
+                        <ChatBubble  className={styles.bubbleRight} time={this.props.time} text={this.state.inputText} userInput={this.state.inputText}
                                     isUserChatBubble={true} onInputChange={this.handleInputChange}/>
 
-                    </div>
-                    <div>
-                        <ChatBubble time={this.props.time} text={this.props.poll!.followUp}
+
+
+                        <ChatBubble className={styles.bubbleLeft} time={this.props.time} text={this.props.poll!.followUp}
                         />
-                    </div>
+
                 </div>
 
             )
@@ -81,8 +85,16 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
     }
 
     componentDidUpdate(){
-        if(this.props.poll!.choices.length == 0) {
-            setTimeout(()=>{this.props.onResize!(); console.log('jetzt')}, 0);
+        if(this.state.answerBubbleIsActive && this.state.bubbleSizeChanged) {
+            if (this.props.poll!.choices.length == 0) {
+                setTimeout(() => {
+                    this.props.onResize!();
+                    console.log('jetzt')
+                }, 0);
+            }
+            this.setState({
+                bubbleSizeChanged: false
+            });
         }
     }
 

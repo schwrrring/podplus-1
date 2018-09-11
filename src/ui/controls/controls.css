@@ -8,6 +8,7 @@
 
 .controls button {
     /* border: solid 1px %234c5057; */
+    font-family: "NDRSansCondRegular";
     border: none;
     background: transparent;
     color: #fff;

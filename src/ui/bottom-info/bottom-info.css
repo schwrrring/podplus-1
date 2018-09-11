@@ -41,6 +41,7 @@
 .bottom-info-button-text {
     position: relative;
     z-index: 2;
+    font-family: "NDRSansCondRegular";
 }
 
 .download-bar {
@@ -50,6 +51,7 @@
 button.with-checkbox {
     padding-left: 30px;
     position: relative;
+    font-family: "NDRSansCondRegular";
 }
 
 .checkbox {

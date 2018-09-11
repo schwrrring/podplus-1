@@ -28,11 +28,11 @@
 }
 
 .current-position {
-    height: 15px;
-    width: 15px;
+    height: 10px;
+    width: 10px;
     border-radius: 50%;
     left: 0px;
-    background: #000;
+    background: #0c327d;
     transition: transform 0.1s linear, opacity 0.1s linear;
 }
 

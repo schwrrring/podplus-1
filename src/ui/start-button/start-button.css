@@ -13,6 +13,7 @@
     margin-top: -5px;
     padding-top: 5px;
     will-change: opacity, transform;
+    font-family: "NDRSansCondRegular";
 }
 
 .hidden {
@@ -20,6 +21,7 @@
     transform: translateY(100%);
     pointer-events: none;
     transition: transform 0.2s linear, opacity 0.2s linear;
+    font-family: "NDRSansCondRegular";
 }
 
 .start-button-container button {
@@ -27,17 +29,19 @@
     border: none;
     padding: 10px 30px;
     background: transparent;
-    color: #569396;
+    color: #0c1754;
     width: 90%;
     /* margin: 0 auto; */
     font-size: 15px;
 }
 
 .start-button-container button.highlighted-button {
-    background: #ccc;
-    color: #fff;
-    border-radius: 20px;
-    font-size: 14px;
     font-weight: bold;
     font-size: 16px;
+    background-color: #cddce9;
+    border-radius: 4px;
+    font-family: "NDRSansCondRegular";
+    color: #0c1754;
+    line-height: 1em;
+    border: 1px solid #aabed2;
 }

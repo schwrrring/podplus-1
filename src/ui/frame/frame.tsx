@@ -271,6 +271,9 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
                     playStateChange={this.playStateChange}
 
                 />
+
+
+
                 {!this.state.hideControls &&
                 <BottomSlider
                     className={styles.controls}

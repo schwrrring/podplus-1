@@ -92,13 +92,17 @@ export function saveTextInput(pollId: String, projectId, db, message) {
                 docRef.set({values: [message]});
             }
             else {
-                docRef.update(
-                    {   values: firebase.firestore.FieldValue._arrayUnion(message)}
-                )
+                try {
+                    docRef.update(
+                        {values: firebase.firestore.FieldValue!._arrayUnion(message)}
+                    )
+                }
+                catch (e) { console.log(e);
+
+                }
             }
         }
-
-    )   .then(() => console.log('Successfully written'))
+    ).then(() => console.log('Successfully written'))
         .catch(err => console.log(err));
 
     // db.collection(projectId).doc(pollId).set({a: 2}, {merge: true}).then(function () {

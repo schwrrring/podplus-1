@@ -1,6 +1,6 @@
 import * as styles from "./poll-user-textinput.css";
 import * as React from "react";
-import {ChangeEvent, Component} from "react";
+import {ChangeEvent, Component, CSSProperties} from "react";
 import {ChatBubblePollProperties, ChatBubblePollState} from "../chat-bubble/chat-bubble";
 import {db, saveTextInput} from "../../bridge/database";
 import {FrameFunctions} from "../frame/frame";
@@ -37,17 +37,20 @@ export class PollUserTextinput extends Component<PollUserTextinputProperties, Po
         document.getElementById(this.props.pollID)!.parentElement!.parentElement!.parentElement!.parentElement!.style.zIndex = "1";
     }
 
+    height = 1;
     autoGrow(element) {
-        element.style.height = "auto";
-        // element.style.width = "auto";
-        element.style.height = (element.scrollHeight) + "px";
-        // element.style.width = (element.scrollWidth) + "px";
-        this.props.onResize!();
+
+            element.style.height = "auto";
+            // element.style.width = "auto";
+            element.style.height = (element.scrollHeight) + "px";
+            // element.style.width = (element.scrollWidth) + "px";
+            this.props.onResize!();
+
+
+
     }
 
     handleChange(e){
-        console.log(this , 'handle Change is called')
-        console.log(this.props, '')
         this.props.onInputChange(e.target.value)
         this.props.onResize!();
     }
@@ -61,6 +64,10 @@ export class PollUserTextinput extends Component<PollUserTextinputProperties, Po
                               className={styles.userInputArea}
                               placeholder={"Nachricht schreiben..."}
                               autoFocus={false}
+                              rows={1}
+                              cols={40}
+                              style={{"overflow": " auto"} as CSSProperties}
+                              max-width={'70%'}
                               onKeyDown={() => this.autoGrow(this.textAreaElement)}
                               value={this.props.userInput}
                     />

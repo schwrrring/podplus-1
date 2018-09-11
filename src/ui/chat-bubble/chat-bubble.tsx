@@ -65,6 +65,7 @@ export interface ChatBubblePollInt {
 
 export interface ChatBubbleProperties {
     text?: string;
+    className?: string;
     time: number;
     images?: ChatBubbleImage[];
     link?: ChatBubbleLink;
@@ -187,7 +188,6 @@ function renderText(bindTo: ChatBubble) {
 }
 
 function renderPoll(bindTo: ChatBubble) {
-    console.log(bindTo.props, 'bindToProps')
     if (!bindTo.props.poll) {
         return null;
     }
@@ -299,6 +299,10 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
 
     render() {
         let className = styles.bubble;
+        if(this.props.className){
+            className = this.props.className;
+        }
+
 
         if (this.props.chapterIndicator) {
             className = styles.chapterIndicator;
@@ -324,7 +328,7 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
             return null;
         }
 
-        let containerClassName = styles.bubbleContainer;
+        let containerClassName = styles.bubbleContainerLeft;
 
         if (this.props.link) {
             containerClassName += " " + styles.linkContainer;

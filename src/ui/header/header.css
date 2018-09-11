@@ -11,14 +11,15 @@
 }
 
 .header-expand .header-image {
-    background: #bbb;
+    background-image: url(https://www.ndr.de/info/podcastbild104_v-podcast.jpg);
     background-repeat: no-repeat;
     background-size: 100% auto;
     width: 866px;
     position: absolute;
     left: 20px;
     top: 5px;
-    height: 1425px;
+    height: 866px;
+    border-bottom: 39px solid #ffcc00;
     /* transform: translate3d(-209px, -172px, 0);*/
     transform-origin: 0 192px;
     transition: transform 0.1s linear;
@@ -34,7 +35,9 @@
 }
 
 .header-interior {
-    background-color: #ccc;
+    background-color: #214683;
+    color: #FFF;
+    padding-bottom: 20px;
     position: absolute;
     height: 154px;
     width: 100%;
@@ -53,11 +56,10 @@
 
 .header h1 {
     margin: 0;
-    font-size: 30px;
-    /* text-indent: 9vh; */
-    padding: 0.5vh;
+    font-size: 22px;
     /* margin: 0.5vh; */
     position: absolute;
+    font-family: 'NDRSansCondRegular', sans-serif;
 }
 
 .strange-bird-title {
