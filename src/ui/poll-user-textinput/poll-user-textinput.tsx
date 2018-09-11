@@ -1,5 +1,6 @@
 import * as styles from "./poll-user-textinput.css";
 import * as React from "react";
+import {findDomNode} from "react-dom";
 import {ChangeEvent, Component, CSSProperties} from "react";
 import {ChatBubblePollProperties, ChatBubblePollState} from "../chat-bubble/chat-bubble";
 import {db, saveTextInput} from "../../bridge/database";
@@ -27,8 +28,9 @@ export class PollUserTextinput extends Component<PollUserTextinputProperties, Po
 
     constructor(props) {
         super(props);
-        this.autoGrow = this.autoGrow.bind(this)
-        this.handleChange = this.handleChange.bind(this)
+        this.autoGrow = this.autoGrow.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.toggleControls = this.toggleControls.bind(this);
     }
 
 
@@ -39,20 +41,20 @@ export class PollUserTextinput extends Component<PollUserTextinputProperties, Po
 
     height = 1;
     autoGrow(element) {
-
             element.style.height = "auto";
             // element.style.width = "auto";
             element.style.height = (element.scrollHeight) + "px";
             // element.style.width = (element.scrollWidth) + "px";
             this.props.onResize!();
-
-
-
     }
 
     handleChange(e){
         this.props.onInputChange(e.target.value)
         this.props.onResize!();
+    }
+
+    toggleControls(){
+        this.props.frameFunctions!.toggleControls();
     }
 
     render() {
@@ -64,6 +66,8 @@ export class PollUserTextinput extends Component<PollUserTextinputProperties, Po
                               className={styles.userInputArea}
                               placeholder={"Nachricht schreiben..."}
                               autoFocus={false}
+                              onBlur={this.toggleControls}
+                              onFocus={this.toggleControls}
                               rows={1}
                               cols={40}
                               style={{"overflow": " auto"} as CSSProperties}
