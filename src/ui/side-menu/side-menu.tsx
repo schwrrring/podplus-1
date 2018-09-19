@@ -77,8 +77,9 @@ export class SideMenu extends React.Component<SideMenuProps, SideMenuState> {
                 );
             });
         }
-
+        if(!this.props.script){return null}
         return (
+
             <div
                 className={containerStyles}
                 onClick={() => this.setState({ opened: false })}
@@ -102,19 +103,19 @@ export class SideMenu extends React.Component<SideMenuProps, SideMenuState> {
                         {this.renderEpisodeDetails()}
                         {this.renderEpisodeNavigator()}
 
-                        <h4>Ihr Feedback zum neuen PodcastPlus-Player</h4>
+                        <h4>Ihr Feedback zum neuen PodcastPlus-Player:</h4>
                         <p>
                             Top oder flop? Was halten Sie von unserem neuen Podcast-Player?
                         </p>
                         <a
                             target="_blank"
-                            href="https://docs.google.com/forms/d/e/1FAIpQLSfEatP4GmXJBn2veUkAcHL9DhEDGiBqmVcV7T6CjYqlKetoQQ/viewform?usp=sf_link"
+                            href= {this.props.script!.metadata.surveyUrl}
                             className={styles.subscribeButton}
                             onClick={() => sendEvent("Web browser", "Take survey", "Podcast menu")}
                         >
                             Zur kurzen Umfrage
                         </a>
-                        <h4>Sie haben eine Frage an die Korrespondenten?</h4>
+                        <h4>{this.props.script!.metadata.contactHeader}</h4>
                         <button
                             className={styles.subscribeButton}
                             onClick={() => this.props.toggleContactBox("Podcast menu")}

@@ -23,18 +23,18 @@ export function ContactBox(props: ContactBoxProps) {
 
     let contactOptions: JSX.Element[] = [];
 
-    if (props.contact.tel) {
-        contactOptions.push(
-            <a
-                href={`tel:${props.contact.tel}`}
-                onClick={() => {
-                    sendEvent("Web browser", "Leave a voicemail", props.source);
-                }}
-            >
-                Leave a voicemail
-            </a>
-        );
-    }
+    // if (props.contact.tel) {
+    //     contactOptions.push(
+    //         <a
+    //             href={`tel:${props.contact.tel}`}
+    //             onClick={() => {
+    //                 sendEvent("Web browser", "Leave a voicemail", props.source);
+    //             }}
+    //         >
+    //             Leave a voicemail
+    //         </a>
+    //     );
+    // }
     if (props.contact.sms) {
         contactOptions.push(
             <a
@@ -43,7 +43,7 @@ export function ContactBox(props: ContactBoxProps) {
                     sendEvent("Web browser", "Send text", props.source);
                 }}
             >
-                Send a text message
+                Eine SMS an Sabrina schicken
             </a>
         );
     }
@@ -55,11 +55,10 @@ export function ContactBox(props: ContactBoxProps) {
                     sendEvent("Web browser", "Write email", props.source);
                 }}
             >
-                Write an e-mail
+                Eine E-Mail an Sabrina schicken
             </a>
         );
     }
-
     return (
         <div
             style={{ pointerEvents: "auto", position: "absolute", width: "100%", height: "100%", zIndex: 11 }}
@@ -72,10 +71,9 @@ export function ContactBox(props: ContactBoxProps) {
                 }}
             />
             <div className={styles.contactBox}>
-                <h3>Ask Mona a Data Question</h3>
+                <h3>{props.contact!.headerContactPopUp}</h3>
                 <p>
-                    Have a data question of your own? Share it with Mona, and she may make a brand new Strange
-                    Bird episode about it. Reach out, ask your question, and we'll be in touch.
+                    {props.contact!.teaserContactPopUp}
                 </p>
                 <ul>{contactOptions.map((el, idx) => <li key={`contactoption_${idx}`}>{el}</li>)}</ul>
             </div>

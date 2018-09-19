@@ -43,31 +43,38 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
         this.setState({inputText: userTextInput})
     }
 
-    handleSendClick() {
+    handleSendClick(e) {
+        e.preventDefault()
         this.setState({
             answerBubbleIsActive: true,
             bubbleSizeChanged: true
         });
-
         saveTextInput(this.props.poll!.pollID!, this.props.frameFunctions!.cacheName, db, this.state.inputText)
     }
 
 
     render() {
         // console.log(this.props.onResize!(), 'aus der RenderFunktion von chatBubble wrapper aufgerufen');
+        console.log(this.state.answerBubbleIsActive, "answerBubble is activ");
         if (!this.state.answerBubbleIsActive) {
+
+            let sendurl = new URL('bundles/example-podcast/send.png', document.location.href)
             return (
                 <div className={styles.chatBubbleWrapper}>
                     <ChatBubble className={styles.bubbleTextInput}  {...this.props} onInputChange={this.handleInputChange}
                                 userInput={this.state.inputText}/>
                     <div className={styles.buttonWrapper}>
-                        <button className={styles.button} onClick={this.handleSendClick}>senden</button>
-                        <button className={styles.button} onClick={()=>{this.props.frameFunctions!.pause(); this.props.frameFunctions!.toggleControls()}}>cancel</button>
+                     {/*using onFocus as an eventHandler and not on click is a hack cause otherwise the button does only focus not reacting on clck*/}
+                        <button type='submit' value="Submit" className={styles.button}  onFocus={(e)=>{this.handleSendClick(e)}}>
+                            <img src={sendurl.href} className={styles.buttonImageStyle}/>
+                        </button>
+                        {/*<button className={styles.button} onClick={()=>{this.props.frameFunctions!.pause(); this.props.frameFunctions!.toggleControls()}}>cancel</button>*/}
                     </div>
                 </div>
             )
         } else {
             return (
+
                 <div>
 
                         <ChatBubble  className={styles.bubbleRight} time={this.props.time} text={this.state.inputText} userInput={this.state.inputText}
@@ -98,6 +105,9 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
                 bubbleSizeChanged: false
             });
         }
+        this.props.onResize!();
+        let elementx = window!.document!.querySelector('.chat-window')!.lastChild! as HTMLDivElement;
+        elementx.scrollTop! = elementx.scrollHeight! - elementx.clientHeight!
     }
 
 }

@@ -17,12 +17,16 @@ export interface ScriptMetadata {
     length: number;
     episodeName: string;
     artwork: string;
+    contactHeader: string;
+    surveyUrl: string;
 }
 
 export interface ScriptContact {
     tel?: string;
     sms?: string;
     email?: string;
+    headerContactPopUp?: string;
+    teaserContactPopUp?: string;
 }
 
 export interface ScriptTeamMember {
@@ -44,6 +48,7 @@ export interface Script {
     dingFile: string;
     contact: ScriptContact;
     team: ScriptTeamMember[];
+
 }
 
 export function makeRelative(url: string, baseURL: string) {

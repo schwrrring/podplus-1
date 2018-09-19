@@ -13,14 +13,12 @@ interface FirebaseConfig {
 }
 
 var config: FirebaseConfig = {
-
     apiKey: "AIzaSyAKzcd6jibmJTJqZHIbAhPgjRv_m0f4cws",
     authDomain: "podcastplusv1.firebaseapp.com",
     databaseURL: "https://podcastplusv1.firebaseio.com",
     projectId: "podcastplusv1",
     storageBucket: "podcastplusv1.appspot.com",
     messagingSenderId: "898237232429",
-
 };
 firebase.initializeApp(config);
 const firestore = firebase.firestore();

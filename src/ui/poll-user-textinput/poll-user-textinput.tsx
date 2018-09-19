@@ -59,6 +59,7 @@ export class PollUserTextinput extends Component<PollUserTextinputProperties, Po
     toggleControls(){
         this.props.frameFunctions!.toggleControls();
         let elementx = window!.document!.querySelector('.chat-window')!.lastChild! as HTMLDivElement;
+        this.props.onResize!();
         elementx.scrollTop! = elementx.scrollHeight! - elementx.clientHeight!
     }
 
@@ -76,15 +77,12 @@ export class PollUserTextinput extends Component<PollUserTextinputProperties, Po
                               rows={1}
                               cols={40}
                               style={{"overflow": " auto"} as CSSProperties}
-                              max-width={'70%'}
                               onKeyDown={() => this.autoGrow(this.textAreaElement)}
                               value={this.props.userInput}
                     />
                 </div>
             </div>
         );
-
-
         return retVal
     }
 }

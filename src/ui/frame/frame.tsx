@@ -104,7 +104,6 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
         async function loadAndTransformData() {
             let response = await fetch(absoluteURL.href);
             let json = (await response.json()) as Script;
-
             json.audioFile = makeRelative(json.audioFile, absoluteURL.href);
             json.baseURL = new URL(".", absoluteURL.href).href;
             json.assets = json.assets.map(url => makeRelative(url, absoluteURL.href));

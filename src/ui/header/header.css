@@ -11,7 +11,8 @@
 }
 
 .header-expand .header-image {
-    background-image: url(https://www.ndr.de/info/podcastbild104_v-podcast.jpg);
+    background-color: white;
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Njoy-logo.svg/220px-Njoy-logo.svg.png);
     background-repeat: no-repeat;
     background-size: 100% auto;
     width: 866px;

@@ -29,11 +29,11 @@ function easeOutBack(t: number, b: number, c: number, d: number, s: number = 0) 
 }
 
 function newMessageGenerator(numberOfMessages: number) {
-    let messagesText = numberOfMessages > 1 ? "messages" : "message";
+    let messagesText = numberOfMessages > 1 ? "neue Nachrichten" : "neue Nachricht";
 
     return (
         <div className={styles.moreMessages}>
-            &#8595;&nbsp;&nbsp;{numberOfMessages}&nbsp;&nbsp;new {messagesText}
+            &#8595;&nbsp;&nbsp;{numberOfMessages}&nbsp;&nbsp;{messagesText}
         </div>
     );
 }
@@ -74,6 +74,9 @@ export class ChatWindow extends React.Component<ChatWindowProps, ChatWindowState
             // if we don't have a script yet, ignore
             return;
         }
+
+        console.log('new Props', newProps)
+
         if (activeDing) {
             activeDing.shouldPlayDings = newProps.playDings;
         }

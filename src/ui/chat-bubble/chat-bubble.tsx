@@ -32,10 +32,10 @@ export interface ChatBubblePollProperties {
     choices: string[];
     followUp?: string;
     pollID: string;
-    onResize?: ()=> void;
+    onResize?: () => void;
     projectId?: string;
     frameFunctions?: FrameFunctions;
-    activateAnswerBubble?: (string)=>void;
+    activateAnswerBubble?: (string) => void;
 
 }
 
@@ -73,7 +73,7 @@ export interface ChatBubbleProperties {
     silent?: boolean;
     notificationOnlyText?: string;
     poll?: ChatBubblePollInt;
-    onResize?: ()=> void;
+    onResize?: () => void;
     frameFunctions?: FrameFunctions;
     projectId?: string;
     userInput?: string;
@@ -191,17 +191,17 @@ function renderPoll(bindTo: ChatBubble) {
     if (!bindTo.props.poll) {
         return null;
     }
-    if(bindTo.props.poll.choices.length > 0) {
+    if (bindTo.props.poll.choices.length > 0) {
         return (<PollUserChoice
             question={bindTo.props.poll.question}
             choices={bindTo.props.poll.choices}
             followUp={bindTo.props.poll.followUp}
             pollID={bindTo.props.poll.pollID}
             showResults={bindTo.props.poll.showResults}
-            onResize = { bindTo.props.onResize!}
-            frameFunctions = {bindTo.props.frameFunctions}
-            key = {"poll"}
-            projectId = {bindTo.props.frameFunctions!.cacheName}
+            onResize={bindTo.props.onResize!}
+            frameFunctions={bindTo.props.frameFunctions}
+            key={"poll"}
+            projectId={bindTo.props.frameFunctions!.cacheName}
         />)
     }
     else {
@@ -210,10 +210,10 @@ function renderPoll(bindTo: ChatBubble) {
             question={bindTo.props.poll.question}
             followUp={bindTo.props.poll.followUp}
             pollID={bindTo.props.poll.pollID}
-            onResize = {bindTo.props.onResize}
-            frameFunctions = {bindTo.props.frameFunctions}
-            projectId = {bindTo.props.frameFunctions!.cacheName}
-            key = {"poll"}
+            onResize={bindTo.props.onResize}
+            frameFunctions={bindTo.props.frameFunctions}
+            projectId={bindTo.props.frameFunctions!.cacheName}
+            key={"poll"}
             userInput={bindTo.props.userInput}
             onInputChange={bindTo.props.onInputChange}
         />)
@@ -299,10 +299,9 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
 
     render() {
         let className = styles.bubble;
-        if(this.props.className){
+        if (this.props.className) {
             className = this.props.className;
         }
-
 
         if (this.props.chapterIndicator) {
             className = styles.chapterIndicator;
@@ -337,16 +336,17 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
         // activateAnswerBubble is used in polls so it is another indicator, that it is a
         // user-chat bubble, even if poll isnt defined
         if (this.props.poll) {
-             containerClassName =  styles.pollContainer;
-            return (
-                <div className={containerClassName} ref={el => (this.containerElement = el)}>
-                    <div className={className} id={'scrollWrapper'} onTouchStart={this.setTouch} onTouchEnd={this.setTouch}>
-                        {elements}
+            if (this.props.poll!.choices.length == 0) {
+                containerClassName = styles.pollContainer;
+                return (
+                    <div className={containerClassName} ref={el => (this.containerElement = el)}>
+                        <div className={className} id={'scrollWrapper'} onTouchStart={this.setTouch}
+                             onTouchEnd={this.setTouch}>
+                            {elements}
+                        </div>
                     </div>
-                </div>
-            );
-
-
+                );
+            }
         }
 
         return (
