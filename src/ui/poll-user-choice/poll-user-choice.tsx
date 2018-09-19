@@ -103,12 +103,6 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
 
             )
         } else {
-
-            let followUptext: React.CSSProperties = {
-                color: "#0c327d",
-                fontSize: "1.4em",
-                marginBottom: "8px"
-            };
             retVal = (
                 <div key="text" className={styles.bubbleTextPadding}>
                     <div className={styles.bubbleText}>
@@ -126,7 +120,6 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
 
                     </div>
                 </div>
-
             )
         }
         return retVal

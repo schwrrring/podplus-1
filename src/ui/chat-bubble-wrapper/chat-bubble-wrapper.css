@@ -9,6 +9,7 @@
     position: absolute;
     display: inline-block;
     bottom: 8px;
+    right: 9px;
     background-color: #fff;
     border: none;
 }
@@ -47,7 +48,7 @@
     border: solid 0.5px #bdc1ca;
     transition: border-radius 0.2s linear;
     margin-left: 14%;
-
+    background-color: #cddce9;
     line-height: 1.4em;
 }
 
