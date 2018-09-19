@@ -73,7 +73,7 @@ export class Ding extends React.Component<DingProps, any> {
     async ding() {
         if (this.shouldPlayDings === false) {
             console.warn("DING: wanted to ding, but it's disabled");
-            return;
+            // return;
         }
         console.info("DING: dinging");
         if (!this.dingAudioElement) {
