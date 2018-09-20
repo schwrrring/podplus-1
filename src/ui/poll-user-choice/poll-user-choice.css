@@ -22,3 +22,21 @@
     text-align: center;
     padding: 10px 15px;
 }
+
+.is-loading-spinner-container{
+    position: relative;
+}
+
+.is-loading-spinner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
+.hidden-chat-bubble{
+    visibility: hidden;
+    text-align: center;
+    padding: 10px 15px;
+
+}

@@ -5,6 +5,7 @@ import {ChatBubbleImage, ChatBubbleLink, ChatBubbleProperties} from "../chat-bub
 import {Chapter} from "../../interfaces/script";
 import {createCounter, db, getCount, incrementCounter} from "../../bridge/database";
 import {FrameFunctions} from "../frame/frame";
+import MDSpinner from "react-md-spinner";
 
 interface ChatBubblePollProperties {
     question: string;
@@ -12,7 +13,7 @@ interface ChatBubblePollProperties {
     followUp?: string;
     pollID: string;
     showResults: boolean;
-    onResize: ()=> void;
+    onResize: () => void;
     frameFunctions?: FrameFunctions;
     projectId?: string;
 
@@ -20,6 +21,7 @@ interface ChatBubblePollProperties {
 
 interface ChatBubblePollState {
     pollSent: boolean;
+    isLoading: boolean;
     databaseRefs: any[];
     value: any;
 }
@@ -30,7 +32,8 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
         this.state = {
             pollSent: false,
             databaseRefs: [], // Todo:fix any
-            value: []
+            value: [],
+            isLoading: false
         }
         this.setUpDatabase = this.setUpDatabase.bind(this);
     }
@@ -58,28 +61,32 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
         this.setUpDatabase()
     }
 
+    checkIfHidden = () => { return this.state.isLoading? styles.hiddenChatBubble : styles.bubblePollButtonsContainer }
+
 
     render() {
 
         let retVal;
         if (!this.state.pollSent) {
             retVal = (
-                <div key="poll-choice" className={styles.bubblePollButtonsContainer}>
+                <div className={styles.isLoadingSpinnerContainer}>
+                <div key="poll-choice" className={this.checkIfHidden()}>
                     <div>{this.props.question}</div>
-
                     <button className={styles.bubblePollButtons} onClick={() => {
-
                         incrementCounter(db, this.state.databaseRefs[0], 10);
                         let iterable = this.state.databaseRefs.map((val) => getCount(val));
                         let results = Promise.all(iterable)
                             .then((valutys) => {
                                 this.setState({
                                     pollSent: true,
-                                    value: valutys
+                                    value: valutys,
+                                    isLoading: false
                                 })
                                 this.props.onResize();
                             })
-                        this.props.onResize();
+                            .catch(() => console.log('couldnt get answer data'))
+                        this.setState({isLoading: true})
+                        // this.props.onResize();
                     }}>
                         {this.props.choices[0]}
                     </button>
@@ -91,14 +98,20 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                             .then((valutys) => {
                                 this.setState({
                                     pollSent: true,
-                                    value: valutys
+                                    value: valutys,
+                                    isLoading: false
                                 })
                             })
                         this.props.onResize();
                     }}>
                         {this.props.choices[1]}
                     </button>
-
+                </div>
+                    {this.state.isLoading &&
+                        <div  className={styles.isLoadingSpinner}>
+                            <MDSpinner singleColor={'#214683'} />
+                        </div>
+                    }
                 </div>
 
             )
