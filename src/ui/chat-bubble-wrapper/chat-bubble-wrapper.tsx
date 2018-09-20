@@ -43,19 +43,26 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
         this.setState({inputText: userTextInput})
     }
 
+    scrollToBottom(){
+        let elementx = window!.document!.querySelector('.chat-window')!.lastChild! as HTMLDivElement;
+        elementx.scrollTop! = elementx.scrollHeight! - elementx.clientHeight!
+        console.log('lala')
+    }
+
     handleSendClick(e) {
-        e.preventDefault()
+
         this.setState({
             answerBubbleIsActive: true,
             bubbleSizeChanged: true
         });
+        setTimeout(this.scrollToBottom,30)
         saveTextInput(this.props.poll!.pollID!, this.props.frameFunctions!.cacheName, db, this.state.inputText)
+
+        e.preventDefault()
     }
 
 
     render() {
-        // console.log(this.props.onResize!(), 'aus der RenderFunktion von chatBubble wrapper aufgerufen');
-        console.log(this.state.answerBubbleIsActive, "answerBubble is activ");
         if (!this.state.answerBubbleIsActive) {
 
             let sendurl = new URL('bundles/example-podcast/send.png', document.location.href)
@@ -96,7 +103,6 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
             if (this.props.poll!.choices.length == 0) {
                 setTimeout(() => {
                     this.props.onResize!();
-                    console.log('jetzt')
                 }, 0);
 
 

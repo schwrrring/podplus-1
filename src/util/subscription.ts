@@ -37,7 +37,6 @@ export async function subscribe(topicName: string) {
 }
 //
 // export async function message(topicName: string, message: string) {
-//     console.log('this is called bingo');
 //     await runServiceWorkerCommand<SubscribeOptions, any>("send-message", {
 //         topic: topicName,
 //         confirmationPayload: {

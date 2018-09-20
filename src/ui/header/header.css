@@ -20,7 +20,6 @@
     left: 20px;
     top: 5px;
     height: 866px;
-    border-bottom: 39px solid #ffcc00;
     /* transform: translate3d(-209px, -172px, 0);*/
     transform-origin: 0 192px;
     transition: transform 0.1s linear;

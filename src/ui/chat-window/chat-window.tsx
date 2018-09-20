@@ -75,8 +75,6 @@ export class ChatWindow extends React.Component<ChatWindowProps, ChatWindowState
             return;
         }
 
-        console.log('new Props', newProps)
-
         if (activeDing) {
             activeDing.shouldPlayDings = newProps.playDings;
         }

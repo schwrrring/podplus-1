@@ -119,7 +119,7 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
             retVal = (
                 <div key="text" className={styles.bubbleTextPadding}>
                     <div className={styles.bubbleText}>
-                        <div>{this.props.followUp}</div>
+                        <div>{this.props.followUp} \n lala</div>
                         {this.props.showResults == true &&
                         <div>
                             <div>
