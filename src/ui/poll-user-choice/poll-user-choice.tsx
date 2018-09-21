@@ -16,6 +16,8 @@ interface ChatBubblePollProperties {
     onResize: () => void;
     frameFunctions?: FrameFunctions;
     projectId?: string;
+    changeBubbleClass?: (string) => void;
+    parentClassChanged: boolean | undefined;
 
 }
 
@@ -24,6 +26,7 @@ interface ChatBubblePollState {
     isLoading: boolean;
     databaseRefs: any[];
     value: any;
+
 }
 
 export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubblePollState> {
@@ -57,11 +60,14 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
 
     }
 
+
     componentDidMount() {
         this.setUpDatabase()
     }
 
-    checkIfHidden = () => { return this.state.isLoading? styles.hiddenChatBubble : styles.bubblePollButtonsContainer }
+    checkIfHidden = () => {
+        return this.state.isLoading ? styles.hiddenChatBubble : styles.bubblePollButtonsContainer
+    }
 
 
     render() {
@@ -70,47 +76,50 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
         if (!this.state.pollSent) {
             retVal = (
                 <div className={styles.isLoadingSpinnerContainer}>
-                <div key="poll-choice" className={this.checkIfHidden()}>
-                    <div>{this.props.question}</div>
-                    <button className={styles.bubblePollButtons} onClick={() => {
-                        incrementCounter(db, this.state.databaseRefs[0], 10);
-                        let iterable = this.state.databaseRefs.map((val) => getCount(val));
-                        let results = Promise.all(iterable)
-                            .then((valutys) => {
-                                this.setState({
-                                    pollSent: true,
-                                    value: valutys,
-                                    isLoading: false
+                    <div key="poll-choice" className={this.checkIfHidden()}>
+                        <div>{this.props.question}</div>
+                        <button className={styles.bubblePollButtons} onClick={() => {
+                            incrementCounter(db, this.state.databaseRefs[0], 10);
+                            let iterable = this.state.databaseRefs.map((val) => getCount(val));
+                            let results = Promise.all(iterable)
+                                .then((valutys) => {
+                                    this.setState({
+                                        pollSent: true,
+                                        value: valutys,
+                                        isLoading: false
+                                    })
+                                    this.props.changeBubbleClass!('bubble-right')
+                                    this.props.onResize();
                                 })
-                                this.props.onResize();
-                            })
-                            .catch(() => console.log('couldnt get answer data'))
-                        this.setState({isLoading: true})
-                        // this.props.onResize();
-                    }}>
-                        {this.props.choices[0]}
-                    </button>
-                    <button className={styles.bubblePollButtons} onClick={() => {
+                                .catch(() => console.log('couldnt get answer data'))
+                            this.setState({isLoading: true})
+                            // this.props.onResize();
+                        }}>
+                            {this.props.choices[0]}
+                        </button>
+                        <button className={styles.bubblePollButtons} onClick={() => {
 
-                        incrementCounter(db, this.state.databaseRefs[1], 10);
-                        let iterable = this.state.databaseRefs.map((val) => getCount(val));
-                        let results = Promise.all(iterable)
-                            .then((valutys) => {
-                                this.setState({
-                                    pollSent: true,
-                                    value: valutys,
-                                    isLoading: false
+                            incrementCounter(db, this.state.databaseRefs[1], 10);
+                            let iterable = this.state.databaseRefs.map((val) => getCount(val));
+                            let results = Promise.all(iterable)
+                                .then((valutys) => {
+                                    this.setState({
+                                        pollSent: true,
+                                        value: valutys,
+                                        isLoading: false
+                                    })
+                                    this.props.changeBubbleClass!('bubble-right')
+                                    this.props.onResize();
                                 })
-                            })
-                        this.props.onResize();
-                    }}>
-                        {this.props.choices[1]}
-                    </button>
-                </div>
+
+                        }}>
+                            {this.props.choices[1]}
+                        </button>
+                    </div>
                     {this.state.isLoading &&
-                        <div  className={styles.isLoadingSpinner}>
-                            <MDSpinner singleColor={'#214683'} />
-                        </div>
+                    <div className={styles.isLoadingSpinner}>
+                        <MDSpinner singleColor={'#214683'}/>
+                    </div>
                     }
                 </div>
 
@@ -119,7 +128,7 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
             retVal = (
                 <div key="text" className={styles.bubbleTextPadding}>
                     <div className={styles.bubbleText}>
-                        <div>{this.props.followUp} \n lala</div>
+                        <div>{this.props.followUp}</div>
                         {this.props.showResults == true &&
                         <div>
                             <div>

@@ -79,12 +79,15 @@ export interface ChatBubbleProperties {
     userInput?: string;
     onInputChange?: any;
     isUserChatBubble?: boolean; // TODO: implement als ersatz fuer den isActivted filter, der bestimmt, ob die bubble nach rehts oder nicht nach rechts rutscht.
+
 }
 
 interface ChatBubbleState {
     touched: boolean;
     expanded: boolean;
     pollSent: number;
+    chatBubbleClassName: string;
+    parentClassChanged?: boolean;
 }
 
 function setExpandedState(target: ChatBubble, toValue: boolean) {
@@ -202,6 +205,8 @@ function renderPoll(bindTo: ChatBubble) {
             frameFunctions={bindTo.props.frameFunctions}
             key={"poll"}
             projectId={bindTo.props.frameFunctions!.cacheName}
+            changeBubbleClass = {bindTo.changeClassName}
+            parentClassChanged={bindTo.state.parentClassChanged}
         />)
     }
     else {
@@ -291,14 +296,26 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
         this.state = {
             touched: false,
             expanded: false,
-            pollSent: 0
+            pollSent: 0,
+            chatBubbleClassName: 'bubble',
+            parentClassChanged: false
         };
         this.maybeOpenPhotoSwipe = this.maybeOpenPhotoSwipe.bind(this);
         this.maybeClosePhotoSwipe = this.maybeClosePhotoSwipe.bind(this);
+        this.changeClassName = this.changeClassName.bind(this);
+    }
+
+    changeClassName(className: string){
+        this.setState( {
+            chatBubbleClassName: className,
+            parentClassChanged: true
+        })
+
     }
 
     render() {
-        let className = styles.bubble;
+
+        let className = styles[this.state.chatBubbleClassName];
         if (this.props.className) {
             className = this.props.className;
         }

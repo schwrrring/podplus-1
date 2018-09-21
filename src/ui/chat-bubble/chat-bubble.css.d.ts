@@ -19,3 +19,4 @@ export const bubbleFullWidth: string;
 export const bubbleImageContainer: string;
 export const expandedVideo: string;
 export const linkContainer: string;
+export const bubbleRight: string;
