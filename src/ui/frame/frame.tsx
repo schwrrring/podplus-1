@@ -587,7 +587,7 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
 
         mediaSession.metadata = new MediaMetadata({
             title: this.state.currentChapterName,
-            artist: "The Guardian",
+            artist: "N-Joy",
             album: this.state.script.metadata.title,
             artwork: [{src: this.state.script.metadata.artwork, sizes: "3001x3001", type: "image/jpg"}]
         });

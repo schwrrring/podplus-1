@@ -57,6 +57,7 @@ export class Ding extends React.Component<DingProps, any> {
     constructor(props) {
         super(props);
         this.activateAudioElement = this.activateAudioElement.bind(this);
+        this.shouldPlayDings = true;
     }
 
     render() {
@@ -72,9 +73,10 @@ export class Ding extends React.Component<DingProps, any> {
 
     async ding() {
         if (this.shouldPlayDings === false) {
-            console.warn("DING: wanted to ding, but it's disabled");
+
             // return;
         }
+        if(this.shouldPlayDings === true){console.log('should play ding = true')}
         console.info("DING: dinging");
         if (!this.dingAudioElement) {
             throw new Error("Tried to play 'ding' element, but it didn't exist");
@@ -88,6 +90,7 @@ export class Ding extends React.Component<DingProps, any> {
     }
 
     componentDidMount() {
+        (window as any).dingger = ()=> this.dingAudioElement!.play();
         // We need to get this to play in reaction to a touch event, so that we're
         // able to freely play it later. So we set up this touch handler.
         console.info("DING: adding touchstart listener");
@@ -100,6 +103,7 @@ export class Ding extends React.Component<DingProps, any> {
 
     componentWillUnmount() {
         document.removeEventListener("touchend", this.activateAudioElement);
+        console.log('ding component unmounts')
     }
 
     async activateAudioElement() {
@@ -110,6 +114,7 @@ export class Ding extends React.Component<DingProps, any> {
         document.removeEventListener("touchend", this.activateAudioElement);
         this.dingAudioElement.volume = 0;
         await this.dingAudioElement.play();
+        (window as any).dingger = this.dingAudioElement.play;
         this.dingAudioElement.pause();
         // this.dingAudioElement.currentTime = 0;
         this.dingAudioElement.volume = 1;

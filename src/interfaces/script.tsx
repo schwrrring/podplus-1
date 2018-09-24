@@ -81,7 +81,7 @@ function mapScriptEntry(
     let elements: JSX.Element[] = [<ChatBubble {...mappedProperties} key={`item_${index}_main`} />];
 
     let notificationOptions: ShowNotification = {
-        title: "Mona from The Guardian",
+        title: "Sabrina von Natürlich Prinzen",
         body: response.text || response.notificationOnlyText || "",
         events: {
             onclick: [
