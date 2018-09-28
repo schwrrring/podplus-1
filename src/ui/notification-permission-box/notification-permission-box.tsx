@@ -19,8 +19,8 @@ export function NotificationPermissionBox(props: PermissionBoxProps) {
                 }}
             />
             <div className={contactBoxStyles.contactBox}>
-                <h3>To finish enabling alerts...</h3>
-                <p>Please change your notification permissions to "Allow" in your Chrome settings.</p>
+                <h3>Zum Aktivieren von Push-Nachrichten...</h3>
+                <p>ändere bitte Deine Browser-Einstellungen.</p>
                 <div className={styles.buttonBox}>
                     <button onClick={props.onClose}>Cancel</button>
                 </div>

@@ -152,7 +152,7 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
 function calculatePercentage(a: number, b: number) {
     let aInpercent: number;
 
-    aInpercent = Math.floor((a / (a + b) * 100));
+    aInpercent = Math.round((a / (a + b) * 100));
 
     return aInpercent
 }
