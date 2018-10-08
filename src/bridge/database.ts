@@ -81,9 +81,6 @@ export function saveTextInput(pollId: String, projectId, db, message) {
 
 
     let docRef = db.collection(projectId).doc(pollId);
-
-    docRef = db.collection(projectId).doc(pollId);
-
     docRef.get().then(
         (value) => {
             if (!value.exists) {
