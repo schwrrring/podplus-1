@@ -42,7 +42,7 @@ button.pause {
 }
 
 button.play {
-    background-image: url('data:image/svg+xml;utf8,<svg width="27" height="56" viewBox="0 0 27 56" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>play</title><defs><path d="M4.367 1.29l20.374 17.947c.936.815 1.03 2.24.212 3.19a3.683 3.683 0 0 1-.212.205L4.367 40.556c-.936.837-2.358.724-3.177-.204a2.284 2.284 0 0 1-.555-1.494V3.01A2.26 2.26 0 0 1 2.885.747a2.35 2.35 0 0 1 1.482.543z" id="a"/></defs><g transform="translate(0 7)" fill="none" fill-rule="evenodd"><mask id="b" fill="#0c1754"><use xlink:href="%23a"/></mask><path fill="#0c1754" mask="url(%23b)" d="M-21.866 63.753H48.01v-85.645h-69.876z"/></g></svg>');
+    background-image: url('data:image/svg+xml;utf8,<svg width="27" height="56" viewBox="0 0 27 56" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>play</title><defs><path d="M4.367 1.29l20.374 17.947c.936.815 1.03 2.24.212 3.19a3.683 3.683 0 0 1-.212.205L4.367 40.556c-.936.837-2.358.724-3.177-.204a2.284 2.284 0 0 1-.555-1.494V3.01A2.26 2.26 0 0 1 2.885.747a2.35 2.35 0 0 1 1.482.543z" id="a"/></defs><g transform="translate(0 7)" fill="none" fill-rule="evenodd"><mask id="b" fill="%23FFF"><use xlink:href="%23a"/></mask><path fill="#0c1754" mask="url(%23b)" d="M-21.866 63.753H48.01v-85.645h-69.876z"/></g></svg>');
 }
 
 button.more {
