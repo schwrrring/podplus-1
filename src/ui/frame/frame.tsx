@@ -1,8 +1,6 @@
 import * as styles from "./frame.css";
 import {ChatWindow} from "../chat-window/chat-window";
 import * as React from "react";
-import {runServiceWorkerCommand, ServiceWorkerNotSupportedError} from "service-worker-command-bridge";
-import {CacheSyncRequest, CacheSyncResponse} from "../../interfaces/cache-sync-request";
 // import { Waveform } from "../waveform/waveform";
 import {Progress} from "../progress/progress";
 import {Controls} from "../controls/controls";
@@ -21,6 +19,7 @@ import {NotificationRequestResult} from "../../interfaces/notification";
 import {setNotificationEnableState, getNotificationEnableState} from "../../util/notification-dispatch";
 import {ContactBox, setShowOrHideFunction} from "../contact-box/contact-box";
 import {NotificationPermissionBox} from "../notification-permission-box/notification-permission-box";
+import FrameContext from '../../contexts/frame-context'
 
 declare var FontFaceSet: any;
 
@@ -53,13 +52,6 @@ interface PlayerState {
     hideControls?: boolean;
 }
 
-export interface FrameFunctions{
-    pause: ()=> void;
-    play: () => void;
-    toggleControls: () => void;
-    cacheName: string;
-}
-
 interface PlayerProps {
     scriptURL: string;
 }
@@ -86,13 +78,9 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
         this.audioError = this.audioError.bind(this);
         this.pause = this.pause.bind(this);
         this.play = this.play.bind(this);
-        (window as any).toggleControls = () => {
-            this.toggleControls()
-        };
     }
 
     toggleControls() {
-        console.log('toggle Controls is called');
         this.setState(prevState => ({
             hideControls: !prevState.hideControls
         }))
@@ -114,16 +102,15 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
 
         Promise.all([loadAndTransformData(), fontsLoaded]).then(async ([json]) => {
             let cacheName = json.podcastId + "_" + json.episodeId;
+            this.contextValues.cacheName = json.podcastId + "_" + json.episodeId;
 
             // If the cache already exists then we know we've at least attempted
             // to cache the podcast before now.
             let hasCacheAlready = "caches" in self && (await caches.has(cacheName));
 
-            let frameFunctions = {pause: this.pause, play: this.play, toggleControls: this.toggleControls, cacheName: cacheName}
-
             this.setState({
                 script: json,
-                scriptElements: mapScriptEntries(json, absoluteURL, frameFunctions ),
+                scriptElements: mapScriptEntries(json, absoluteURL),
                 downloadOffline: hasCacheAlready
             });
         });
@@ -165,8 +152,24 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
         // source.load();
     }
 
-    render() {
+    contextValues = {
+        pausex: () => {
+            if (this.state.playState == PlayState.Playing) {
+                this.pause();
+            } else {
+                this.play();
+            }
+        },
+        toggleControls: () => this.toggleControls(),
+        canPlay: undefined as any,
+        canPause: undefined as any,
+        cacheName: undefined as any
 
+    }
+
+    render() {
+        this.contextValues.canPlay = this.state.playState == PlayState.Paused;
+        this.contextValues.canPause = this.state.playState == PlayState.Playing;
         let loadedPercent = 0;
         let playbackPercent = 0;
         let duration = 0;
@@ -247,7 +250,6 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
             );
 
 
-
             chapterMarks = this.state.script.chapters.map(c => c.time);
         }
 
@@ -256,108 +258,109 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
         // (this.state.playState === PlayState.Paused && this.state.playback.current === 0);
 
         return (
-            <div className={styles.frame} onTouchMove={e => e.preventDefault()}>
-                {audio}
-                {dingElement}
-                <Header
-                    metadata={this.state.script ? this.state.script.metadata : undefined}
-                    showExpanded={isInitialView}
-                />
-                <ChatWindow
-                    script={this.state.script}
-                    currentTime={this.state.playback ? this.state.playback.current : 0}
-                    elements={this.state.scriptElements}
-                    ref={el => (this.chatWindow = el)}
-                    playDings={this.state.playback ? !this.state.playback.manuallyScrubbed : true}
-                    playStateChange={this.playStateChange}
-
-                />
-
-
-
-                {!this.state.hideControls &&
-                <BottomSlider
-                    className={styles.controls}
-                    bottomElement={
-                        <BottomInfo
-                            offlineDownloadEnabled={this.state.downloadOffline}
-                            offlineDownloadChange={newValue => this.setState({downloadOffline: newValue})}
-                            script={this.state.script}
-                            alertsEnabled={this.state.showNotifications}
-                            onAlertChange={newSetting => this.setNotificationSetting(newSetting)}
-                        />
-                    }
-                    expanded={this.state.bottomSliderExpanded}
-                >
-                    <ProgressSlider
-                        length={duration}
-                        currentPosition={currentPosition}
-                        chapters={chapterMarks}
-                        onSliderChange={newTime => this.setTime(newTime, false)}
+            <FrameContext.Provider value={this.contextValues}>
+                <div className={styles.frame} onTouchMove={e => e.preventDefault()}>
+                    {audio}
+                    {dingElement}
+                    <Header
+                        metadata={this.state.script ? this.state.script.metadata : undefined}
+                        showExpanded={isInitialView}
                     />
-                    <div className={styles.timeAndChapter}>
-                        <TimeFormatter
-                            time={this.state.playback ? this.state.playback.current : 0}
-                            className={styles.timeBlock}
+                    <ChatWindow
+                        script={this.state.script}
+                        currentTime={this.state.playback ? this.state.playback.current : 0}
+                        elements={this.state.scriptElements}
+                        ref={el => (this.chatWindow = el)}
+                        playDings={this.state.playback ? !this.state.playback.manuallyScrubbed : true}
+                        playStateChange={this.playStateChange}
+
+                    />
+
+
+                    {!this.state.hideControls &&
+                    <BottomSlider
+                        className={styles.controls}
+                        bottomElement={
+                            <BottomInfo
+                                offlineDownloadEnabled={this.state.downloadOffline}
+                                offlineDownloadChange={newValue => this.setState({downloadOffline: newValue})}
+                                script={this.state.script}
+                                alertsEnabled={this.state.showNotifications}
+                                onAlertChange={newSetting => this.setNotificationSetting(newSetting)}
+                            />
+                        }
+                        expanded={this.state.bottomSliderExpanded}
+                    >
+                        <ProgressSlider
+                            length={duration}
+                            currentPosition={currentPosition}
+                            chapters={chapterMarks}
+                            onSliderChange={newTime => this.setTime(newTime, false)}
                         />
-                        <div className={styles.currentChapterName}>
-                            {this.state.buffering ? "Buffering..." : this.state.currentChapterName}
+                        <div className={styles.timeAndChapter}>
+                            <TimeFormatter
+                                time={this.state.playback ? this.state.playback.current : 0}
+                                className={styles.timeBlock}
+                            />
+                            <div className={styles.currentChapterName}>
+                                {this.state.buffering ? "Buffering..." : this.state.currentChapterName}
+                            </div>
+                            <TimeFormatter
+                                time={
+                                    this.state.playback
+                                        ? this.state.playback.total - this.state.playback.current
+                                        : undefined
+                                }
+                                className={styles.timeBlock + " " + styles.timeLeft}
+                            />
                         </div>
-                        <TimeFormatter
-                            time={
-                                this.state.playback
-                                    ? this.state.playback.total - this.state.playback.current
-                                    : undefined
-                            }
-                            className={styles.timeBlock + " " + styles.timeLeft}
+                        <Controls
+                            onPlay={() => {
+                                sendEvent("Web browser", "Play");
+                                this.play();
+                            }}
+                            onPause={() => {
+                                sendEvent("Web browser", "Pause");
+                                this.pause();
+                            }}
+                            onRewind={() => {
+                                sendEvent("Web browser", "15 seconds backwards");
+                                this.setTime(-15, true);
+                            }}
+                            onFastForward={() => {
+                                sendEvent("Web browser", "15 seconds forward");
+                                this.setTime(15, true);
+                            }}
+                            onSkipBack={() => this.moveChapter(-1)}
+                            onSkipForward={() => this.moveChapter(1)}
+                            canPlay={this.state.playState == PlayState.Paused}
+                            canPause={this.state.playState == PlayState.Playing}
+                            onBottomToggle={() => {
+                                sendEvent(
+                                    "Web browser",
+                                    this.state.bottomSliderExpanded ? "Close episode menu" : "Open episode menu"
+                                );
+                                this.setState({bottomSliderExpanded: !this.state.bottomSliderExpanded});
+                            }}
                         />
-                    </div>
-                    <Controls
-                        onPlay={() => {
-                            sendEvent("Web browser", "Play");
-                            this.play();
-                        }}
-                        onPause={() => {
-                            sendEvent("Web browser", "Pause");
-                            this.pause();
-                        }}
-                        onRewind={() => {
-                            sendEvent("Web browser", "15 seconds backwards");
-                            this.setTime(-15, true);
-                        }}
-                        onFastForward={() => {
-                            sendEvent("Web browser", "15 seconds forward");
-                            this.setTime(15, true);
-                        }}
-                        onSkipBack={() => this.moveChapter(-1)}
-                        onSkipForward={() => this.moveChapter(1)}
-                        canPlay={this.state.playState == PlayState.Paused}
-                        canPause={this.state.playState == PlayState.Playing}
-                        onBottomToggle={() => {
-                            sendEvent(
-                                "Web browser",
-                                this.state.bottomSliderExpanded ? "Close episode menu" : "Open episode menu"
-                            );
-                            this.setState({bottomSliderExpanded: !this.state.bottomSliderExpanded});
-                        }}
+                        <StartButton
+                            display={isInitialView}
+                            onPlay={show => this.playWithNotificationSetting(show)}
+                            onNotificationPermissionChange={() => {
+                            }}
+                        />
+                    </BottomSlider>
+                    }
+                    {contactBox}
+                    <SideMenu
+                        script={this.state.script}
+                        toggleContactBox={this.toggleContactWindow}
+                        isPlaying={this.state.playback !== undefined}
+                        scriptURL={this.props.scriptURL}
                     />
-                    <StartButton
-                        display={isInitialView}
-                        onPlay={show => this.playWithNotificationSetting(show)}
-                        onNotificationPermissionChange={() => {
-                        }}
-                    />
-                </BottomSlider>
-                }
-                {contactBox}
-                <SideMenu
-                    script={this.state.script}
-                    toggleContactBox={this.toggleContactWindow}
-                    isPlaying={this.state.playback !== undefined}
-                    scriptURL={this.props.scriptURL}
-                />
-                {permissionWarning}
-            </div>
+                    {permissionWarning}
+                </div>
+            </FrameContext.Provider>
         );
     }
 

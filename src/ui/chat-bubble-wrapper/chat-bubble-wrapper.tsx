@@ -1,5 +1,4 @@
 import * as React from "react";
-import {FrameFunctions} from "../frame/frame";
 import {ChatBubble, ChatBubbleImage, ChatBubbleLink, ChatBubblePollInt} from "../chat-bubble/chat-bubble";
 import {Chapter} from "../../interfaces/script";
 import * as styles from "./chat-bubble-wrapper.css";
@@ -14,9 +13,8 @@ export interface ChatBubbleWrapperProp {
     silent?: boolean;
     notificationOnlyText?: string;
     poll?: ChatBubblePollInt;
-    onResize?: () => void;
-    frameFunctions?: FrameFunctions;
-    projectId?: string;
+    cacheName?: string | any;
+    onResize?: any;
 }
 
 export interface ChatBubbleWrapperState {
@@ -56,7 +54,7 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
             bubbleSizeChanged: true
         });
         setTimeout(this.scrollToBottom,30)
-        saveTextInput(this.props.poll!.pollID!, this.props.frameFunctions!.cacheName, db, this.state.inputText)
+        saveTextInput(this.props.poll!.pollID!, this.props.cacheName, db, this.state.inputText)
 
         e.preventDefault()
     }
@@ -75,7 +73,7 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
                         <button type='submit' value="Submit" className={styles.button}  onFocus={(e)=>{this.handleSendClick(e)}}>
                             <img src={sendurl.href} className={styles.buttonImageStyle}/>
                         </button>
-                        {/*<button className={styles.button} onClick={()=>{this.props.frameFunctions!.pause(); this.props.frameFunctions!.toggleControls()}}>cancel</button>*/}
+
                     </div>
                 </div>
             )

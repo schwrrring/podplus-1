@@ -4,7 +4,7 @@ import {findDomNode} from "react-dom";
 import {ChangeEvent, Component, CSSProperties} from "react";
 import {ChatBubblePollProperties, ChatBubblePollState} from "../chat-bubble/chat-bubble";
 import {db, saveTextInput} from "../../bridge/database";
-import {FrameFunctions} from "../frame/frame";
+
 
 
 export interface PollUserTextinputProperties {
@@ -12,8 +12,7 @@ export interface PollUserTextinputProperties {
     followUp?: string;
     pollID: string;
     onResize?: () => void;
-    projectId?: string;
-    frameFunctions?: FrameFunctions;
+    frameFunctions?: any;
     userInput?: string;
     onInputChange: any; // TODO: refactor, add function and argumentTypes
 }
@@ -46,7 +45,6 @@ export class PollUserTextinput extends Component<PollUserTextinputProperties, Po
             element.style.height = (element.scrollHeight) + "px";
             // element.style.width = (element.scrollWidth) + "px";
             this.props.onResize!();
-
     }
 
     handleChange(e){

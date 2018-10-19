@@ -9,7 +9,8 @@ import {showOrHideSideMenu} from "../side-menu/side-menu";
 import {sendEvent} from "../../util/analytics";
 import {PollUserChoice} from "../poll-user-choice/poll-user-choice";
 import {PollUserTextinput} from "../poll-user-textinput/poll-user-textinput";
-import {FrameFunctions} from "../frame/frame";
+import FrameContext from "../../contexts/frame-context"
+import ScrollViewItemContext from "../performance-scroll-view/scroll-view-item-context";
 
 export interface ChatBubbleImage {
     url: string;
@@ -24,9 +25,6 @@ export interface ChatBubblePollProperties {
     choices: string[];
     followUp?: string;
     pollID: string;
-    onResize?: () => void;
-    projectId?: string;
-    frameFunctions?: FrameFunctions;
     activateAnswerBubble?: (string) => void;
 
 }
@@ -65,8 +63,6 @@ export interface ChatBubbleProperties {
     silent?: boolean;
     notificationOnlyText?: string;
     poll?: ChatBubblePollInt;
-    onResize?: () => void;
-    frameFunctions?: FrameFunctions;
     projectId?: string;
     userInput?: string;
     onInputChange?: any;
@@ -187,33 +183,44 @@ function renderPoll(bindTo: ChatBubble) {
         return null;
     }
     if (bindTo.props.poll.choices.length > 0) {
-        return (<PollUserChoice
-            question={bindTo.props.poll.question}
-            choices={bindTo.props.poll.choices}
-            followUp={bindTo.props.poll.followUp}
-            pollID={bindTo.props.poll.pollID}
-            showResults={bindTo.props.poll.showResults}
-            onResize={bindTo.props.onResize!}
-            frameFunctions={bindTo.props.frameFunctions}
-            key={"poll"}
-            projectId={bindTo.props.frameFunctions!.cacheName}
-            changeBubbleClass = {bindTo.changeClassName}
-            parentClassChanged={bindTo.state.parentClassChanged}
-        />)
+        return (
+            <ScrollViewItemContext.Consumer>
+                {viewItemContext =>
+                    <PollUserChoice
+                        question={bindTo.props!.poll!.question}
+                        choices={bindTo.props!.poll!.choices}
+                        followUp={bindTo.props!.poll!.followUp}
+                        pollID={bindTo.props!.poll!.pollID}
+                        showResults={bindTo.props!.poll!.showResults}
+                        onResize={viewItemContext.onResize!}
+                        key={"poll"}
+                        changeBubbleClass={bindTo.changeClassName}
+                        parentClassChanged={bindTo.state.parentClassChanged}
+                    />}
+            </ScrollViewItemContext.Consumer>
+        )
     }
     else {
 
-        return (<PollUserTextinput
-            question={bindTo.props.poll.question}
-            followUp={bindTo.props.poll.followUp}
-            pollID={bindTo.props.poll.pollID}
-            onResize={bindTo.props.onResize}
-            frameFunctions={bindTo.props.frameFunctions}
-            projectId={bindTo.props.frameFunctions!.cacheName}
-            key={"poll"}
-            userInput={bindTo.props.userInput}
-            onInputChange={bindTo.props.onInputChange}
-        />)
+        return (
+            <ScrollViewItemContext.Consumer>
+                {viewItemContext =>
+                    <FrameContext.Consumer>
+                        {frame =>
+                            <PollUserTextinput
+                                question={bindTo.props!.poll!.question}
+                                followUp={bindTo.props!.poll!.followUp}
+                                pollID={bindTo.props!.poll!.pollID}
+                                onResize={viewItemContext.onResize}
+                                frameFunctions={frame}
+                                key={"poll"}
+                                userInput={bindTo.props.userInput}
+                                onInputChange={bindTo.props.onInputChange}
+                            />
+                        }
+                    </FrameContext.Consumer>}
+            </ScrollViewItemContext.Consumer>
+        )
     }
 }
 
@@ -297,8 +304,8 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
         this.changeClassName = this.changeClassName.bind(this);
     }
 
-    changeClassName(className: string){
-        this.setState( {
+    changeClassName(className: string) {
+        this.setState({
             chatBubbleClassName: className,
             parentClassChanged: true
         })

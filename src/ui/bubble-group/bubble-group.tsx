@@ -12,7 +12,6 @@ const ALWAYS_SHOW_NOTIFICATIONS =
 interface BubbleGroupProperties {
     notification?: ShowNotification;
     silent: boolean;
-    onResize?: () => void;
 }
 
 interface BubbleGroupState {
@@ -39,7 +38,7 @@ export class BubbleGroup extends React.Component<BubbleGroupProperties, BubbleGr
     render() {
 
         const childWithProp = React.Children.map(this.props.children, (child) => {
-            return React.cloneElement( child as ReactElement<any>, {onResize: this.props.onResize});
+            return React.cloneElement( child as ReactElement<any>);
         });
 
         return childWithProp;

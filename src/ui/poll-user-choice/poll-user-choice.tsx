@@ -4,7 +4,6 @@ import {Component} from "react";
 import {ChatBubbleImage, ChatBubbleLink, ChatBubbleProperties} from "../chat-bubble/chat-bubble";
 import {Chapter} from "../../interfaces/script";
 import {createCounter, db, getCount, incrementCounter} from "../../bridge/database";
-import {FrameFunctions} from "../frame/frame";
 import MDSpinner from "react-md-spinner";
 
 interface ChatBubblePollProperties {
@@ -14,7 +13,6 @@ interface ChatBubblePollProperties {
     pollID: string;
     showResults: boolean;
     onResize: () => void;
-    frameFunctions?: FrameFunctions;
     projectId?: string;
     changeBubbleClass?: (string) => void;
     parentClassChanged: boolean | undefined;
@@ -69,7 +67,6 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
         return this.state.isLoading ? styles.hiddenChatBubble : styles.bubblePollButtonsContainer
     }
 
-
     render() {
 
         let retVal;
@@ -93,12 +90,10 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                                 })
                                 .catch(() => console.log('couldnt get answer data'))
                             this.setState({isLoading: true})
-                            // this.props.onResize();
                         }}>
                             {this.props.choices[0]}
                         </button>
                         <button className={styles.bubblePollButtons} onClick={() => {
-
                             incrementCounter(db, this.state.databaseRefs[1], 10);
                             let iterable = this.state.databaseRefs.map((val) => getCount(val));
                             let results = Promise.all(iterable)

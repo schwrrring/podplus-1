@@ -1,5 +1,6 @@
 import {Component} from "react";
 import * as React from "react";
+import ScrollViewItemContext from './scroll-view-item-context';
 
 const scrollViewItemCSS: React.CSSProperties = {
     position: "absolute",
@@ -22,16 +23,12 @@ export class ScrollViewItem extends Component<ScrollViewItemProperties, any> {
 
     constructor(props) {
         super(props);
-
         this.onResize = this.onResize.bind(this);
-
-
-        (window as any).resizer = ()=>{ return this.onResize()}
     }
 
-    onResize (){
+    onResize() {
 
-        if(this.wrapperElement) {
+        if (this.wrapperElement) {
             let size = this.wrapperElement.getBoundingClientRect();
             this.props.onRender(this.props.itemIndex, Math.ceil(size.width), Math.ceil(size.height));
             return this.wrapperElement;
@@ -48,19 +45,22 @@ export class ScrollViewItem extends Component<ScrollViewItemProperties, any> {
                 transform: `translate3d(0,${this.props.y}px,0)`
             });
         }
-
+        // TODO: der ganze kladaradatsch ist wahrscheinlich nicht mehr notwendig, wei on resize ueber den Context nach unten
+        // durchgegeben wird.
         const childWithProp = React.Children.map(this.props.children, (child) => {
             return React.cloneElement(child as React.ReactElement<any>, {onResize: this.onResize});
         });
 
 
         return (
-            <div id={this.props.debugId} ref={el => (this.wrapperElement = el!)} style={style}>
-                {childWithProp}
-            </div>
+            <ScrollViewItemContext.Provider value={{onResize: this.onResize}}>
+                <div id={this.props.debugId} ref={el => (this.wrapperElement = el!)} style={style}>
+                    {childWithProp}
+                </div>
+            </ScrollViewItemContext.Provider>
         );
     }
-    // hierherkommt die Groesse!!!!!!
+
     componentDidMount() {
         let size = this.wrapperElement.getBoundingClientRect();
         this.props.onRender(this.props.itemIndex, Math.ceil(size.width), Math.ceil(size.height));

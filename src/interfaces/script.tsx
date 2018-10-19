@@ -1,9 +1,11 @@
-import { ChatBubbleProperties, ChatBubble } from "../ui/chat-bubble/chat-bubble";
-import { BubbleGroup } from "../ui/bubble-group/bubble-group";
-import { ShowNotification, RunCommand } from "worker-commands";
-import {FrameFunctions} from "../ui/frame/frame";
+import {ChatBubbleProperties, ChatBubble} from "../ui/chat-bubble/chat-bubble";
+import {BubbleGroup} from "../ui/bubble-group/bubble-group";
+import {ShowNotification, RunCommand} from "worker-commands";
 import * as React from "react";
 import {ChatBubbleWrapper} from "../ui/chat-bubble-wrapper/chat-bubble-wrapper";
+import FrameContext from "../contexts/frame-context";
+import ScrollViewItemContext from "../ui/performance-scroll-view/scroll-view-item-context";
+import {string} from "prop-types";
 
 export interface Chapter {
     time: number;
@@ -17,14 +19,19 @@ export interface ScriptMetadata {
     length: number;
     episodeName: string;
     artwork: string;
+    // used in side-menu contact section
     contactHeader: string;
+    // link to external survey-page
     surveyUrl: string;
+    //
+    pushNotificationHeader: string;
 }
 
 export interface ScriptContact {
     tel?: string;
     sms?: string;
     email?: string;
+    // used in side-menu contact section
     headerContactPopUp?: string;
     teaserContactPopUp?: string;
 }
@@ -48,7 +55,6 @@ export interface Script {
     dingFile: string;
     contact: ScriptContact;
     team: ScriptTeamMember[];
-
 }
 
 export function makeRelative(url: string, baseURL: string) {
@@ -59,7 +65,7 @@ function mapScriptEntry(
     response: ChatBubbleProperties,
     index: number,
     baseURL: URL,
-    frameFunctions: FrameFunctions
+    pushNotificationHeader: string
 ): JSX.Element | undefined {
     // Hack for last-minute iOS bug
 
@@ -78,10 +84,10 @@ function mapScriptEntry(
 
     mappedProperties.text = response.text;
 
-    let elements: JSX.Element[] = [<ChatBubble {...mappedProperties} key={`item_${index}_main`} />];
+    let elements: JSX.Element[] = [<ChatBubble {...mappedProperties} key={`item_${index}_main`}/>];
 
     let notificationOptions: ShowNotification = {
-        title: "Sabrina von Natürlich Prinzen",
+        title: pushNotificationHeader,
         body: response.text || response.notificationOnlyText || "",
         events: {
             onclick: [
@@ -121,17 +127,27 @@ function mapScriptEntry(
             }
         });
 
-        elements.unshift(<ChatBubble time={response.time} key={`item_${index}_images`} images={images} />);
+        elements.unshift(<ChatBubble time={response.time} key={`item_${index}_images`} images={images}/>);
     }
 
     if (response.poll && response.poll!.choices.length == 0) { // TODO: zwischen Poll 1 und Poll 2 unterscheiden
 
         let secondItemProperties: ChatBubbleProperties = {
             time: response.time,
-           poll: response.poll,
+            poll: response.poll,
         };
 
-        elements.push(<ChatBubbleWrapper {...secondItemProperties} key={`item_${index}_poll`} frameFunctions={frameFunctions} />);
+        elements.push(
+            <ScrollViewItemContext.Consumer>{
+                viewItemContext =>
+                    <FrameContext.Consumer>{
+                        value =>
+                            <ChatBubbleWrapper onResize = {viewItemContext.onResize} cacheName={value.cacheName!} {...secondItemProperties}
+                                               key={`item_${index}_poll`}/>
+                    }
+                    </FrameContext.Consumer>}
+            </ScrollViewItemContext.Consumer>
+        );
 
     }
 
@@ -142,7 +158,7 @@ function mapScriptEntry(
             poll: response.poll,
         };
 
-        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_poll`} frameFunctions={frameFunctions} />);
+        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_poll`}/>);
 
     }
 
@@ -165,7 +181,7 @@ function mapScriptEntry(
             }
         };
 
-        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_link`} />);
+        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_link`}/>);
     }
 
     if (response.link) {
@@ -201,7 +217,7 @@ function mapScriptEntry(
     );
 }
 
-export function mapScriptEntries(script: Script, baseURL: URL, frameFunctions: FrameFunctions) {
+export function mapScriptEntries(script: Script, baseURL: URL) {
 
     let items: JSX.Element[] = [];
     let currentChapterIndex = 0;
@@ -211,13 +227,13 @@ export function mapScriptEntries(script: Script, baseURL: URL, frameFunctions: F
         if (currentChapter && currentChapter.time <= scriptItem.time) {
             items.push(
                 <BubbleGroup key={"chapter_" + currentChapterIndex} silent={true}>
-                    <ChatBubble chapterIndicator={currentChapter} time={currentChapter.time}  />
+                    <ChatBubble chapterIndicator={currentChapter} time={currentChapter.time}/>
                 </BubbleGroup>
             );
             currentChapterIndex++;
         }
 
-        let item = mapScriptEntry(scriptItem, idx, baseURL,  frameFunctions );
+        let item = mapScriptEntry(scriptItem, idx, baseURL, script.metadata.pushNotificationHeader);
         if (item) {
             items.push(item);
         }
