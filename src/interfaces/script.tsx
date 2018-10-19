@@ -23,7 +23,7 @@ export interface ScriptMetadata {
     contactHeader: string;
     // link to external survey-page
     surveyUrl: string;
-    //
+    // header Used in PushNotifications
     pushNotificationHeader: string;
 }
 
