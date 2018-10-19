@@ -12,7 +12,6 @@ import {
     getSubscribedTopics,
     SubscribeOptions,
     UnsubscribeOptions
-
 } from "pushkin-client";
 import { cacheCheckSplit } from "./io/cache-split";
 import checkForRangeRequest from "browser-range-response";
@@ -213,5 +212,3 @@ CommandListener.bind("push-subscribe", (opts: SubscribeOptions) => {
 CommandListener.bind("push-unsubscribe", (opts: UnsubscribeOptions) => {
     return unsubscribeFromTopic(opts);
 });
-
-

@@ -2,46 +2,53 @@ import * as firebase from 'firebase'
 import firestore from 'firebase/firebase-firestore'
 
 interface FirebaseConfig {
-    apiKey: string,
-    authDomain: string,
-    databaseURL: string,
-    projectId: string,
-    storageBucket: string,
-    messagingSenderId: string,
-
-
+    apiKey: string | undefined,
+    authDomain: string | undefined,
+    databaseURL: string | undefined,
+    projectId: string | undefined,
+    storageBucket: string | undefined,
+    messagingSenderId: string | undefined
 }
 
+// TODO: put to config file
 var config: FirebaseConfig = {
-    apiKey: "AIzaSyAKzcd6jibmJTJqZHIbAhPgjRv_m0f4cws",
-    authDomain: "podcastplusv1.firebaseapp.com",
-    databaseURL: "https://podcastplusv1.firebaseio.com",
-    projectId: "podcastplusv1",
-    storageBucket: "podcastplusv1.appspot.com",
-    messagingSenderId: "898237232429",
+    apiKey: FIREBASE_API_KEY,
+    authDomain: FIREBASE_AUTH_DOMAIN,
+    databaseURL: FIREBASE_DATABASE_URL,
+    projectId: FIREBASE_PROJECT_ID,
+    storageBucket: FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
 };
-firebase.initializeApp(config);
-const firestore = firebase.firestore();
 
-firestore.settings({timestampsInSnapshots: true})
+firebase.initializeApp(config);
 
 export const db = firebase.firestore();
+// needs to be configured dur to deprecation warning in browser
+db.settings({timestampsInSnapshots: true})
 
-(window as any).db = db;
-(window as any).firebase = firebase;
 
+/**
+ * the following methods are used in poll-user-choice-component to save and get to save and return user voting results as used in the
+ * ------------------------------------------------------------------------------------------------------------------------------
+ */
+
+/**
+ * creates a distributed counter for firestore in order to count multiple user votes
+ * at the same time. See https://firebase.google.com/docs/firestore/solutions/counters
+ *
+ * @param {firebase.firestore.DocumentReference} ref
+ * @param {number} num_shards
+ * @returns {Promise<void>}
+ */
 export function createCounter(ref: firebase.firestore.DocumentReference, num_shards: number) {
     var batch = db.batch();
     // Initialize the counter document
-
     batch.set(ref, {num_shards: num_shards}, {merge: true});
-
     // Initialize each shard with count=0
     for (let i = 0; i < num_shards; i++) {
         let shardRef = ref.collection('shards').doc(i.toString());
         batch.set(shardRef, {count: 0}, {merge: true});
     }
-
     // Commit the write batch
     return batch.commit();
 }
@@ -76,10 +83,17 @@ export function getCount(ref) {
     });
 }
 
+//-------------------------------------------------------------------------
 
+/**
+ * used in poll-user-text-input component to save text messages sent by users
+ *
+ * @param {String} pollId
+ * @param projectId
+ * @param db
+ * @param message
+ */
 export function saveTextInput(pollId: String, projectId, db, message) {
-
-
     let docRef = db.collection(projectId).doc(pollId);
     docRef.get().then(
         (value) => {
@@ -92,30 +106,11 @@ export function saveTextInput(pollId: String, projectId, db, message) {
                         {values: firebase.firestore.FieldValue!.arrayUnion(message)}
                     )
                 }
-                catch (e) { console.log(e);
-
+                catch (e) {
+                    console.log(e);
                 }
             }
         }
     ).then(() => console.log('Successfully written'))
         .catch(err => console.log(err));
-
-    // db.collection(projectId).doc(pollId).set({a: 2}, {merge: true}).then(function () {
-    //     console.log("Document successfully written!");
-    // })
-    //     .catch(function (error) {
-    //         console.error("Error writing document: ", error);
-    //     });
-
-    // var newPostKey = firebase.database().ref().child(pollId).push().key;
-    //
-    //     let ref = db.collection(pollID).doc(this.props.choices[i]);
-    //     const ergebnis = ref.get()
-    //     ergebnis.then(function (userInput) {
-    //         if (!userInput.exists) {
-    //             createCounter(ref, 10)
-    //         }
-    //     })
-    //     temp.push(ref)
-
 }
