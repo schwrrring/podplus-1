@@ -213,6 +213,10 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
         if (this.state.script) {
             duration = this.state.script.metadata.length;
 
+            dingElement = (
+                <Ding audioURL={this.state.script.dingFile} getMainAudioElement={() => this.audioElement}/>
+            );
+
             audio = (
                 <audio
                     // src={this.state.script.audioFile}
@@ -242,9 +246,7 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
                 </audio>
             );
 
-            dingElement = (
-                <Ding audioURL={this.state.script.dingFile} getMainAudioElement={() => this.audioElement}/>
-            );
+
 
             chapterMarks = this.state.script.chapters.map(c => c.time);
         }

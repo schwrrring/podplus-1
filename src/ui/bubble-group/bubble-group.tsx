@@ -47,6 +47,7 @@ export class BubbleGroup extends React.Component<BubbleGroupProperties, BubbleGr
 
     componentDidMount() {
         if (this.props.silent === false) {
+            console.log('hier kommt das active Ding', activeDing );
             activeDing!.ding();
         }
 

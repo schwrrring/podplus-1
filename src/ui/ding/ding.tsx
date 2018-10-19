@@ -72,11 +72,14 @@ export class Ding extends React.Component<DingProps, any> {
     }
 
     async ding() {
+        console.log('dingFunktion')
         if (this.shouldPlayDings === false) {
 
-            // return;
+            console.log('should play ding = false');// return;
         }
-        if(this.shouldPlayDings === true){console.log('should play ding = true')}
+        if(this.shouldPlayDings === true){
+            console.log('should play ding = true')
+        }
         console.info("DING: dinging");
         if (!this.dingAudioElement) {
             throw new Error("Tried to play 'ding' element, but it didn't exist");
@@ -114,7 +117,6 @@ export class Ding extends React.Component<DingProps, any> {
         document.removeEventListener("touchend", this.activateAudioElement);
         this.dingAudioElement.volume = 0;
         await this.dingAudioElement.play();
-        (window as any).dingger = this.dingAudioElement.play;
         this.dingAudioElement.pause();
         // this.dingAudioElement.currentTime = 0;
         this.dingAudioElement.volume = 1;
