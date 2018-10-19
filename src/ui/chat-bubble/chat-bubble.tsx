@@ -11,14 +11,6 @@ import {PollUserChoice} from "../poll-user-choice/poll-user-choice";
 import {PollUserTextinput} from "../poll-user-textinput/poll-user-textinput";
 import {FrameFunctions} from "../frame/frame";
 
-// tryouts
-import {httpGet} from "../../bridge/httpRequest";
-import {db, createCounter, incrementCounter, getCount} from "../../bridge/database";
-
-export enum BubbleType {
-    text = "text"
-}
-
 export interface ChatBubbleImage {
     url: string;
     width: number;

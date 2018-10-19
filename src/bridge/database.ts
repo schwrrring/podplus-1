@@ -10,7 +10,6 @@ interface FirebaseConfig {
     messagingSenderId: string | undefined
 }
 
-// TODO: put to config file
 var config: FirebaseConfig = {
     apiKey: FIREBASE_API_KEY,
     authDomain: FIREBASE_AUTH_DOMAIN,
@@ -23,9 +22,8 @@ var config: FirebaseConfig = {
 firebase.initializeApp(config);
 
 export const db = firebase.firestore();
-// needs to be configured dur to deprecation warning in browser
+// needed to be configured due to deprecation warning in browser
 db.settings({timestampsInSnapshots: true})
-
 
 /**
  * the following methods are used in poll-user-choice-component to save and get to save and return user voting results as used in the
