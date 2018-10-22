@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ChatBubble, ChatBubbleImage, ChatBubbleLink, ChatBubblePollInt} from "../chat-bubble/chat-bubble";
+import {ChatBubble, ChatBubbleImage, ChatBubbleLink, ChatBubblePollInt, OpenQuestion} from "../chat-bubble/chat-bubble";
 import {Chapter} from "../../interfaces/script";
 import * as styles from "./chat-bubble-wrapper.css";
 import {db, saveTextInput} from "../../bridge/database";
@@ -12,7 +12,7 @@ export interface ChatBubbleWrapperProp {
     chapterIndicator?: Chapter;
     silent?: boolean;
     notificationOnlyText?: string;
-    poll?: ChatBubblePollInt;
+    openQuestion?: OpenQuestion;
     cacheName?: string | any;
     onResize?: any;
 }
@@ -54,7 +54,7 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
             bubbleSizeChanged: true
         });
         setTimeout(this.scrollToBottom,30)
-        saveTextInput(this.props.poll!.pollID!, this.props.cacheName, db, this.state.inputText)
+        saveTextInput(this.props.openQuestion!.pollID!, this.props.cacheName, db, this.state.inputText)
 
         e.preventDefault()
     }
@@ -83,11 +83,11 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
                 <div>
 
                         <ChatBubble  className={styles.bubbleRight} time={this.props.time} text={this.state.inputText} userInput={this.state.inputText}
-                                    isUserChatBubble={true} onInputChange={this.handleInputChange}/>
+                                    isUserChatBubble={true} onInputChange={this.handleInputChange} />
 
 
 
-                        <ChatBubble className={styles.bubbleLeft} time={this.props.time} text={this.props.poll!.followUp}
+                        <ChatBubble className={styles.bubbleLeft} time={this.props.time} text={this.props.openQuestion!.followUp}
                         />
 
                 </div>
@@ -98,7 +98,7 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
 
     componentDidUpdate(){
         if(this.state.answerBubbleIsActive && this.state.bubbleSizeChanged) {
-            if (this.props.poll!.choices.length == 0) {
+            if (this.props.openQuestion!.choices.length == 0) {
                 setTimeout(() => {
                     this.props.onResize!();
                 }, 0);

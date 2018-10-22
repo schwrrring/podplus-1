@@ -24,7 +24,7 @@ interface ChatBubblePollState {
     isLoading: boolean;
     databaseRefs: any[];
     value: any;
-
+    hasError: boolean
 }
 
 export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubblePollState> {
@@ -34,9 +34,17 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
             pollSent: false,
             databaseRefs: [], // Todo:fix any
             value: [],
-            isLoading: false
+            isLoading: false,
+            hasError: false
         }
         this.setUpDatabase = this.setUpDatabase.bind(this);
+    }
+
+    componentDidCatch(error, info) {
+        // Display fallback UI
+        this.setState({ hasError: true });
+        // You can also log the error to an error reporting service
+        console.log(error, info);
     }
 
     setUpDatabase() {
@@ -68,7 +76,10 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
     }
 
     render() {
-
+        if (this.state.hasError) {
+            // You can render any custom fallback UI
+            return <h1>Something went wrong.</h1>;
+        }
         let retVal;
         if (!this.state.pollSent) {
             retVal = (

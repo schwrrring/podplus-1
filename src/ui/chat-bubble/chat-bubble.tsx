@@ -53,6 +53,14 @@ export interface ChatBubblePollInt {
     showResults: boolean;
 }
 
+export interface OpenQuestion {
+    question: string;
+    choices: string[];
+    followUp: string;
+    pollID: string;
+    showResults: boolean;
+}
+
 export interface ChatBubbleProperties {
     text?: string;
     className?: string;
@@ -63,10 +71,12 @@ export interface ChatBubbleProperties {
     silent?: boolean;
     notificationOnlyText?: string;
     poll?: ChatBubblePollInt;
+    type?:  string;
+    openQuestion?: OpenQuestion;
     projectId?: string;
     userInput?: string;
     onInputChange?: any;
-    isUserChatBubble?: boolean; // TODO: implement als ersatz fuer den isActivted filter, der bestimmt, ob die bubble nach rehts oder nicht nach rechts rutscht.
+    isUserChatBubble?: boolean; // TODO: implement als ersatz fuer den is Activted filter, der bestimmt, ob die bubble nach rehts oder nicht nach rechts rutscht.
 
 }
 
@@ -150,7 +160,7 @@ function renderImage(bindTo: ChatBubble) {
     }
 
     return (
-        <div key="image" style={{maxHeight: "60vh"}} className={styles.bubbleImageContainer}>
+        <div key="imaged" style={{maxHeight: "60vh"}} className={styles.bubbleImageContainer}>
             <div
                 style={containerStyles}
                 onClick={() => {
@@ -178,13 +188,39 @@ function renderText(bindTo: ChatBubble) {
     );
 }
 
-function renderPoll(bindTo: ChatBubble) {
-    if (!bindTo.props.poll) {
-        return null;
+function renderOpenQuestion(bindTo: ChatBubble) {
+    if (!bindTo.props.openQuestion) {
+        return null
     }
-    if (bindTo.props.poll.choices.length > 0) {
+    return (
+
+        <ScrollViewItemContext.Consumer key={"userTextInput"}>
+            {viewItemContext =>
+                <FrameContext.Consumer>
+                    {frame =>
+                        <PollUserTextinput
+                            question={bindTo.props!.openQuestion!.question}
+                            followUp={bindTo.props!.openQuestion!.followUp}
+                            pollID={bindTo.props!.openQuestion!.pollID}
+                            onResize={viewItemContext.onResize}
+                            frameFunctions={frame}
+                            key={"userTextInput"}
+                            userInput={bindTo.props.userInput}
+                            onInputChange={bindTo.props.onInputChange}
+                        />
+                    }
+                </FrameContext.Consumer>}
+        </ScrollViewItemContext.Consumer>
+    )
+}
+
+function renderPoll(bindTo: ChatBubble) {
+
+    if (!bindTo.props.poll) {
+        return null
+    }
         return (
-            <ScrollViewItemContext.Consumer>
+            <ScrollViewItemContext.Consumer key={"openQuestion"}>
                 {viewItemContext =>
                     <PollUserChoice
                         question={bindTo.props!.poll!.question}
@@ -193,35 +229,13 @@ function renderPoll(bindTo: ChatBubble) {
                         pollID={bindTo.props!.poll!.pollID}
                         showResults={bindTo.props!.poll!.showResults}
                         onResize={viewItemContext.onResize!}
-                        key={"poll"}
+                        key={"multipleChoice"}
                         changeBubbleClass={bindTo.changeClassName}
                         parentClassChanged={bindTo.state.parentClassChanged}
                     />}
             </ScrollViewItemContext.Consumer>
         )
-    }
-    else {
 
-        return (
-            <ScrollViewItemContext.Consumer>
-                {viewItemContext =>
-                    <FrameContext.Consumer>
-                        {frame =>
-                            <PollUserTextinput
-                                question={bindTo.props!.poll!.question}
-                                followUp={bindTo.props!.poll!.followUp}
-                                pollID={bindTo.props!.poll!.pollID}
-                                onResize={viewItemContext.onResize}
-                                frameFunctions={frame}
-                                key={"poll"}
-                                userInput={bindTo.props.userInput}
-                                onInputChange={bindTo.props.onInputChange}
-                            />
-                        }
-                    </FrameContext.Consumer>}
-            </ScrollViewItemContext.Consumer>
-        )
-    }
 }
 
 function renderLink(props: ChatBubbleProperties) {
@@ -243,7 +257,7 @@ function renderLink(props: ChatBubbleProperties) {
     if (props.link.specialAction === "open-side-menu") {
         return (
             <div
-                key="link"
+                key="link2"
                 onClick={showOrHideSideMenu}
                 className={styles.bubbleText + " " + styles.bubbleLink}
             >
@@ -262,7 +276,7 @@ function renderLink(props: ChatBubbleProperties) {
             onClick={() => {
                 sendEvent("Web Browser", "Link Click", props.link!.url);
             }}
-            key="link"
+            key="link3"
             target="_blank"
             className={styles.bubbleText + " " + styles.bubbleLink}
             href={props.link.url}
@@ -336,6 +350,7 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
             renderImage(this),
             renderText(this),
             renderLink(this.props),
+            renderOpenQuestion(this),
             renderPoll(this),
         ];
 
@@ -349,20 +364,17 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
             containerClassName += " " + styles.linkContainer;
         }
 
-        // activateAnswerBubble is used in polls so it is another indicator, that it is a
-        // user-chat bubble, even if poll isnt defined
-        if (this.props.poll) {
-            if (this.props.poll!.choices.length == 0) {
-                containerClassName = styles.pollContainer;
-                return (
-                    <div className={containerClassName} ref={el => (this.containerElement = el)}>
-                        <div className={className} id={'scrollWrapper'} onTouchStart={this.setTouch}
-                             onTouchEnd={this.setTouch}>
-                            {elements}
-                        </div>
+
+        if (this.props.openQuestion) {
+            containerClassName = styles.pollContainer;
+            return (
+                <div className={containerClassName} ref={el => (this.containerElement = el)} >
+                    <div className={className} id={'scrollWrapper'} onTouchStart={this.setTouch}
+                         onTouchEnd={this.setTouch}>
+                        {elements}
                     </div>
-                );
-            }
+                </div>
+            );
         }
 
         return (

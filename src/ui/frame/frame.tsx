@@ -168,12 +168,14 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
     }
 
     render() {
+
         this.contextValues.canPlay = this.state.playState == PlayState.Paused;
         this.contextValues.canPause = this.state.playState == PlayState.Playing;
         let loadedPercent = 0;
         let playbackPercent = 0;
         let duration = 0;
         let currentPosition = 0;
+        console.log("currenPosition:" );
         if (this.state.download) {
             loadedPercent = this.state.download.current / this.state.download.total;
         }

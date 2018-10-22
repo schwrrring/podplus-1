@@ -50,6 +50,7 @@ export class PollUserTextinput extends Component<PollUserTextinputProperties, Po
     handleChange(e){
         this.props.onInputChange(e.target.value)
         this.props.onResize!();
+        //TODO: mega dirtY
         let elementx = window!.document!.querySelector('.chat-window')!.lastChild! as HTMLDivElement;
         elementx.scrollTop! = elementx.scrollHeight! - elementx.clientHeight!
     }

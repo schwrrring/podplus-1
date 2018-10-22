@@ -68,7 +68,6 @@ function mapScriptEntry(
     pushNotificationHeader: string
 ): JSX.Element | undefined {
     // Hack for last-minute iOS bug
-
     if (
         (!("Notification" in window) || !("serviceWorker" in navigator)) &&
         response.link &&
@@ -84,7 +83,9 @@ function mapScriptEntry(
 
     mappedProperties.text = response.text;
 
-    let elements: JSX.Element[] = [<ChatBubble {...mappedProperties} key={`item_${index}_main`}/>];
+    let elements: JSX.Element[] = [
+        <ChatBubble {...mappedProperties} key={`item_${index}_main`}/>
+    ];
 
     let notificationOptions: ShowNotification = {
         title: pushNotificationHeader,
@@ -130,20 +131,22 @@ function mapScriptEntry(
         elements.unshift(<ChatBubble time={response.time} key={`item_${index}_images`} images={images}/>);
     }
 
-    if (response.poll && response.poll!.choices.length == 0) { // TODO: zwischen Poll 1 und Poll 2 unterscheiden
+    if (response.openQuestion) { // TODO: zwischen Poll 1 und Poll 2 unterscheiden
 
         let secondItemProperties: ChatBubbleProperties = {
             time: response.time,
-            poll: response.poll,
+            openQuestion: response.openQuestion,
         };
+        console.log(response.openQuestion, "response.openQuestion");
 
         elements.push(
             <ScrollViewItemContext.Consumer>{
                 viewItemContext =>
                     <FrameContext.Consumer>{
                         value =>
-                            <ChatBubbleWrapper onResize = {viewItemContext.onResize} cacheName={value.cacheName!} {...secondItemProperties}
-                                               key={`item_${index}_poll`}/>
+                            <ChatBubbleWrapper onResize={viewItemContext.onResize}
+                                               cacheName={value.cacheName!} {...secondItemProperties}
+                                               key={`item_${index}_openQuestion`}/>
                     }
                     </FrameContext.Consumer>}
             </ScrollViewItemContext.Consumer>
@@ -238,15 +241,5 @@ export function mapScriptEntries(script: Script, baseURL: URL) {
             items.push(item);
         }
     });
-    // let createdItems = script.items.map(i => mapScriptEntry(i, baseURL));
-
-    // let chapterIndicators = script.chapters.map(c => {
-    //     return (
-    //         <BubbleGroup>
-    //             <ChatBubble chapterIndicator={c} time={c.time} />
-    //         </BubbleGroup>
-    //     );
-    // });
-
     return items;
 }
