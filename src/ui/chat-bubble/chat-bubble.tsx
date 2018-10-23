@@ -2,7 +2,6 @@ import * as styles from "./chat-bubble.css";
 import * as React from "react";
 import {Component} from "react";
 import {getPhotoSwipeContainer, PhotoSwipe} from "../photoswipe/photoswipe";
-import {runServiceWorkerCommand} from "service-worker-command-bridge";
 import {Chapter, makeRelative} from "../../interfaces/script";
 import {showOrHideContactBox} from "../contact-box/contact-box";
 import {showOrHideSideMenu} from "../side-menu/side-menu";
