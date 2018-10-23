@@ -137,7 +137,6 @@ function mapScriptEntry(
             time: response.time,
             openQuestion: response.openQuestion,
         };
-        console.log(response.openQuestion, "response.openQuestion");
 
         elements.push(
             <ScrollViewItemContext.Consumer>{
@@ -154,14 +153,14 @@ function mapScriptEntry(
 
     }
 
-    if (response.poll && response.poll!.choices.length > 0) { // TODO: zwischen Poll 1 und Poll 2 unterscheiden
+    if (response.multipleChoice) {
 
         let secondItemProperties: ChatBubbleProperties = {
             time: response.time,
-            poll: response.poll,
+            multipleChoice: response.multipleChoice,
         };
 
-        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_poll`}/>);
+        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_multipleChoice`}/>);
 
     }
 

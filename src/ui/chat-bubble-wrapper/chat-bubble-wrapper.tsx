@@ -41,7 +41,7 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
         this.setState({inputText: userTextInput})
     }
 
-    scrollToBottom(){
+    scrollToBottom() {
         let elementx = window!.document!.querySelector('.chat-window')!.lastChild! as HTMLDivElement;
         elementx.scrollTop! = elementx.scrollHeight! - elementx.clientHeight!
         console.log('lala')
@@ -53,7 +53,7 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
             answerBubbleIsActive: true,
             bubbleSizeChanged: true
         });
-        setTimeout(this.scrollToBottom,30)
+        setTimeout(this.scrollToBottom, 30)
         saveTextInput(this.props.openQuestion!.pollID!, this.props.cacheName, db, this.state.inputText)
 
         e.preventDefault()
@@ -66,11 +66,14 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
             let sendurl = new URL('bundles/example-podcast/send.png', document.location.href)
             return (
                 <div className={styles.chatBubbleWrapper}>
-                    <ChatBubble className={styles.bubbleTextInput}  {...this.props} onInputChange={this.handleInputChange}
+                    <ChatBubble className={styles.bubbleTextInput}  {...this.props}
+                                onInputChange={this.handleInputChange}
                                 userInput={this.state.inputText}/>
                     <div className={styles.buttonWrapper}>
-                     {/*using onFocus as an eventHandler and not on click is a hack cause otherwise the button does only focus not reacting on clck*/}
-                        <button type='submit' value="Submit" className={styles.button}  onFocus={(e)=>{this.handleSendClick(e)}}>
+                        {/*using onFocus as an eventHandler and not on click is a hack cause otherwise the button does only focus not reacting on clck*/}
+                        <button type='submit' value="Submit" className={styles.button} onFocus={(e) => {
+                            this.handleSendClick(e)
+                        }}>
                             <img src={sendurl.href} className={styles.buttonImageStyle}/>
                         </button>
 
@@ -82,13 +85,14 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
 
                 <div>
 
-                        <ChatBubble  className={styles.bubbleRight} time={this.props.time} text={this.state.inputText} userInput={this.state.inputText}
-                                    isUserChatBubble={true} onInputChange={this.handleInputChange} />
+                    <ChatBubble className={styles.bubbleRight} time={this.props.time} text={this.state.inputText}
+                                userInput={this.state.inputText}
+                                isUserChatBubble={true} onInputChange={this.handleInputChange}/>
 
 
-
-                        <ChatBubble className={styles.bubbleLeft} time={this.props.time} text={this.props.openQuestion!.followUp}
-                        />
+                    <ChatBubble className={styles.bubbleLeft} time={this.props.time}
+                                text={this.props.openQuestion!.followUp}
+                    />
 
                 </div>
 
@@ -96,15 +100,14 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
         }
     }
 
-    componentDidUpdate(){
-        if(this.state.answerBubbleIsActive && this.state.bubbleSizeChanged) {
-            if (this.props.openQuestion!.choices.length == 0) {
-                setTimeout(() => {
-                    this.props.onResize!();
-                }, 0);
+    componentDidUpdate() {
+        if (this.state.answerBubbleIsActive && this.state.bubbleSizeChanged) {
+
+            setTimeout(() => {
+                this.props.onResize!();
+            }, 0);
 
 
-            }
             this.setState({
                 bubbleSizeChanged: false
             });

@@ -101,6 +101,8 @@ export function saveTextInput(pollId: String, projectId, db, message) {
             else {
                 try {
                     docRef.update(
+
+                        // somehow _arrayUnion isnt recognized as a method even though it exists
                         {values: firebase.firestore.FieldValue!.arrayUnion(message)}
                     )
                 }

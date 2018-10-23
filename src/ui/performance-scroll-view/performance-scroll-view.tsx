@@ -142,8 +142,6 @@ export class PerformanceScrollView extends Component<PerformanceScrollViewProper
                 }
             }
 
-            // Todo hier ne funktionalitaet hinzufuegen
-
             let numberOfNewItems = 0;
 
             if (this.isAtScrollEnd() === false) {

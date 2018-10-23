@@ -55,7 +55,6 @@ export interface ChatBubblePollInt {
 
 export interface OpenQuestion {
     question: string;
-    choices: string[];
     followUp: string;
     pollID: string;
     showResults: boolean;
@@ -70,7 +69,7 @@ export interface ChatBubbleProperties {
     chapterIndicator?: Chapter;
     silent?: boolean;
     notificationOnlyText?: string;
-    poll?: ChatBubblePollInt;
+    multipleChoice?: ChatBubblePollInt;
     type?:  string;
     openQuestion?: OpenQuestion;
     projectId?: string;
@@ -215,18 +214,18 @@ function renderOpenQuestion(bindTo: ChatBubble) {
 }
 
 function renderMultipleChoice(bindTo: ChatBubble) {
-    if (!bindTo.props.poll) {
+    if (!bindTo.props.multipleChoice) {
         return null
     }
     return (
         <ScrollViewItemContext.Consumer key={"openQuestion"}>
             {viewItemContext =>
                 <PollUserChoice
-                    question={bindTo.props!.poll!.question}
-                    choices={bindTo.props!.poll!.choices}
-                    followUp={bindTo.props!.poll!.followUp}
-                    pollID={bindTo.props!.poll!.pollID}
-                    showResults={bindTo.props!.poll!.showResults}
+                    question={bindTo.props!.multipleChoice!.question}
+                    choices={bindTo.props!.multipleChoice!.choices}
+                    followUp={bindTo.props!.multipleChoice!.followUp}
+                    pollID={bindTo.props!.multipleChoice!.pollID}
+                    showResults={bindTo.props!.multipleChoice!.showResults}
                     onResize={viewItemContext.onResize!}
                     key={"multipleChoice"}
                     changeBubbleClass={bindTo.changeClassName}
