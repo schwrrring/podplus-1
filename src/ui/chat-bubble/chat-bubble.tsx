@@ -214,27 +214,26 @@ function renderOpenQuestion(bindTo: ChatBubble) {
     )
 }
 
-function renderPoll(bindTo: ChatBubble) {
-
+function renderMultipleChoice(bindTo: ChatBubble) {
     if (!bindTo.props.poll) {
         return null
     }
-        return (
-            <ScrollViewItemContext.Consumer key={"openQuestion"}>
-                {viewItemContext =>
-                    <PollUserChoice
-                        question={bindTo.props!.poll!.question}
-                        choices={bindTo.props!.poll!.choices}
-                        followUp={bindTo.props!.poll!.followUp}
-                        pollID={bindTo.props!.poll!.pollID}
-                        showResults={bindTo.props!.poll!.showResults}
-                        onResize={viewItemContext.onResize!}
-                        key={"multipleChoice"}
-                        changeBubbleClass={bindTo.changeClassName}
-                        parentClassChanged={bindTo.state.parentClassChanged}
-                    />}
-            </ScrollViewItemContext.Consumer>
-        )
+    return (
+        <ScrollViewItemContext.Consumer key={"openQuestion"}>
+            {viewItemContext =>
+                <PollUserChoice
+                    question={bindTo.props!.poll!.question}
+                    choices={bindTo.props!.poll!.choices}
+                    followUp={bindTo.props!.poll!.followUp}
+                    pollID={bindTo.props!.poll!.pollID}
+                    showResults={bindTo.props!.poll!.showResults}
+                    onResize={viewItemContext.onResize!}
+                    key={"multipleChoice"}
+                    changeBubbleClass={bindTo.changeClassName}
+                    parentClassChanged={bindTo.state.parentClassChanged}
+                />}
+        </ScrollViewItemContext.Consumer>
+    )
 
 }
 
@@ -327,7 +326,6 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
     }
 
     render() {
-
         let className = styles[this.state.chatBubbleClassName];
         if (this.props.className) {
             className = this.props.className;
@@ -351,7 +349,7 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
             renderText(this),
             renderLink(this.props),
             renderOpenQuestion(this),
-            renderPoll(this),
+            renderMultipleChoice(this),
         ];
 
         if (elements.some(el => el !== null) === false) {
