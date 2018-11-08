@@ -1,6 +1,13 @@
 {
     "PUSHKIN_HOST": "",
     "PUSHKIN_KEY": "",
-    "ANALYTICS_ID": "",
-    "SCRIPT_URL": "bundles/example-podcast/script.json"
+    "ANALYTICS_ID": "UA-xxxxx",
+    "SCRIPT_URL": "bundles/example-podcast/script.json",
+    "FIREBASE_API_KEY": "xxxxx",
+    "FIREBASE_AUTH_DOMAIN":"xxxxx",
+    "FIREBASE_DATABASE_URL":"xxxx",
+    "FIREBASE_PROJECT_ID":"xxxx",
+    "FIREBASE_STORAGE_BUCKET":"xxx",
+    "FIREBASE_MESSAGING_SENDER_ID":"xxx"
 }
+
