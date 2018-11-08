@@ -1,5 +1,4 @@
 import * as firebase from 'firebase'
-import firestore from 'firebase/firebase-firestore'
 
 interface FirebaseConfig {
     apiKey: string | undefined,
