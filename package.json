@@ -36,7 +36,6 @@
         "webpack-dev-server": "^2.11.3"
     },
     "dependencies": {
-        "@firebase/firestore": "^0.5.5",
         "@types/react": "^16.4.12",
         "awesome-typescript-loader": "^3.5.0",
         "axios": "^0.18.0",
@@ -47,7 +46,7 @@
         "deep-for-each": "^1.0.6",
         "event-target-shim": "^3.0.2",
         "file-loader": "^1.1.11",
-        "firebase": "^5.4.1",
+        "firebase": "^5.5.8",
         "google-analytics-protocol": "git+https://github.com/gdnmobilelab/google-analytics-protocol.git",
         "html-webpack-plugin": "^2.30.1",
         "pepjs": "^0.4.3",
