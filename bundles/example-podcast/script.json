@@ -1,0 +1,232 @@
+{
+  "podcastId": "NatuerlichPrinzenV1",
+  "episodeId": "Bodybutter selber machen!",
+  "audioFile": "audio4.mp3",
+  "dingFile": "ping.mp3",
+  "metadata": {
+    "length": 559,
+    "title": "Natürlich Prinzen",
+    "episodeName": "Bodybutter selber machen!",
+    "description": "Bodybutter selber machen!",
+    "avatarFile": "robot_headshot.png",
+    "artwork": "assets/thumb-maat-lrg.jpg",
+    "contactHeader": "Du hast eine Frage an Sabrina?",
+    "surveyUrl": "https://www.ndr.de/podcast/Nutzer-Umfrage-Podcasts,podcastplusumfrage102.html",
+    "pushNotificationHeader": "\"Sabrina von Natürlich Prinzen\""
+  },
+  "contact": {
+    "tel": "\"017632765544\"",
+    "sms": "\"017632765544\"",
+    "email": "podcastPlus@ndr.de",
+    "headerContactPopUp": "Frag Sabrina!",
+    "teaserContactPopUp": "Du hast eine Idee, was Sabrina in der nächsten Folge ausprobieren könnte? Immer her mit den Ideen! Wir freuen uns über Deine Vorschläge!"
+  },
+  "team": [
+    {
+      "name": "Robot Voice",
+      "role": "Presenter",
+      "credit": "Isn't a real person",
+      "photo": "robot_headshot.png"
+    }
+  ],
+  "assets": [],
+  "chapters": [
+    {
+      "name": "Bodybutter selber machen!",
+      "time": 0
+    }
+  ],
+  "items": [
+    {
+      "silent": true,
+      "time": 0,
+      "type": "text",
+      "text": "Hallo! Ich bin Sabrina Prinzen. Herzlich Willkommen zu meinem neuen Podcast, Natürlich Prinzen!"
+    },
+    {
+      "silent": true,
+      "time": 0,
+      "type": "text",
+      "text": "Während du den Podcast hörst 🎧, werde ich Dir hier Nachrichten wie diese, mit Links, Grafiken, Fotos, kleinen Videos und Umfragen schicken 🔗📷🎬 ⁉️schicken."
+    },
+
+    {
+      "silent": true,
+      "time": 0,
+      "type": "text",
+      "openQuestion": {
+        "question": "",
+        "choices": [
+          "",
+          ""
+        ],
+        "followUp": "Vielen herzlichen Dank für Deinen Vorschlag! ",
+        "pollID": "textInput2",
+        "showResults": null
+      }
+    },
+    {
+      "silent": true,
+      "time": 0,
+      "type": "text",
+      "text": "Um den Podcast zu starten, clicke auf Play. Viel Spaß beim Hören, Gucken und Austauschen!"
+    },
+    {
+      "silent": false,
+      "time": 44,
+      "type": "text",
+      "text": "So seh ich aus 👸😉",
+      "images": [
+        {
+          "url": "sabrina.jpg",
+          "width": 733,
+          "height": 211
+        }
+      ]
+    },
+    {
+      "silent": false,
+      "time": 146,
+      "type": "text",
+      "multipleChoice": {
+        "question": "Machst Du Dir Sorgen, dass Inhaltsstoffe in den Kosmetika sein könnten, die ungesund für Dich sind?",
+        "choices": [
+          "Ja",
+          "Nein"
+        ],
+        "followUp": "Danke für Deine Antwort! Hier ein Überblick, wie Ihr darüber denkt: ",
+        "pollID": "Sorgenmachen",
+        "showResults": 1
+      }
+    },
+    {
+      "silent": false,
+      "time": 231,
+      "type": "text",
+      "text": "So sieht er aus, mein Bruder Sven",
+      "images": [
+        {
+          "url": "nichtSven.jpg",
+          "width": 1024,
+          "height": 1024
+        }
+      ]
+    },
+
+    {
+      "silent": true,
+      "time": 473,
+      "type": "text",
+      "text": "Was brauchen wir?\n"
+    },
+    {
+      "silent": true,
+      "time": 473,
+      "type": "text",
+      "images": [
+        {
+          "url": "rezept.jpg",
+          "width": 647,
+          "height": 647
+        }
+      ]
+    },
+    {
+      "silent": true,
+      "time": 485,
+      "type": "text",
+      "text": "⏰ Dauer: 10 Minuten"
+    },
+    {
+      "silent": true,
+      "time": 490,
+      "type": "text",
+      "text": "Haltbarkeit: im Kühlschrank einige Wochen"
+    },
+    {
+      "silent": true,
+      "time": 495,
+      "type": "text",
+      "text": "Karmapunkte: 💐💌🌋"
+    },
+    {
+      "silent": false,
+      "time": 495,
+      "type": "text",
+      "openQuestion": {
+        "question": "",
+        "choices": [
+          "",
+          ""
+        ],
+        "followUp": "Vielen herzlichen Dank für Deinen Vorschlag! ",
+        "pollID": "textInput3",
+        "showResults": null
+      }
+    },
+    {
+      "silent": true,
+      "time": 503,
+      "type": "text",
+      "text": "Geschenketauglich? 🎁"
+    },
+    {
+      "silent": true,
+      "time": 503,
+      "type": "text",
+      "text": "Absolut! Oder etwa nicht?",
+      "images": [
+        {
+          "url": "geschenk.jpg",
+          "width": 733,
+          "height": 362
+        }
+      ]
+    },
+    {
+      "silent": false,
+      "time": 524,
+      "type": "text",
+      "text": "Video: Bodybutter selber machen",
+      "images": [
+        {
+          "video": true,
+          "url": "movie.mp4",
+          "width": 1600,
+          "height": 900
+        }
+      ]
+    },
+    {
+      "silent": false,
+      "time": 536,
+      "type": "text",
+      "link": {
+        "url": "https://www.ndr.de/podcast/podcastplusumfrage102.html",
+        "title": "Hier geht es zur Umfrage. Danke 👍"
+      }
+    },
+    {
+      "silent": false,
+      "time": 543,
+      "type": "text",
+      "text": "Was soll ich für Euch in einer kommenden Sendung ausprobieren? 👩‍🔬"
+    },
+    {
+      "silent": false,
+      "time": 543,
+      "type": "text",
+      "openQuestion": {
+        "question": "",
+        "choices": [
+          "",
+          ""
+        ],
+        "followUp": "Vielen herzlichen Dank für Deinen Vorschlag! ",
+        "pollID": "textInput",
+        "showResults": null
+      }
+    }
+  ]
+}
+
