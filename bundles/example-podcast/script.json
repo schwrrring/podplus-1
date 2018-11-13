@@ -49,22 +49,6 @@
       "type": "text",
       "text": "Während du den Podcast hörst 🎧, werde ich Dir hier Nachrichten wie diese, mit Links, Grafiken, Fotos, kleinen Videos und Umfragen schicken 🔗📷🎬 ⁉️schicken."
     },
-
-    {
-      "silent": true,
-      "time": 0,
-      "type": "text",
-      "openQuestion": {
-        "question": "",
-        "choices": [
-          "",
-          ""
-        ],
-        "followUp": "Vielen herzlichen Dank für Deinen Vorschlag! ",
-        "pollID": "textInput2",
-        "showResults": null
-      }
-    },
     {
       "silent": true,
       "time": 0,
