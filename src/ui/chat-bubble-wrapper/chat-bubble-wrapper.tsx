@@ -44,7 +44,6 @@ export class ChatBubbleWrapper extends React.Component<ChatBubbleWrapperProp, Ch
     scrollToBottom() {
         let elementx = window!.document!.querySelector('.chat-window')!.lastChild! as HTMLDivElement;
         elementx.scrollTop! = elementx.scrollHeight! - elementx.clientHeight!
-        console.log('lala')
     }
 
     handleSendClick(e) {

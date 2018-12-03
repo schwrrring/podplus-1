@@ -81,7 +81,7 @@ function mapScriptEntry(
     };
     // let baseURL = new URL(this.props.url, window.location.href);
 
-    mappedProperties.text = response.text;
+    mappedProperties.text = response.text as string;
 
     let elements: JSX.Element[] = [
         <ChatBubble {...mappedProperties} key={`item_${index}_main`}/>
@@ -139,9 +139,9 @@ function mapScriptEntry(
         };
 
         elements.push(
-            <ScrollViewItemContext.Consumer>{
+            <ScrollViewItemContext.Consumer key={'scrollViewItemContext'}>{
                 viewItemContext =>
-                    <FrameContext.Consumer>{
+                    <FrameContext.Consumer key = {'frameContext'}>{
                         value =>
                             <ChatBubbleWrapper onResize={viewItemContext.onResize}
                                                cacheName={value.cacheName!} {...secondItemProperties}
@@ -173,13 +173,13 @@ function mapScriptEntry(
         }
 
         let secondItemProperties: ChatBubbleProperties = {
-            time: response.time,
+            time: response.time as number,
             link: {
-                url: url.href,
-                domain: url.hostname,
-                image: imageURL,
-                title: response.link.title,
-                specialAction: response.link.specialAction
+                url: url.href as string,
+                domain: url.hostname as string,
+                image: imageURL as string,
+                title: response.link.title as string,
+                specialAction: response.link.specialAction as string
             }
         };
 
