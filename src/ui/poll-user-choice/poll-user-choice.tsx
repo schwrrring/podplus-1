@@ -137,6 +137,17 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                         <div>{this.props.followUp}</div>
                         {this.props.showResults == true &&
                         <div>
+                            {/*{*/}
+                                {/*this.props.choices.map(*/}
+                                    {/*(name, index)=>{*/}
+                                        {/*return <div key={index}>*/}
+                                            {/*{this.props.choices[index]}: {calculatePercentage(this.state.value[index], this.state.value[1])} %*/}
+                                        {/*</div>*/}
+                                    {/*}*/}
+                                {/*)*/}
+
+                            {/*}*/}
+
                             <div>
                                 {this.props.choices[0]}: {calculatePercentage(this.state.value[0], this.state.value[1])} %
                             </div>
