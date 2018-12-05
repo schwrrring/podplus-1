@@ -132,23 +132,15 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                         {this.props.showResults == true &&
                         <div>
                             {
-                            this.props.choices.map(
-                            (name, index)=>{
-                            return <div key={index}>
-                            {this.props.choices[index]}: {calculatePercentage(index, this.state.value!)} %
-                            </div>
+                                this.props.choices.map(
+                                    (name, index) => {
+                                        return <div key={index}>
+                                            {this.props.choices[index]}: {calculatePercentage(index, this.state.value!)} %
+                                        </div>
+                                    }
+                                )
                             }
-                            )
 
-                            }
-
-
-                            {/*<div>*/}
-                                {/*{this.props.choices[0]}: {calculatePercentage(calculatePercentage(index, this.state.value!))} %*/}
-                            {/*</div>*/}
-                            {/*<div>*/}
-                                {/*{this.props.choices[1]}: {calculatePercentage(this.state.value[1], this.state.value[0])} %*/}
-                            {/*</div>*/}
 
                         </div>
                         }
@@ -165,12 +157,12 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
 function calculatePercentage(index: number, counts: number[]) {
     let sum = counts.reduce(
         (accumulator, currentValue) => {
-           return accumulator + currentValue
+            return accumulator + currentValue
         }
     )
-    if(sum !=0 && counts[index] != 0){
-        return Math.round((counts[index] / sum ) * 100);
-    } else{
+    if (sum != 0 && counts[index] != 0) {
+        return Math.round((counts[index] / sum) * 100);
+    } else {
         return 0
     }
 }
