@@ -30,23 +30,25 @@ export function StartButton(props: StartButtonProps) {
     if (NotificationsSupported) {
         return (
             <div className={className}>
+                {/*Todo: reactivate when using Push Notifications*/}
+                {/*<button*/}
+                    {/*className={styles.highlightedButton}*/}
+                    {/*onClick={() => {*/}
+                        {/*sendEvent("Web browser", "Play", "With push alert");*/}
+                        {/*props.onPlay(true);*/}
+                        {/*requestPermission(props.onNotificationPermissionChange);*/}
+                    {/*}}*/}
+                {/*>*/}
+                    {/*Play – Mit Push-Nachrichten*/}
+                {/*</button>*/}
                 <button
                     className={styles.highlightedButton}
-                    onClick={() => {
-                        sendEvent("Web browser", "Play", "With push alert");
-                        props.onPlay(true);
-                        requestPermission(props.onNotificationPermissionChange);
-                    }}
-                >
-                    Play – Mit Push-Nachrichten
-                </button>
-                <button
                     onClick={() => {
                         sendEvent("Web browser", "Play", "Without push alert");
                         props.onPlay(false);
                     }}
                 >
-                    Play – Ohne Push-Nachrichten
+                    Play
                 </button>
             </div>
         );
