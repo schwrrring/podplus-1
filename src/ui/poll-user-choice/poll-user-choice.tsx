@@ -1,8 +1,6 @@
 import * as styles from "./poll-user-choice.css";
 import * as React from "react";
 import {Component} from "react";
-import {ChatBubbleImage, ChatBubbleLink, ChatBubbleProperties} from "../chat-bubble/chat-bubble";
-import {Chapter} from "../../interfaces/script";
 import {createCounter, db, getCount, incrementCounter} from "../../bridge/database";
 import MDSpinner from "react-md-spinner";
 
@@ -15,8 +13,6 @@ interface ChatBubblePollProperties {
     onResize: () => void;
     projectId?: string;
     changeBubbleClass?: (string) => void;
-    parentClassChanged: boolean | undefined;
-
 }
 
 interface ChatBubblePollState {

@@ -228,7 +228,6 @@ function renderMultipleChoice(bindTo: ChatBubble) {
                     onResize={viewItemContext.onResize!}
                     key={"multipleChoice"}
                     changeBubbleClass={bindTo.changeClassName}
-                    parentClassChanged={bindTo.state.parentClassChanged}
                 />}
         </ScrollViewItemContext.Consumer>
     )
@@ -308,7 +307,6 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
             expanded: false,
             pollSent: 0,
             chatBubbleClassName: 'bubble',
-            parentClassChanged: false
         };
         this.maybeOpenPhotoSwipe = this.maybeOpenPhotoSwipe.bind(this);
         this.maybeClosePhotoSwipe = this.maybeClosePhotoSwipe.bind(this);
@@ -318,7 +316,6 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
     changeClassName(className: string) {
         this.setState({
             chatBubbleClassName: className,
-            parentClassChanged: true
         })
 
     }
