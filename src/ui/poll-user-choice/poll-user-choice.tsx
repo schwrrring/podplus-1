@@ -3,6 +3,7 @@ import * as React from "react";
 import {Component} from "react";
 import {createCounter, db, getCount, incrementCounter} from "../../bridge/database";
 import MDSpinner from "react-md-spinner";
+import {UserChoiceButton} from "../user-choice-button/user-choice-button";
 
 interface ChatBubblePollProperties {
     question: string;
@@ -34,18 +35,24 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
             hasError: false
         }
         this.setUpDatabase = this.setUpDatabase.bind(this);
+        this.userClickedChoiceButton = this.userClickedChoiceButton.bind(this);
+        this.showIsLoading = this.showIsLoading.bind(this);
+    }
+
+    showIsLoading (){
+        this.setState({isLoading: true})
     }
 
     componentDidCatch(error, info) {
         // Display fallback UI
-        this.setState({ hasError: true });
+        this.setState({hasError: true});
         // You can also log the error to an error reporting service
         console.log(error, info);
     }
 
     setUpDatabase() {
-        let temp: any[];
-        temp = [];
+        let refs: any[];
+        refs = [];
         for (var i = 0; i < this.props.choices.length; i++) {
             let ref = db.collection(this.props.pollID).doc(this.props.choices[i]);
             const ergebnis = ref.get()
@@ -54,10 +61,10 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                     createCounter(ref, 10)
                 }
             })
-            temp.push(ref)
+            refs.push(ref)
         }
         this.setState(
-            {databaseRefs: temp}
+            {databaseRefs: refs}
         )
 
     }
@@ -71,6 +78,14 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
         return this.state.isLoading ? styles.hiddenChatBubble : styles.bubblePollButtonsContainer
     }
 
+    userClickedChoiceButton = (counts) =>  {
+        this.setState({
+            pollSent: true,
+            value: counts,
+            isLoading: false
+        })
+    }
+
     render() {
         if (this.state.hasError) {
             // You can render any custom fallback UI
@@ -82,41 +97,27 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                 <div className={styles.isLoadingSpinnerContainer}>
                     <div key="poll-choice" className={this.checkIfHidden()}>
                         <div>{this.props.question}</div>
-                        <button className={styles.bubblePollButtons} onClick={() => {
-                            incrementCounter(db, this.state.databaseRefs[0], 10);
-                            let iterable = this.state.databaseRefs.map((val) => getCount(val));
-                            let results = Promise.all(iterable)
-                                .then((valutys) => {
-                                    this.setState({
-                                        pollSent: true,
-                                        value: valutys,
-                                        isLoading: false
-                                    })
-                                    this.props.changeBubbleClass!('bubble-right')
-                                    this.props.onResize();
-                                })
-                                .catch(() => console.log('couldnt get answer data'))
-                            this.setState({isLoading: true})
-                        }}>
-                            {this.props.choices[0]}
-                        </button>
-                        <button className={styles.bubblePollButtons} onClick={() => {
-                            incrementCounter(db, this.state.databaseRefs[1], 10);
-                            let iterable = this.state.databaseRefs.map((val) => getCount(val));
-                            let results = Promise.all(iterable)
-                                .then((valutys) => {
-                                    this.setState({
-                                        pollSent: true,
-                                        value: valutys,
-                                        isLoading: false
-                                    })
-                                    this.props.changeBubbleClass!('bubble-right')
-                                    this.props.onResize();
-                                })
 
-                        }}>
-                            {this.props.choices[1]}
-                        </button>
+                        <UserChoiceButton
+                            changeBubbleClass={this.props.changeBubbleClass}
+                            onResize={this.props.onResize}
+                            choiceNr={0}
+                            databaseRefs={this.state.databaseRefs}
+                            choices={this.props.choices}
+                            userClickedChoiceButton = {this.userClickedChoiceButton}
+                            showIsLoading={this.showIsLoading}
+                        />
+                        <UserChoiceButton
+                            changeBubbleClass={this.props.changeBubbleClass}
+                            onResize={this.props.onResize}
+                            choiceNr={1}
+                            databaseRefs={this.state.databaseRefs}
+                            choices={this.props.choices}
+                            userClickedChoiceButton = {this.userClickedChoiceButton}
+                            showIsLoading={this.showIsLoading}
+                        />
+
+
                     </div>
                     {this.state.isLoading &&
                     <div className={styles.isLoadingSpinner}>
@@ -134,13 +135,13 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                         {this.props.showResults == true &&
                         <div>
                             {/*{*/}
-                                {/*this.props.choices.map(*/}
-                                    {/*(name, index)=>{*/}
-                                        {/*return <div key={index}>*/}
-                                            {/*{this.props.choices[index]}: {calculatePercentage(this.state.value[index], this.state.value[1])} %*/}
-                                        {/*</div>*/}
-                                    {/*}*/}
-                                {/*)*/}
+                            {/*this.props.choices.map(*/}
+                            {/*(name, index)=>{*/}
+                            {/*return <div key={index}>*/}
+                            {/*{this.props.choices[index]}: {calculatePercentage(this.state.value[index], this.state.value[1])} %*/}
+                            {/*</div>*/}
+                            {/*}*/}
+                            {/*)*/}
 
                             {/*}*/}
 
