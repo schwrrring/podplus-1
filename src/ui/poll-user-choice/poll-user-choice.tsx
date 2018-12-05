@@ -39,7 +39,7 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
         this.showIsLoading = this.showIsLoading.bind(this);
     }
 
-    showIsLoading (){
+    showIsLoading() {
         this.setState({isLoading: true})
     }
 
@@ -78,7 +78,7 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
         return this.state.isLoading ? styles.hiddenChatBubble : styles.bubblePollButtonsContainer
     }
 
-    userClickedChoiceButton = (counts) =>  {
+    userClickedChoiceButton = (counts) => {
         this.setState({
             pollSent: true,
             value: counts,
@@ -98,25 +98,22 @@ export class PollUserChoice extends Component<ChatBubblePollProperties, ChatBubb
                     <div key="poll-choice" className={this.checkIfHidden()}>
                         <div>{this.props.question}</div>
 
-                        <UserChoiceButton
-                            changeBubbleClass={this.props.changeBubbleClass}
-                            onResize={this.props.onResize}
-                            choiceNr={0}
-                            databaseRefs={this.state.databaseRefs}
-                            choices={this.props.choices}
-                            userClickedChoiceButton = {this.userClickedChoiceButton}
-                            showIsLoading={this.showIsLoading}
-                        />
-                        <UserChoiceButton
-                            changeBubbleClass={this.props.changeBubbleClass}
-                            onResize={this.props.onResize}
-                            choiceNr={1}
-                            databaseRefs={this.state.databaseRefs}
-                            choices={this.props.choices}
-                            userClickedChoiceButton = {this.userClickedChoiceButton}
-                            showIsLoading={this.showIsLoading}
-                        />
-
+                        {
+                            this.props.choices.map(
+                                (choice, index) => {
+                                    return  <UserChoiceButton
+                                        key={index}
+                                        changeBubbleClass={this.props.changeBubbleClass}
+                                        onResize={this.props.onResize}
+                                        choiceNr={index}
+                                        databaseRefs={this.state.databaseRefs}
+                                        choices={this.props.choices}
+                                        userClickedChoiceButton={this.userClickedChoiceButton}
+                                        showIsLoading={this.showIsLoading}
+                                    />
+                                }
+                            )
+                        }
 
                     </div>
                     {this.state.isLoading &&
