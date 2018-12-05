@@ -8,6 +8,7 @@ declare const process: {
 // declare const ENVIRONMENT: "production" | "staging";
 declare const BUILD_TIME: number;
 declare const ANALYTICS_ID: string | undefined;
+declare const USE_FAKE_DATA: boolean | undefined;
 declare const SCRIPT_URL: string;
 declare const FIREBASE_API_KEY: string | undefined;
 declare const FIREBASE_AUTH_DOMAIN: string | undefined;

@@ -21,17 +21,31 @@ export const UserChoiceButton: React.SFC<UserChoiceProps> = (props) => {
             className={styles.bubblePollButtons}
             onClick={
                 () => {
-                    incrementCounter(db, props.databaseRefs[props.choiceNr], 10);
-                    let iterable = props.databaseRefs.map((val) => getCount(val));
-                    Promise.all(iterable)
-                        .then((counts) => {
-                            props.userClickedChoiceButton(counts);
-                            props.changeBubbleClass!('bubble-right');
-                            props.onResize();
-                        })
-                        .catch(() => console.log('couldnt get answer data'))
-                    props.showIsLoading();
+                    // return Fake Data if defined in config
+                    if(!USE_FAKE_DATA) {
+                        incrementCounter(db, props.databaseRefs[props.choiceNr], 10);
+                        let iterable = props.databaseRefs.map((val) => getCount(val));
+                        Promise.all(iterable)
+                            .then((counts) => {
+                                props.userClickedChoiceButton(counts);
+                                props.changeBubbleClass!('bubble-right');
+                                props.onResize();
+                            })
+                            .catch(() => console.log('couldnt get answer data'))
+                        props.showIsLoading();
+                    }
+                    else {
+                        props.userClickedChoiceButton([1,2,3]);
+                        props.changeBubbleClass!('bubble-right');
+                        props.showIsLoading();
+                        setTimeout(
+                            ()=>{
+                                props.onResize();
+                            }, 100
+                        )
+                    }
                 }}>
+
             {props.choices[props.choiceNr]}
         </button>)
 
