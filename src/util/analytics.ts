@@ -18,7 +18,8 @@ export function sendEvent(
         ea: action,
         el: label,
         ev: value,
-        cd1: "{{clientId}}"
+        aip: 1,
+        // cd1: "{{clientId}}"
     };
 
     if (!ANALYTICS_ID) {
@@ -35,8 +36,9 @@ export function sendPageView(url: string, title?: string) {
         dh: brokenApart.hostname,
         dp: brokenApart.pathname,
         dt: title,
-        cd1: "{{clientId}}",
-        dr: document.referrer
+        // cd1: "{{clientId}}",
+        dr: document.referrer,
+        aip: 1
     };
 
     if (!ANALYTICS_ID) {
