@@ -77,7 +77,6 @@ export interface ChatBubbleProperties {
     onInputChange?: any;
     isUserChatBubble?: boolean; // TODO: implement als ersatz fuer den is Activted filter, der bestimmt, ob die bubble nach rehts oder nicht nach rechts rutscht.
     dataWrapper?: boolean;
-
 }
 
 interface ChatBubbleState {
@@ -375,6 +374,18 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
                 <div className={containerClassName} ref={el => (this.containerElement = el)}>
                     <div className={className} id={'scrollWrapper'} onTouchStart={this.setTouch}
                          onTouchEnd={this.setTouch}>
+                        {elements}
+                    </div>
+                </div>
+            );
+        }
+
+        if (this.props.dataWrapper) {
+            containerClassName = styles.pollContainer;
+            let fixedWidth = {width: '102%'};
+            return (
+                <div className={containerClassName} ref={el => (this.containerElement = el)}>
+                    <div className={className} style={fixedWidth} onTouchStart={this.setTouch} onTouchEnd={this.setTouch}>
                         {elements}
                     </div>
                 </div>
