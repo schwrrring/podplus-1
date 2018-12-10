@@ -164,6 +164,14 @@ function mapScriptEntry(
 
     }
 
+    if (response.dataWrapper){
+        let secondItemProperties: ChatBubbleProperties = {
+            time: response.time,
+            dataWrapper: true,
+        };
+        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_multipleChoice`}/>);
+    }
+
     if (response.link) {
         let url = new URL(response.link.url, baseURL.href);
         let imageURL: string | undefined = undefined;

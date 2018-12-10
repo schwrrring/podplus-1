@@ -10,6 +10,7 @@ import {PollUserChoice} from "../poll-user-choice/poll-user-choice";
 import {PollUserTextinput} from "../poll-user-textinput/poll-user-textinput";
 import FrameContext from "../../contexts/frame-context"
 import ScrollViewItemContext from "../performance-scroll-view/scroll-view-item-context";
+import {DatawrapperBubble} from "../datawrapper-bubble/datawrapper-bubble";
 
 export interface ChatBubbleImage {
     url: string;
@@ -69,12 +70,13 @@ export interface ChatBubbleProperties {
     silent?: boolean;
     notificationOnlyText?: string;
     multipleChoice?: ChatBubblePollInt;
-    type?:  string;
+    type?: string;
     openQuestion?: OpenQuestion;
     projectId?: string;
     userInput?: string;
     onInputChange?: any;
     isUserChatBubble?: boolean; // TODO: implement als ersatz fuer den is Activted filter, der bestimmt, ob die bubble nach rehts oder nicht nach rechts rutscht.
+    dataWrapper?: boolean;
 
 }
 
@@ -234,6 +236,14 @@ function renderMultipleChoice(bindTo: ChatBubble) {
 
 }
 
+function renderDatawrapperBubble(bindTo: ChatBubble) {
+    if (!bindTo.props.dataWrapper) {
+        return null
+    }else{
+        return <DatawrapperBubble/>
+    }
+}
+
 function renderLink(props: ChatBubbleProperties) {
     if (!props.link) {
         return null;
@@ -345,6 +355,7 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
             renderLink(this.props),
             renderOpenQuestion(this),
             renderMultipleChoice(this),
+            renderDatawrapperBubble(this),
         ];
 
         if (elements.some(el => el !== null) === false) {
@@ -361,7 +372,7 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
         if (this.props.openQuestion) {
             containerClassName = styles.pollContainer;
             return (
-                <div className={containerClassName} ref={el => (this.containerElement = el)} >
+                <div className={containerClassName} ref={el => (this.containerElement = el)}>
                     <div className={className} id={'scrollWrapper'} onTouchStart={this.setTouch}
                          onTouchEnd={this.setTouch}>
                         {elements}

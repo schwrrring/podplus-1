@@ -1,0 +1,43 @@
+.bubble-poll-buttons {
+    background-color: #cddce9;
+    color: #0C174E;
+    font-size: 1.1em;
+
+    font-family: "NDRSansCondRegular";
+    margin-top: 11px;
+    margin-right: 8px;
+    margin-left: 8px;
+    width: auto;
+    min-width: 65px;
+}
+
+.bubble-text-padding {
+    padding: 10px 15px;
+}
+
+.bubble-text {
+    display: inline;
+    font-size: 16px;
+}
+.bubble-poll-buttons-container{
+    text-align: center;
+    padding: 10px 15px;
+}
+
+.is-loading-spinner-container{
+    position: relative;
+}
+
+.is-loading-spinner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
+.hidden-chat-bubble{
+    visibility: hidden;
+    text-align: center;
+    padding: 10px 15px;
+
+}
