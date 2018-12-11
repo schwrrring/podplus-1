@@ -10,7 +10,7 @@ import {PollUserChoice} from "../poll-user-choice/poll-user-choice";
 import {PollUserTextinput} from "../poll-user-textinput/poll-user-textinput";
 import FrameContext from "../../contexts/frame-context"
 import ScrollViewItemContext from "../performance-scroll-view/scroll-view-item-context";
-import {DatawrapperBubble} from "../datawrapper-bubble/datawrapper-bubble";
+import {IFrameBubble} from "../datawrapper-bubble/i-frame-bubble";
 
 export interface ChatBubbleImage {
     url: string;
@@ -76,7 +76,9 @@ export interface ChatBubbleProperties {
     userInput?: string;
     onInputChange?: any;
     isUserChatBubble?: boolean; // TODO: implement als ersatz fuer den is Activted filter, der bestimmt, ob die bubble nach rehts oder nicht nach rechts rutscht.
-    dataWrapper?: boolean;
+    iframe?: string;
+    //Todo: Swipeable
+    userQuestions?: boolean;
 }
 
 interface ChatBubbleState {
@@ -159,7 +161,7 @@ function renderImage(bindTo: ChatBubble) {
     }
 
     return (
-        <div key="imaged" style={{maxHeight: "60vh"}} className={styles.bubbleImageContainer}>
+        <div key="imaged" className={styles.bubbleImageContainer}>
             <div
                 style={containerStyles}
                 onClick={() => {
@@ -235,11 +237,51 @@ function renderMultipleChoice(bindTo: ChatBubble) {
 
 }
 
-function renderDatawrapperBubble(bindTo: ChatBubble) {
-    if (!bindTo.props.dataWrapper) {
+
+function renderiframeBubble(bindTo: ChatBubble) {
+    //TODO komplett in IFrame Bubble auslagern
+    if (!bindTo.props.iframe) {
+        return null;
+    }
+
+
+    let containerStyles: React.CSSProperties = {
+        width: "100%",
+        position: "relative",
+
+    };
+    let gallery: JSX.Element | undefined = undefined;
+
+    if (bindTo.state && bindTo.state.expanded === true) {
+        var items = [{
+            html: bindTo.props.iframe,
+            title: ""
+        }];
+            gallery = <PhotoSwipe items={items} onClose={() => setExpandedState(bindTo, false)}/>;
+    }
+    let img = <IFrameBubble iframe={bindTo.props.iframe}/>
+
+    return (
+        <div key="imaged"  className={styles.bubbleImageContainer}>
+            <div
+                style={containerStyles}
+                onClick={() => {
+                    setExpandedState(bindTo, true);
+                    sendEvent("Web Browser", "Image Expand", "Platzhalter");
+                }}
+            >
+                {img}
+                {gallery}
+            </div>
+        </div>
+    );
+}
+//TODO: implement UserQuestions Bubble
+function renderUserQuestionsBubble(bindTo: ChatBubble) {
+    if (!bindTo.props.userQuestions) {
         return null
     }else{
-        return <DatawrapperBubble/>
+        // return <Carousel></Carousel>
     }
 }
 
@@ -354,7 +396,8 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
             renderLink(this.props),
             renderOpenQuestion(this),
             renderMultipleChoice(this),
-            renderDatawrapperBubble(this),
+            renderiframeBubble(this),
+            renderUserQuestionsBubble(this),
         ];
 
         if (elements.some(el => el !== null) === false) {
@@ -380,7 +423,7 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
             );
         }
 
-        if (this.props.dataWrapper) {
+        if (this.props.iframe) {
             containerClassName = styles.pollContainer;
             let fixedWidth = {width: '102%'};
             return (

@@ -58,7 +58,7 @@
     {
       "time": 0,
       "type": "text",
-      "dataWrapper": true
+      "iframe":"<iframe id='datawrapper-chart-N1dza' src='//datawrapper.dwcdn.net/N1dza/1/' scrolling='no' frameborder='0' style='width: 0; min-width: 100% !important;' height='550'></iframe><script type='text/javascript'>if('undefined'==typeof window.datawrapper)window.datawrapper={};window.datawrapper['N1dza']={},window.datawrapper['N1dza'].embedDeltas={'100':600,'200':575,'300':550,'400':550,'500':550,'700':550,'800':550,'900':550,'1000':550},window.datawrapper['N1dza'].iframe=document.getElementById('datawrapper-chart-N1dza'),window.datawrapper['N1dza'].iframe.style.height=window.datawrapper['N1dza'].embedDeltas[Math.min(1e3,Math.max(100*Math.floor(window.datawrapper['N1dza'].iframe.offsetWidth/100),100))]+'px',window.addEventListener('message',function(a){if('undefined'!=typeof a.data['datawrapper-height'])for(var b in a.data['datawrapper-height'])if('N1dza'==b)window.datawrapper['N1dza'].iframe.style.height=a.data['datawrapper-height'][b]+'px'});</script>"
     },
     {
       "silent": false,

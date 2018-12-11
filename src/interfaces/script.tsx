@@ -164,12 +164,12 @@ function mapScriptEntry(
 
     }
 
-    if (response.dataWrapper){
+    if (response.iframe){
         let secondItemProperties: ChatBubbleProperties = {
             time: response.time,
-            dataWrapper: true,
+            iframe: response.iframe,
         };
-        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_multipleChoice`}/>);
+        elements.push(<ChatBubble {...secondItemProperties} key={`item_${index}_dataWrapper`}/>);
     }
 
     if (response.link) {
