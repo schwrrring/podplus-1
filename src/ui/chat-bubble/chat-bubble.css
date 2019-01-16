@@ -74,6 +74,13 @@
     float: left;
     width: 80%
 }
+
+.user-questions-container{
+    float: left;
+    position: relative;
+    width: 80%;
+    text-align: center;
+}
 .bubble-poll-buttons{
     font-size: 20px;
 }

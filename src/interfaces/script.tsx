@@ -6,6 +6,7 @@ import {ChatBubbleWrapper} from "../ui/chat-bubble-wrapper/chat-bubble-wrapper";
 import FrameContext from "../contexts/frame-context";
 import ScrollViewItemContext from "../ui/performance-scroll-view/scroll-view-item-context";
 import {string} from "prop-types";
+import {Carousel} from "../ui/user-questions/user-questions";
 
 export interface Chapter {
     time: number;
@@ -105,6 +106,23 @@ function mapScriptEntry(
         }
     };
 
+    if (response.userQuestions) {
+
+        let bubblProps: ChatBubbleProperties = {
+            time: response.time
+        };
+        // let baseURL = new URL(this.props.url, window.location.href);
+        elements.push(
+            <Carousel>
+                <ChatBubble userQuestions={true} {...mappedProperties} text={'asdf'} key={`item_${index}_main`}/>
+                <ChatBubble userQuestions={true} {...mappedProperties} text={'haaaalllsdf llooo'} key={`item_${index}_main3`}/>
+                <ChatBubble userQuestions={true} {...mappedProperties} text={'haaaalllllooo'} key={`item_${index}_main3`}/>
+                <ChatBubble userQuestions={true} {...mappedProperties} text={'sdfgg'} key={`item_${index}_main3`}/>
+                <ChatBubble userQuestions={true} {...mappedProperties} text={'haaaadasfasdfalllllooo'} key={`item_${index}_main3`}/>
+            </Carousel>
+        )
+    }
+
     if (response.images && response.images.length > 0) {
         let images = response.images.map(image => {
             let caption = response.text;
@@ -141,7 +159,7 @@ function mapScriptEntry(
         elements.push(
             <ScrollViewItemContext.Consumer key={'scrollViewItemContext'}>{
                 viewItemContext =>
-                    <FrameContext.Consumer key = {'frameContext'}>{
+                    <FrameContext.Consumer key={'frameContext'}>{
                         value =>
                             <ChatBubbleWrapper onResize={viewItemContext.onResize}
                                                cacheName={value.cacheName!} {...secondItemProperties}
@@ -164,7 +182,7 @@ function mapScriptEntry(
 
     }
 
-    if (response.iframe){
+    if (response.iframe) {
         let secondItemProperties: ChatBubbleProperties = {
             time: response.time,
             iframe: response.iframe,

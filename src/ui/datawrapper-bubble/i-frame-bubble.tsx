@@ -2,7 +2,7 @@ import * as styles from "./i-frame-bubble.css";
 import * as React from "react";
 import {Component} from "react";
 
-
+// TODO: nicht dangerouslSetInnerhtml
 interface DatawrapperBubbleProperties {
     iframe: string
 }

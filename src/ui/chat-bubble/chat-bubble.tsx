@@ -423,6 +423,18 @@ export class ChatBubble extends Component<ChatBubbleProperties, ChatBubbleState>
             );
         }
 
+        if(this.props.userQuestions){
+            containerClassName = styles.userQuestionsContainer;
+            return (
+                <div className={containerClassName} ref={el => (this.containerElement = el)}>
+                    <div className={className} id={'scrollWrapper'} onTouchStart={this.setTouch}
+                         onTouchEnd={this.setTouch}>
+                        {elements}
+                    </div>
+                </div>
+            );
+        }
+
         if (this.props.iframe) {
             containerClassName = styles.pollContainer;
             let fixedWidth = {width: '102%'};
