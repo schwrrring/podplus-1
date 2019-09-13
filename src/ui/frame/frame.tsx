@@ -499,7 +499,7 @@ export class Frame extends React.Component<PlayerProps, PlayerState> {
         };
     }
 
-    nextSecondTimeout: number | undefined;
+    nextSecondTimeout: any;
 
     timeUpdate(e: React.SyntheticEvent<HTMLAudioElement>) {
         let currentTime = this.audioElement.currentTime;
